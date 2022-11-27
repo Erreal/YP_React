@@ -1,10 +1,14 @@
 import React from 'react';
 import { Tab, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientsStyles from './BurgerIngredients.module.css';
-import data from '../../utils/data';
 
 const BurgerIngredients = (props) => {
     const [current, setCurrent] = React.useState('one');
+    const tabClick = (evt) => {
+        console.log(evt);
+        //document.getElementById('title').scrollIntoView();
+        setCurrent();
+    }
     const ingredientType = [
         {
             name: 'Булки',
@@ -19,26 +23,25 @@ const BurgerIngredients = (props) => {
             type: 'sauce'
         }
     ];
-    const dataSorted = props.data.sort((first, second) => first['type'] > second['type'] ? 1 : -1);
-    console.log(dataSorted);
+
     return (
         <section className={ingredientsStyles.mainsection}>
             <h2 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h2>
             <div style={{ display: 'flex' }}>
-                <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+                <Tab value="one" active={current === 'one'} onClick={tabClick}>
                     {ingredientType[0].name}
                 </Tab>
-                <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+                <Tab value="two" active={current === 'two'} onClick={tabClick}>
                     {ingredientType[1].name}
                 </Tab>
-                <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+                <Tab value="three" active={current === 'three'} onClick={tabClick}>
                     {ingredientType[2].name}
                 </Tab>
             </div>
-            <div className={ingredientsStyles.ingredientsection}>
-            {ingredientType.map((item, index) =>(
+            <div className={ingredientsStyles.scrollsection}>
+            {ingredientType.map((item, index) => (
                 <IngredientsGroup key={index} type={item.type} name={item.name} data={
-                    dataSorted.filter(obj => {
+                    props.data.filter(obj => {
                         return obj.type === item.type
                       })
                 }/>
@@ -54,28 +57,27 @@ const IngredientsGroup = (props) => {
             <h3 className="text text_type_main-medium">
                 {props.name}
             </h3>
-            {data.map(item => (
-                <IngredientCard 
-                    key = {item.id}
-                    imageSrc = {item.image}
-                    name = {item.name}
-                    price = {item.price}
-                />
-            ))}
-
+            <div className={ingredientsStyles.groupinner}>
+                {props.data.map(item => (
+                    <IngredientCard key={item._id} imageSrc={item.image} name={item.name} price={item.price} />
+                ))}
+            </div>
         </section>
     );
 
 }
 
 const IngredientCard = (props) => {
-    <div>
-        <img src={props.imageSrc} alt=""/>
-        <div className={ingredientsStyles.priceblock}>
-            <span>{props.price}</span>
-            <CurrencyIcon type="primary" />
+    return (
+        <div className={`${ingredientsStyles.card} mt-6 mb-8`}>
+            <img className={ingredientsStyles.cardimage} src={props.imageSrc} alt={props.name}/>
+            <div className={ingredientsStyles.cardprice}>
+                <span className="text text_type_digits-default">{props.price}</span>
+                <CurrencyIcon type="primary" />
+            </div>
+            <p className={ingredientsStyles.cardname}>{props.name}</p>
         </div>
-    </div>
+    );
 }
 
 export default BurgerIngredients;

@@ -1,0 +1,31 @@
+.mainsection {
+    max-width: 600px;
+}
+.constructorBunItem {
+    padding-left: 48px;
+}
+.constructorInner {
+    max-height: 500px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+.constructorItem {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+.checkout {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 40px;
+}
+.checkoutTotal {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
