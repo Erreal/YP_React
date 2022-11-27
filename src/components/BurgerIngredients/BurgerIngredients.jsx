@@ -3,24 +3,26 @@ import { Tab, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-compo
 import ingredientsStyles from './BurgerIngredients.module.css';
 
 const BurgerIngredients = (props) => {
-    const [current, setCurrent] = React.useState('one');
+    const [current, setState] = React.useState('one');
     const tabClick = (evt) => {
-        console.log(evt);
-        //document.getElementById('title').scrollIntoView();
-        setCurrent();
+        document.querySelector(`.scroll-${evt}`).scrollIntoView();
+        setState(evt);
     }
     const ingredientType = [
         {
             name: 'Булки',
-            type: 'bun'
+            type: 'bun',
+            place: 'one'
         },
         {
             name: 'Начинки',
-            type: 'main'
+            type: 'main',
+            place: 'two'
         },
         {
             name: 'Соусы',
-            type: 'sauce'
+            type: 'sauce',
+            place: 'three'
         }
     ];
 
@@ -40,7 +42,7 @@ const BurgerIngredients = (props) => {
             </div>
             <div className={ingredientsStyles.scrollsection}>
             {ingredientType.map((item, index) => (
-                <IngredientsGroup key={index} type={item.type} name={item.name} data={
+                <IngredientsGroup key={index} type={item.type} place={item.place} name={item.name} data={
                     props.data.filter(obj => {
                         return obj.type === item.type
                       })
@@ -53,7 +55,7 @@ const BurgerIngredients = (props) => {
 
 const IngredientsGroup = (props) => {
     return (
-        <section className='mt-10'>
+        <section className={`scroll-${props.place} mt-10`}>
             <h3 className="text text_type_main-medium">
                 {props.name}
             </h3>
