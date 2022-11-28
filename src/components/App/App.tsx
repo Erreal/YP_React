@@ -4,6 +4,7 @@ import data from '../../utils/data';
 import appStyles from './App.module.css';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
+import tempBasket from '../../utils/tempBasket';
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       <AppHeader />
       <main className={appStyles.container}>
         <BurgerIngredients data={data} />
-        <BurgerConstructor />
+        <BurgerConstructor basket={tempBasket} />
       </main>
     </>
   );

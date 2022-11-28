@@ -1,6 +1,11 @@
 .mainsection {
     max-width: 600px;
 }
+.constructorWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 .constructorBunItem {
     padding-left: 48px;
 }
