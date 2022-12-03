@@ -1,0 +1,16 @@
+.image {
+    width: 480px;
+    display: block;
+    margin: 0 auto;
+}
+.title {
+    text-align: center;
+}
+.parametrsWrapper {
+    width: 508px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 0 auto;
+    text-align: center;
+}

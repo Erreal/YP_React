@@ -2,22 +2,42 @@ import React from 'react';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructorStyles from './BurgerConstructor.module.css';
 import PropTypes from "prop-types";
+import Modal from '../Modal/Modal';
+import OrderDetails from '../OrderDetails/OrderDetails';
+import ingredientType from '../../utils/types';
 
 const BurgerConstructor = (props) => {
+    const [basket, setBasket] = React.useState({
+        totalPrice: props.basket.totalPrice,
+        basketItems: props.basket.items,
+    })
+    const [modal, setModal] = React.useState({visible:false});
+
+    const handleOpenModal = () => {
+        setModal({ visible: true });
+    }
+    
+    const handleCloseModal = () => {
+        setModal({ visible: false });
+    }
+ 
     return (
         <section className={`${constructorStyles.mainsection} pt-25 ml-10`}>
             <div className={`${constructorStyles.constructorWrapper} mb-10`}>
                 <div className={constructorStyles.constructorBunItem}>
-                    <ConstructorElement
-                        type="top"
-                        isLocked={true}
-                        text="Краторная булка N-200i (верх)"
-                        price={200}
-                        thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-                    />
+                    {basket.basketItems.filter(item => item.type === 'bun').map((item, index) => {
+                        return (<ConstructorElement
+                            type="top"
+                            isLocked={true}
+                            text={item.name}
+                            price={item.price}
+                            thumbnail={item.image}
+                            key={index}
+                        />)
+                    })}
                 </div>
                 <div className={constructorStyles.constructorInner}>
-                    {props.basket.map((item, index) => (
+                {basket.basketItems.filter(item => item.type !== 'bun').map((item, index) => (
                         <div className={constructorStyles.constructorItem} key={index}>
                             <DragIcon type="primary" />
                             <ConstructorElement
@@ -29,36 +49,41 @@ const BurgerConstructor = (props) => {
                     ))}
                 </div>
                 <div className={constructorStyles.constructorBunItem}>
-                    <ConstructorElement
-                        type="bottom"
-                        isLocked={true}
-                        text="Краторная булка N-200i (низ)"
-                        price={200}
-                        thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-                    />
+                    {basket.basketItems.filter(item => item.type === 'bun').map((item, index) => {
+                        return (<ConstructorElement
+                            type="bottom"
+                            isLocked={true}
+                            text={item.name}
+                            price={item.price}
+                            thumbnail={item.image}
+                            key={index}
+                        />)
+                    })}
                 </div>
             </div>
             <div className={constructorStyles.checkout}>
                 <span className={`${constructorStyles.checkoutTotal} text text_type_main-large`}>
-                    2251 
+                    {basket.totalPrice} 
                     <CurrencyIcon type="primary" />
                 </span>
-                <Button htmlType="button" type="primary" size="large">
+                <Button onClick={handleOpenModal} htmlType="button" type="primary" size="large">
                     Оформить заказ
                 </Button>
             </div>
+            {modal.visible && 
+                <Modal onClose={handleCloseModal}>
+                    <OrderDetails />
+                </Modal>
+            }
         </section>
-    )
+    );
 }
 
-const basketTypes = PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-})
-
 BurgerConstructor.propTypes = {
-    basket: PropTypes.arrayOf(basketTypes).isRequired
-} 
+    basket: PropTypes.shape({
+        totalPrice: PropTypes.number,
+        items: PropTypes.arrayOf(ingredientType)})
+        .isRequired
+}
 
 export default BurgerConstructor;

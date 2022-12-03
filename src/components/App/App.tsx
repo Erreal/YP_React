@@ -1,19 +1,42 @@
-import React from 'react';
+import React, {useState} from 'react';
 import AppHeader from '../AppHeader/AppHeader';
-import data from '../../utils/data';
 import appStyles from './App.module.css';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import tempBasket from '../../utils/tempBasket';
 
+
 function App() {
+  const [apiState, setApiState] = useState({
+    loaded: false,
+    data: [],
+  });
+  const dataUrl = 'https://norma.nomoreparties.space/api/ingredients';
+  React.useEffect(() => {
+    fetch(dataUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setApiState({
+            loaded: true,
+            data: data.data,
+          });
+        } else {
+          console.error('Server faled request');
+        }
+      })
+      .catch((error) => console.error(error));
+  }, []);
   return (
     <>
       <AppHeader />
-      <main className={appStyles.container}>
-        <BurgerIngredients data={data} />
-        <BurgerConstructor basket={tempBasket} />
-      </main>
+      {apiState.loaded && 
+              <main className={appStyles.container}>
+              <BurgerIngredients data={apiState.data} />
+              <BurgerConstructor basket={tempBasket} />
+            </main>
+      }
+
     </>
   );
 }
