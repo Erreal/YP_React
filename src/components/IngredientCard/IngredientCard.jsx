@@ -1,9 +1,9 @@
-import React from "react";
-import ingredientCardStyles from "./IngredientCard.module.css";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import Modal from "../Modal/Modal";
-import ingredientType from "../../utils/types";
+import React from 'react';
+import ingredientCardStyles from './IngredientCard.module.css';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import Modal from '../Modal/Modal';
+import ingredientType from '../../utils/types';
 
 const IngredientCard = (props) => {
   const [modal, setModal] = React.useState({ visible: false });

@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import {
   ConstructorElement,
   DragIcon,
   CurrencyIcon,
   Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import constructorStyles from "./BurgerConstructor.module.css";
-import PropTypes from "prop-types";
-import Modal from "../Modal/Modal";
-import OrderDetails from "../OrderDetails/OrderDetails";
-import ingredientType from "../../utils/types";
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import constructorStyles from './BurgerConstructor.module.css';
+import PropTypes from 'prop-types';
+import Modal from '../Modal/Modal';
+import OrderDetails from '../OrderDetails/OrderDetails';
+import ingredientType from '../../utils/types';
 
 const BurgerConstructor = (props) => {
   const [basket, setBasket] = React.useState({
@@ -31,7 +31,7 @@ const BurgerConstructor = (props) => {
       <div className={`${constructorStyles.constructorWrapper} mb-10`}>
         <div className={constructorStyles.constructorBunItem}>
           {basket.basketItems
-            .filter((item) => item.type === "bun")
+            .filter((item) => item.type === 'bun')
             .map((item, index) => {
               return (
                 <ConstructorElement
@@ -47,7 +47,7 @@ const BurgerConstructor = (props) => {
         </div>
         <div className={constructorStyles.constructorInner}>
           {basket.basketItems
-            .filter((item) => item.type !== "bun")
+            .filter((item) => item.type !== 'bun')
             .map((item, index) => (
               <div className={constructorStyles.constructorItem} key={index}>
                 <DragIcon type="primary" />
@@ -61,7 +61,7 @@ const BurgerConstructor = (props) => {
         </div>
         <div className={constructorStyles.constructorBunItem}>
           {basket.basketItems
-            .filter((item) => item.type === "bun")
+            .filter((item) => item.type === 'bun')
             .map((item, index) => {
               return (
                 <ConstructorElement

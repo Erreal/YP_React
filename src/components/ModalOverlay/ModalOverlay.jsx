@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import modalOverlayStyles from "./ModalOverlay.module.css";
-import PropTypes from "prop-types";
+import React, { useEffect } from 'react';
+import modalOverlayStyles from './ModalOverlay.module.css';
+import PropTypes from 'prop-types';
 
 const ModalOverlay = (props) => {
   useEffect(() => {
@@ -9,8 +9,8 @@ const ModalOverlay = (props) => {
         props.onClose();
       }
     };
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
   }, [props]);
   return (
     <aside className={modalOverlayStyles.overlay} onClick={props.onClose}>

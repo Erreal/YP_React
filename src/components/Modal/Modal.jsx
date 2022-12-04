@@ -1,14 +1,14 @@
-import React from "react";
-import { createPortal } from "react-dom";
-import ModalOverlay from "../ModalOverlay/ModalOverlay";
-import modalStyles from "./Modal.module.css";
-import PropTypes from "prop-types";
+import React from 'react';
+import { createPortal } from 'react-dom';
+import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import modalStyles from './Modal.module.css';
+import PropTypes from 'prop-types';
 
-const modalRoot = document.getElementById("root-modals");
+const modalRoot = document.getElementById('root-modals');
 
 const Modal = (props) => {
   const cancelWindowClose = (evt) => {
-    if (evt.target.tagName !== "BUTTON") {
+    if (evt.target.tagName !== 'BUTTON') {
       evt.stopPropagation();
     }
   };

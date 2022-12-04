@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import AppHeader from "../AppHeader/AppHeader";
-import appStyles from "./App.module.css";
-import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import tempBasket from "../../utils/tempBasket";
+import React, { useState } from 'react';
+import AppHeader from '../AppHeader/AppHeader';
+import appStyles from './App.module.css';
+import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
+import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
+import tempBasket from '../../utils/tempBasket';
 
 function App() {
   const [apiState, setApiState] = useState({
     loaded: false,
     data: [],
   });
-  const dataUrl = "https://norma.nomoreparties.space/api/ingredients";
+  const dataUrl = 'https://norma.nomoreparties.space/api/ingredients';
   React.useEffect(() => {
     fetch(dataUrl)
       .then((response) => {
@@ -26,7 +26,7 @@ function App() {
             data: data.data,
           });
         } else {
-          console.error("Server failed request");
+          console.error('Server failed request');
         }
       })
       .catch((error) => console.error(error));

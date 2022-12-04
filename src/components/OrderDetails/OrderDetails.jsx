@@ -1,6 +1,6 @@
-import React from "react";
-import orderDetailsStyles from "./OrderDetails.module.css";
-import done from "../../images/done.png";
+import React from 'react';
+import orderDetailsStyles from './OrderDetails.module.css';
+import done from '../../images/done.png';
 
 const OrderDetails = () => {
   return (
