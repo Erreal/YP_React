@@ -4,9 +4,21 @@ import ingredientsStyles from './BurgerIngredients.module.css';
 import PropTypes from 'prop-types';
 import ingredientType from '../../utils/types';
 import IngredientCard from '../IngredientCard/IngredientCard';
+import Modal from '../Modal/Modal';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
 const BurgerIngredients = (props) => {
   const [currentTab, setCurrentTab] = React.useState('one');
+  const [modal, setModal] = React.useState({ visible: false });
+  const [popupItem, setPopupItem] = React.useState({});
+
+  const handleOpenModal = () => {
+    setModal({ visible: true });
+  };
+
+  const handleCloseModal = () => {
+    setModal({ visible: false });
+  };
   const scrollRefs = useRef(currentTab);
 
   useEffect(() => {
@@ -62,12 +74,22 @@ const BurgerIngredients = (props) => {
                   return obj.type === item.type;
                 })
                 .map((item) => (
-                  <IngredientCard key={item._id} item={item} />
+                  <IngredientCard
+                    key={item._id}
+                    item={item}
+                    onClick={handleOpenModal}
+                    setPopup={setPopupItem}
+                  />
                 ))}
             </div>
           </section>
         ))}
       </div>
+      {modal.visible && (
+        <Modal onClose={handleCloseModal} title="Детали ингредиента">
+          <IngredientDetails item={popupItem} />
+        </Modal>
+      )}
     </section>
   );
 };

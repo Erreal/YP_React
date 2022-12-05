@@ -1,24 +1,17 @@
 import React from 'react';
 import ingredientCardStyles from './IngredientCard.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import Modal from '../Modal/Modal';
 import ingredientType from '../../utils/types';
 
 const IngredientCard = (props) => {
-  const [modal, setModal] = React.useState({ visible: false });
-  const handleOpenModal = () => {
-    setModal({ visible: true });
-  };
-
-  const handleCloseModal = () => {
-    setModal({ visible: false });
-  };
   return (
     <>
       <div
         className={`${ingredientCardStyles.card} mt-6 mb-8`}
-        onClick={handleOpenModal}
+        onClick={() => {
+          props.setPopup(props.item);
+          props.onClick();
+        }}
       >
         <img
           className={ingredientCardStyles.cardimage}
@@ -33,18 +26,6 @@ const IngredientCard = (props) => {
         </div>
         <p className={ingredientCardStyles.cardname}>{props.item.name}</p>
       </div>
-      {modal.visible && (
-        <Modal onClose={handleCloseModal} title="Детали ингредиента">
-          <IngredientDetails
-            image={props.item.image_large}
-            name={props.item.name}
-            calories={props.item.calories}
-            proteins={props.item.proteins}
-            fat={props.item.fat}
-            carbohydrates={props.item.carbohydrates}
-          />
-        </Modal>
-      )}
     </>
   );
 };

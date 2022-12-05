@@ -1,39 +1,39 @@
 import React from 'react';
 import ingredientDatelesStyles from './IngredientDetails.module.css';
-import PropTypes from 'prop-types';
+import ingredientType from '../../utils/types';
 
 const IngredientDetails = (props) => {
   return (
     <>
       <img
-        src={props.image}
-        title={props.name}
-        alt={props.name}
+        src={props.item.image}
+        title={props.item.name}
+        alt={props.item.name}
         className={ingredientDatelesStyles.image}
       />
       <h4
         className={`${ingredientDatelesStyles.title} text text_type_main-medium mt-4 mb-8`}
       >
-        {props.name}
+        {props.item.name}
       </h4>
       <div
         className={`${ingredientDatelesStyles.parametrsWrapper} text text_type_main-default text_color_inactive`}
       >
         <div className={ingredientDatelesStyles.ingredient}>
           <p>Калории,ккал</p>
-          <p>{props.calories}</p>
+          <p>{props.item.calories}</p>
         </div>
         <div className={ingredientDatelesStyles.ingredient}>
           <p>Белки, г</p>
-          <p>{props.proteins}</p>
+          <p>{props.item.proteins}</p>
         </div>
         <div className={ingredientDatelesStyles.ingredient}>
           <p>Жиры, г</p>
-          <p>{props.fat}</p>
+          <p>{props.item.fat}</p>
         </div>
         <div className={ingredientDatelesStyles.ingredient}>
           <p>Углеводы, г</p>
-          <p>{props.carbohydrates}</p>
+          <p>{props.item.carbohydrates}</p>
         </div>
       </div>
     </>
@@ -41,12 +41,7 @@ const IngredientDetails = (props) => {
 };
 
 IngredientDetails.propTypes = {
-  name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  calories: PropTypes.number.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
+  item: ingredientType.isRequired,
 };
 
 export default IngredientDetails;

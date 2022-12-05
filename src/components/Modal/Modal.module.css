@@ -17,23 +17,6 @@
     border: none;
     cursor: pointer;
 }
-.closeButton::before,
-.closeButton::after {
-    content: "";
-    position: absolute; 
-    width: 24px; 
-    height: 1px; 
-    background: white;
-    top: 50%;
-    left: 0;
-
-}
-.closeButton::before {    
-    transform: rotate(45deg);
-}
-.closeButton::after {
-    transform: rotate(-45deg);
-}
 .title {
     text-align: left;
 }
