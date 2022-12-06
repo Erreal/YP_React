@@ -1,0 +1,22 @@
+/* W3C standard
+   сейчас только для Firefox */
+   * {
+    scrollbar-width: thin;
+    scrollbar-color: #2F2F37 #8585AD;
+  }
+  
+  /* для Chrome/Edge/Safari */
+  *::-webkit-scrollbar {
+    width: 8px;
+  }
+  *::-webkit-scrollbar-track {
+    background: #2F2F37;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+  }
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+}
