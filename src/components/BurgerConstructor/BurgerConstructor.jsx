@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   ConstructorElement,
   DragIcon,
@@ -11,8 +10,9 @@ import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { Basket } from '../../utils/appContext';
 import { useAPI } from '../../utils/appContext';
-import ingredientType from '../../utils/types';
-import PropTypes from 'prop-types';
+import { API_URL } from '../../utils/constants';
+import { requestData } from '../../utils/requestApi';
+import BunInConstructor from './BunInConstructor';
 
 const BurgerConstructor = () => {
   const { basket } = useContext(Basket);
@@ -29,11 +29,18 @@ const BurgerConstructor = () => {
     setModal({ visible: false });
   };
 
+  useEffect(() => {
+    if (Object.keys(ingredients).length && !Object.keys(basket.bun).length) {
+      const item = ingredients.find((ingredient) => ingredient.type === 'bun');
+      basketDispatcher({ type: 'addBun', bun: item, price: item.price });
+    }
+  }, [ingredients, basketDispatcher, basket.bun]);
+
   const placeOrder = () => {
     let request = basket.items.map((item) => item._id);
     request.push(basket.bun._id);
-    const orderUrl = 'https://norma.nomoreparties.space/api/orders';
-    fetch(orderUrl, {
+    const orderUrl = `${API_URL}/orders`;
+    requestData(orderUrl, {
       method: 'post',
       headers: {
         Accept: 'application/json',
@@ -43,38 +50,35 @@ const BurgerConstructor = () => {
         ingredients: request,
       }),
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Error ${response.status}`);
-      })
       .then((data) => {
         if (data.success) {
           setOrder({
             number: data.order.number,
             name: data.name,
           });
+          basketDispatcher({ type: 'reset' });
+          handleOpenModal();
         } else {
           console.error('Server reject order');
         }
       })
       .catch((error) => console.error(error));
-    basketDispatcher({ type: 'reset' });
-    handleOpenModal();
   };
+
   return (
     <section className={`${constructorStyles.mainsection} pt-25 ml-10`}>
       {Object.keys(ingredients).length && (
         <>
           <div className={`${constructorStyles.constructorWrapper} mb-10`}>
             <div className={constructorStyles.constructorBunItem}>
-              <BunInConstructor
-                type="top"
-                text="(верх)"
-                bun={basket.bun}
-                ingredients={ingredients}
-              />
+              {Object.keys(basket.bun).length && (
+                <BunInConstructor
+                  type="top"
+                  text="(верх)"
+                  bun={basket.bun}
+                  ingredients={ingredients}
+                />
+              )}
             </div>
             <div className={constructorStyles.constructorInner}>
               {Object.keys(basket.items).length
@@ -94,12 +98,14 @@ const BurgerConstructor = () => {
                 : null}
             </div>
             <div className={constructorStyles.constructorBunItem}>
-              <BunInConstructor
-                type="bottom"
-                text="(низ)"
-                bun={basket.bun}
-                ingredients={ingredients}
-              />
+              {Object.keys(basket.bun).length && (
+                <BunInConstructor
+                  type="bottom"
+                  text="(низ)"
+                  bun={basket.bun}
+                  ingredients={ingredients}
+                />
+              )}
             </div>
           </div>
           <div className={constructorStyles.checkout}>
@@ -127,33 +133,6 @@ const BurgerConstructor = () => {
       )}
     </section>
   );
-};
-const BunInConstructor = (props) => {
-  const { basketDispatcher } = useContext(Basket);
-  let item = {};
-  if (Object.keys(props.bun).length) {
-    item = props.bun;
-  } else {
-    item = props.ingredients.find((ingredient) => ingredient.type === 'bun');
-    basketDispatcher({ type: 'addBun', bun: item, price: item.price });
-  }
-
-  return (
-    <ConstructorElement
-      type={props.type}
-      isLocked={true}
-      text={`${item.name} ${props.text}`}
-      price={item.price}
-      thumbnail={item.image}
-    />
-  );
-};
-
-BunInConstructor.propTypes = {
-  type: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  bun: ingredientType.isRequired,
-  ingredients: PropTypes.arrayOf(ingredientType),
 };
 
 export default BurgerConstructor;

@@ -1,18 +1,14 @@
 import React, { useContext, useState, createContext, useEffect } from 'react';
+import { API_URL } from './constants';
+import { requestData } from './requestApi';
 
 export const Basket = createContext({});
 const IngredientContext = createContext([]);
-export const Ingredients = ({ children }) => {
+export const IngredientsProvider = ({ children }) => {
   const [ingredients, setIngredients] = useState([]);
-  const dataUrl = 'https://norma.nomoreparties.space/api/ingredients';
-    useEffect(() => {
-    fetch(dataUrl)
-        .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Error ${response.status}`);
-      })
+  const dataUrl = `${API_URL}/ingredients`;
+  useEffect(() => {
+    requestData(dataUrl)
       .then((data) => {
         if (data.success) {
           setIngredients(data.data);
@@ -20,7 +16,7 @@ export const Ingredients = ({ children }) => {
           console.error('Server failed request');
         }
       })
-      .catch((error) => console.error(error)); 
+      .catch((error) => console.error(error));
   }, []);
   return (
     <IngredientContext.Provider
@@ -30,7 +26,7 @@ export const Ingredients = ({ children }) => {
       {children}
     </IngredientContext.Provider>
   );
-}
+};
 export function useAPI() {
   const context = useContext(IngredientContext);
   if (context === undefined) {

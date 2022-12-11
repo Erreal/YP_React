@@ -3,7 +3,7 @@ import AppHeader from '../AppHeader/AppHeader';
 import appStyles from './App.module.css';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import { Basket, Ingredients } from '../../utils/appContext';
+import { Basket, IngredientsProvider } from '../../utils/appContext';
 
 function App() {
   const basketInitialState = {
@@ -40,10 +40,10 @@ function App() {
       <AppHeader />
       <main className={appStyles.container}>
         <Basket.Provider value={{ basket, basketDispatcher }}>
-          <Ingredients>
+          <IngredientsProvider>
             <BurgerIngredients />
             <BurgerConstructor />
-          </Ingredients>
+          </IngredientsProvider>
         </Basket.Provider>
       </main>
     </>
