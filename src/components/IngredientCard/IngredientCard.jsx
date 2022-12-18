@@ -2,16 +2,23 @@ import React from 'react';
 import ingredientCardStyles from './IngredientCard.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../utils/types';
+import {useSelector, useDispatch} from 'react-redux';
+import { OPEN_MODAL } from '../../services/actions/modal';
 
 const IngredientCard = (props) => {
+  const dispatch = useDispatch();
+
+    
+
   return (
     <>
       <div
         className={`${ingredientCardStyles.card} mt-6 mb-8`}
-        onClick={() => {
-          props.setPopup(props.item);
-          props.onClick();
-        }}
+        onClick={()=>dispatch({
+          type: OPEN_MODAL,
+          view: 'detale',
+          item: props.item
+        })}
       >
         <img
           className={ingredientCardStyles.cardimage}

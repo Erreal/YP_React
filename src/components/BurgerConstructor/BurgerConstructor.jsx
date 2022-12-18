@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   ConstructorElement,
   DragIcon,
@@ -6,35 +6,25 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructorStyles from './BurgerConstructor.module.css';
-import Modal from '../Modal/Modal';
-import OrderDetails from '../OrderDetails/OrderDetails';
-import { Basket } from '../../utils/appContext';
-import { useAPI } from '../../utils/appContext';
 import { API_URL } from '../../utils/constants';
 import { requestData } from '../../utils/requestApi';
 import BunInConstructor from './BunInConstructor';
+import { useSelector, useDispatch} from 'react-redux';
+import { ADD_BUN, RESET } from '../../services/actions/basket';
+import { OPEN_MODAL } from '../../services/actions/modal';
+import { ORDER_FAILED, ORDER_SUCESS } from '../../services/actions/order';
 
 const BurgerConstructor = () => {
-  const { basket } = useContext(Basket);
-  const [modal, setModal] = React.useState({ visible: false });
-  const { ingredients } = useAPI();
-  const [order, setOrder] = useState(null);
-  const { basketDispatcher } = useContext(Basket);
-
-  const handleOpenModal = () => {
-    setModal({ visible: true });
-  };
-
-  const handleCloseModal = () => {
-    setModal({ visible: false });
-  };
-
+  const ingredients = useSelector(store => store.ingredients.items);
+  const basket = useSelector(store => store.basket);
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     if (Object.keys(ingredients).length && !Object.keys(basket.bun).length) {
       const item = ingredients.find((ingredient) => ingredient.type === 'bun');
-      basketDispatcher({ type: 'addBun', bun: item, price: item.price });
+      dispatch({ type: ADD_BUN, bun: item, price: item.price });
     }
-  }, [ingredients, basketDispatcher, basket.bun]);
+  }, [ingredients, dispatch, basket.bun]);
 
   const placeOrder = () => {
     let request = basket.items.map((item) => item._id);
@@ -52,14 +42,17 @@ const BurgerConstructor = () => {
     })
       .then((data) => {
         if (data.success) {
-          setOrder({
+          dispatch({
+            type: ORDER_SUCESS,
             number: data.order.number,
             name: data.name,
           });
-          basketDispatcher({ type: 'reset' });
-          handleOpenModal();
+          dispatch({ type: RESET });
+          dispatch({type: OPEN_MODAL, view: 'order', item:{}})
         } else {
-          console.error('Server reject order');
+          dispatch({
+            type: ORDER_FAILED
+          });
         }
       })
       .catch((error) => console.error(error));
@@ -125,11 +118,6 @@ const BurgerConstructor = () => {
             </Button>
           </div>
         </>
-      )}
-      {modal.visible && order && (
-        <Modal onClose={handleCloseModal}>
-          <OrderDetails number={order.number} name={order.name} />
-        </Modal>
       )}
     </section>
   );

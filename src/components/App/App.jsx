@@ -1,51 +1,59 @@
-import React, { useReducer } from 'react';
+import React, {useEffect, useMemo} from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import appStyles from './App.module.css';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import { Basket, IngredientsProvider } from '../../utils/appContext';
+import { useDispatch, useSelector } from 'react-redux';
+import OrderDetails from '../OrderDetails/OrderDetails';
+import Modal from '../Modal/Modal';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import { CLOSE_MODAL } from '../../services/actions/modal';
+import { getItems } from '../../services/actions';
+import { Loader } from '../Loader/loader';
 
 function App() {
-  const basketInitialState = {
-    bun: {},
-    bunPrice: 0,
-    items: [],
-    itemsPrice: 0,
-  };
+  
+  const {order, modal, ingredients} = useSelector(store => store);
+  const dispatch = useDispatch();
+  const onClose = () => {
+    dispatch({type: CLOSE_MODAL});
+  }
+  useEffect(()=>{
+    console.log('main request');
+    dispatch(getItems());
+  }, [dispatch]);
 
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case 'addBun':
-        return {
-          ...state,
-          bun: action.bun,
-          bunPrice: action.price * 2,
-        };
-      case 'addItem':
-        return {
-          ...state,
-          items: [...state.items, action.item],
-          itemsPrice: state.itemsPrice + action.price,
-        };
-      case 'reset':
-        return basketInitialState;
-      default:
-        return state;
-    }
-  };
-  const [basket, basketDispatcher] = useReducer(reducer, basketInitialState);
+  const content = useMemo(
+    () => {
+      return ingredients.itemsRequest ? (
+        <Loader size="large" />
+      ) : (
+        <>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </>
+      );
+    },
+    [ingredients.itemsRequest]
+  );
 
   return (
     <>
       <AppHeader />
-      <main className={appStyles.container}>
-        <Basket.Provider value={{ basket, basketDispatcher }}>
-          <IngredientsProvider>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </IngredientsProvider>
-        </Basket.Provider>
-      </main>
+        <main className={appStyles.container}>
+          {content}
+        </main>
+        {modal.isOpen && (
+          <Modal onClose={onClose} title={modal.header}>
+            {modal.view === 'order' ? (
+              <OrderDetails number={order.number} name={order.name} />
+            ) : (
+              modal.view === 'detale'
+              ? (<IngredientDetails item={modal.item} />)
+              : null
+            )}
+          </Modal>
+        )}
     </>
   );
 }

@@ -2,43 +2,13 @@ import React, { useRef, useEffect, useContext } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientsStyles from './BurgerIngredients.module.css';
 import IngredientCard from '../IngredientCard/IngredientCard';
-import Modal from '../Modal/Modal';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import { useAPI } from '../../utils/appContext';
-import { Basket } from '../../utils/appContext';
+import {useSelector, useDispatch} from 'react-redux';
+import { OPEN_MODAL } from '../../services/actions/modal';
 
 const BurgerIngredients = () => {
-  const { ingredients } = useAPI();
-  const { basketDispatcher } = useContext(Basket);
+  const ingredients = useSelector(store => store.ingredients.items);
   const [currentTab, setCurrentTab] = React.useState('0');
-  const [modal, setModal] = React.useState({ visible: false });
-  const [popupItem, setPopupItem] = React.useState({});
-
-  const handleOpenModal = () => {
-    setModal({ visible: true });
-  };
-
-  const handleCloseModal = () => {
-    setModal({ visible: false });
-  };
-  useEffect(() => {
-    if (Object.keys(popupItem).length && popupItem.type === 'bun') {
-      basketDispatcher({
-        type: 'addBun',
-        bun: popupItem,
-        price: popupItem.price,
-      });
-    } else if (Object.keys(popupItem).length && popupItem.type !== 'bun') {
-      basketDispatcher({
-        type: 'addItem',
-        item: popupItem,
-        price: popupItem.price,
-      });
-    } else {
-      return;
-    }
-  }, [popupItem, basketDispatcher]);
-
+ 
   const scrollRefs = useRef(currentTab);
 
   useEffect(() => {
@@ -98,8 +68,6 @@ const BurgerIngredients = () => {
                       <IngredientCard
                         key={item._id}
                         item={item}
-                        onClick={handleOpenModal}
-                        setPopup={setPopupItem}
                       />
                     ))}
                 </div>
@@ -107,11 +75,6 @@ const BurgerIngredients = () => {
             ))}
           </div>
         </>
-      )}
-      {modal.visible && (
-        <Modal onClose={handleCloseModal} title="Детали ингредиента">
-          <IngredientDetails item={popupItem} />
-        </Modal>
       )}
     </section>
   );
