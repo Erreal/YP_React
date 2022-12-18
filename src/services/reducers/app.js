@@ -14,12 +14,12 @@ export const initialState = {
     isOpen: false,
     data: {},
     view: '',
-    header: ''
+    header: '',
   },
   order: {
-    name:'',
+    name: '',
     number: 0,
     orderRequest: false,
     orderFailed: false,
-   }
+  },
 };

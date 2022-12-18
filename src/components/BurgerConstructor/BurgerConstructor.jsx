@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import {
   ConstructorElement,
   DragIcon,
@@ -6,19 +6,17 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructorStyles from './BurgerConstructor.module.css';
-import { API_URL } from '../../utils/constants';
-import { requestData } from '../../utils/requestApi';
 import BunInConstructor from './BunInConstructor';
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { ADD_BUN, RESET } from '../../services/actions/basket';
 import { OPEN_MODAL } from '../../services/actions/modal';
-import { ORDER_FAILED, ORDER_SUCESS } from '../../services/actions/order';
+import { placeOrder } from '../../services/actions/order';
 
 const BurgerConstructor = () => {
-  const ingredients = useSelector(store => store.ingredients.items);
-  const basket = useSelector(store => store.basket);
+  const ingredients = useSelector((store) => store.ingredients.items);
+  const basket = useSelector((store) => store.basket);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (Object.keys(ingredients).length && !Object.keys(basket.bun).length) {
       const item = ingredients.find((ingredient) => ingredient.type === 'bun');
@@ -26,37 +24,13 @@ const BurgerConstructor = () => {
     }
   }, [ingredients, dispatch, basket.bun]);
 
-  const placeOrder = () => {
+  const clickOrder = useCallback(() => {
     let request = basket.items.map((item) => item._id);
     request.push(basket.bun._id);
-    const orderUrl = `${API_URL}/orders`;
-    requestData(orderUrl, {
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ingredients: request,
-      }),
-    })
-      .then((data) => {
-        if (data.success) {
-          dispatch({
-            type: ORDER_SUCESS,
-            number: data.order.number,
-            name: data.name,
-          });
-          dispatch({ type: RESET });
-          dispatch({type: OPEN_MODAL, view: 'order', item:{}})
-        } else {
-          dispatch({
-            type: ORDER_FAILED
-          });
-        }
-      })
-      .catch((error) => console.error(error));
-  };
+    dispatch({ type: OPEN_MODAL, view: 'order' });
+    dispatch(placeOrder(request));
+    dispatch({ type: RESET });
+  }, [dispatch, basket.bun._id, basket.items]);
 
   return (
     <section className={`${constructorStyles.mainsection} pt-25 ml-10`}>
@@ -109,7 +83,7 @@ const BurgerConstructor = () => {
               <CurrencyIcon type="primary" />
             </span>
             <Button
-              onClick={placeOrder}
+              onClick={clickOrder}
               htmlType="button"
               type="primary"
               size="large"

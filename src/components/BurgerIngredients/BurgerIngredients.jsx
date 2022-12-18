@@ -1,14 +1,13 @@
-import React, { useRef, useEffect, useContext } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientsStyles from './BurgerIngredients.module.css';
 import IngredientCard from '../IngredientCard/IngredientCard';
-import {useSelector, useDispatch} from 'react-redux';
-import { OPEN_MODAL } from '../../services/actions/modal';
+import { useSelector } from 'react-redux';
 
 const BurgerIngredients = () => {
-  const ingredients = useSelector(store => store.ingredients.items);
+  const ingredients = useSelector((store) => store.ingredients.items);
   const [currentTab, setCurrentTab] = React.useState('0');
- 
+
   const scrollRefs = useRef(currentTab);
 
   useEffect(() => {
@@ -65,10 +64,7 @@ const BurgerIngredients = () => {
                       return obj.type === item.type;
                     })
                     .map((item) => (
-                      <IngredientCard
-                        key={item._id}
-                        item={item}
-                      />
+                      <IngredientCard key={item._id} item={item} />
                     ))}
                 </div>
               </section>

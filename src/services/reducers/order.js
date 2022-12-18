@@ -6,11 +6,11 @@ export const order = (state = initialState.order, action) => {
         case ORDER_REQUEST: {
           return {
             ...state,
-            itemsRequest: true
+            orderRequest: true
           };
         }
         case ORDER_SUCESS: {
-          return { ...state, orderFailed: false, items: action.items, orderRequest: false };
+          return { ...state, orderFailed: false, name: action.name, number: action.number, orderRequest: false };
         }
         case ORDER_FAILED: {
           return { ...state, orderFailed: true, orderRequest: false };
