@@ -8,14 +8,41 @@ import {
 import constructorStyles from './BurgerConstructor.module.css';
 import BunInConstructor from './BunInConstructor';
 import { useSelector, useDispatch } from 'react-redux';
-import { ADD_BUN, RESET } from '../../services/actions/basket';
+import {
+  ADD_BUN,
+  ADD_ITEM,
+  DELETE_ITEM,
+  RESET,
+} from '../../services/actions/basket';
 import { OPEN_MODAL } from '../../services/actions/modal';
 import { placeOrder } from '../../services/actions/order';
+import { useDrop } from 'react-dnd';
+import ItemInConstructor from './ItemInConstructor';
+import uuid from 'react-uuid';
 
 const BurgerConstructor = () => {
   const ingredients = useSelector((store) => store.ingredients.items);
   const basket = useSelector((store) => store.basket);
   const dispatch = useDispatch();
+
+  const onDrop = (item) => {
+    item.type === 'bun'
+      ? dispatch({ type: ADD_BUN, bun: item, price: item.price })
+      : dispatch({
+          type: ADD_ITEM,
+          item: { ...item, id: uuid() },
+          price: item.price,
+        });
+  };
+  const deleteItem = (item) => {
+    dispatch({ type: DELETE_ITEM, id: item.id, price: item.price });
+  };
+  const [, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop(item) {
+      onDrop(item);
+    },
+  });
 
   useEffect(() => {
     if (Object.keys(ingredients).length && !Object.keys(basket.bun).length) {
@@ -33,7 +60,10 @@ const BurgerConstructor = () => {
   }, [dispatch, basket.bun._id, basket.items]);
 
   return (
-    <section className={`${constructorStyles.mainsection} pt-25 ml-10`}>
+    <section
+      className={`${constructorStyles.mainsection} pt-25 ml-10`}
+      ref={dropTarget}
+    >
       {Object.keys(ingredients).length && (
         <>
           <div className={`${constructorStyles.constructorWrapper} mb-10`}>
@@ -50,17 +80,12 @@ const BurgerConstructor = () => {
             <div className={constructorStyles.constructorInner}>
               {Object.keys(basket.items).length
                 ? basket.items.map((item, index) => (
-                    <div
-                      className={constructorStyles.constructorItem}
-                      key={index}
-                    >
-                      <DragIcon type="primary" />
-                      <ConstructorElement
-                        text={item.name}
-                        price={item.price}
-                        thumbnail={item.image}
-                      />
-                    </div>
+                    <ItemInConstructor
+                      item={item}
+                      deleteItem={deleteItem}
+                      index={index}
+                      key={item.id}
+                    />
                   ))
                 : null}
             </div>

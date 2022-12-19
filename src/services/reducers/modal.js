@@ -8,6 +8,7 @@ export const modal = (state = initialState.modal, action) => {
         isOpen: true,
         view: action.view,
         item: action.item,
+        header: action.header,
       };
     case CLOSE_MODAL:
       return {

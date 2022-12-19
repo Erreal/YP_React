@@ -10,6 +10,8 @@ import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { CLOSE_MODAL } from '../../services/actions/modal';
 import { getItems } from '../../services/actions';
 import { Loader } from '../Loader/loader';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
 function App() {
   const { order, modal, ingredients } = useSelector((store) => store);
@@ -18,7 +20,6 @@ function App() {
     dispatch({ type: CLOSE_MODAL });
   };
   useEffect(() => {
-    console.log('main request');
     dispatch(getItems());
   }, [dispatch]);
 
@@ -44,12 +45,14 @@ function App() {
   return (
     <>
       <AppHeader />
-      <main className={appStyles.container}>{content}</main>
+      <DndProvider backend={HTML5Backend}>
+        <main className={appStyles.container}>{content}</main>
+      </DndProvider>
       {modal.isOpen && (
         <Modal onClose={onClose} title={modal.header}>
           {modal.view === 'order' ? (
             orderContent
-          ) : modal.view === 'detale' ? (
+          ) : modal.view === 'detail' ? (
             <IngredientDetails item={modal.item} />
           ) : null}
         </Modal>

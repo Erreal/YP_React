@@ -17,7 +17,6 @@ const composeEnhancers =
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 const store = createStore(rootReducer, enhancer);
-console.log(store);
 
   const root = ReactDOM.createRoot(
     document.getElementById('root')

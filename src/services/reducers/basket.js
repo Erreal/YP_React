@@ -1,4 +1,10 @@
-import { RESET, ADD_ITEM, ADD_BUN } from '../actions/basket';
+import {
+  RESET,
+  ADD_ITEM,
+  ADD_BUN,
+  DELETE_ITEM,
+  MOVE_ITEM,
+} from '../actions/basket';
 import { initialState } from './app';
 
 export const basket = (state = initialState.basket, action) => {
@@ -14,6 +20,17 @@ export const basket = (state = initialState.basket, action) => {
         ...state,
         items: [...state.items, action.item],
         itemsPrice: state.itemsPrice + action.price,
+      };
+    case DELETE_ITEM:
+      return {
+        ...state,
+        items: state.items.filter((item) => item.id !== action.id),
+        itemsPrice: state.itemsPrice - action.price,
+      };
+    case MOVE_ITEM:
+      return {
+        ...state,
+        items: action.items,
       };
     case RESET:
       return initialState.basket;

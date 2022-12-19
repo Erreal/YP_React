@@ -3,18 +3,38 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientsStyles from './BurgerIngredients.module.css';
 import IngredientCard from '../IngredientCard/IngredientCard';
 import { useSelector } from 'react-redux';
+import { useInView } from 'react-intersection-observer';
 
 const BurgerIngredients = () => {
   const ingredients = useSelector((store) => store.ingredients.items);
   const [currentTab, setCurrentTab] = React.useState('0');
+  const [bunRef, bunInView] = useInView();
+  const [mainRef, mainInView] = useInView();
+  const [sauceRef, sauceInView] = useInView();
 
-  const scrollRefs = useRef(currentTab);
+  const mainScrollRef = useRef();
+  const bunScrollRef = useRef();
+  const sauceScrollRef = useRef();
 
   useEffect(() => {
-    if (Object.keys(ingredients).length) {
-      scrollRefs.current.scrollIntoView({ behavior: 'smooth' });
+    if (bunInView) {
+      setCurrentTab('0');
+    } else if (mainInView) {
+      setCurrentTab('1');
+    } else if (sauceInView) {
+      setCurrentTab('2');
     }
-  }, [currentTab, ingredients]);
+  }, [bunInView, sauceInView, mainInView]);
+  const onTabClick = (evt) => {
+    setCurrentTab(evt);
+    if (evt === '0') {
+      bunScrollRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else if (evt === '1') {
+      mainScrollRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else if (evt === '2') {
+      sauceScrollRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   const ingredientType = [
     {
       name: 'Булки',
@@ -44,7 +64,7 @@ const BurgerIngredients = () => {
                 value={item.place}
                 key={item.type}
                 active={currentTab === item.place}
-                onClick={setCurrentTab}
+                onClick={onTabClick}
               >
                 {item.name}
               </Tab>
@@ -54,10 +74,27 @@ const BurgerIngredients = () => {
             {ingredientType.map((item) => (
               <section
                 className="mt-10"
-                ref={currentTab === item.place ? scrollRefs : null}
                 key={item.type}
+                ref={
+                  item.type === 'bun'
+                    ? bunScrollRef
+                    : item.type === 'main'
+                    ? mainScrollRef
+                    : sauceScrollRef
+                }
               >
-                <h3 className="text text_type_main-medium">{item.name}</h3>
+                <h3
+                  className="text text_type_main-medium"
+                  ref={
+                    item.type === 'bun'
+                      ? bunRef
+                      : item.type === 'main'
+                      ? mainRef
+                      : sauceRef
+                  }
+                >
+                  {item.name}
+                </h3>
                 <div className={ingredientsStyles.groupinner}>
                   {ingredients
                     .filter((obj) => {
