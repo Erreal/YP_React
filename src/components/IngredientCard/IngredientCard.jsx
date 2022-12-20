@@ -3,8 +3,8 @@ import ingredientCardStyles from './IngredientCard.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../utils/types';
 import { useDispatch } from 'react-redux';
-import { OPEN_MODAL } from '../../services/actions/modal';
 import { useDrag } from 'react-dnd/dist/hooks';
+import { SET_CURRENT_ITEM } from '../../services/actions';
 
 const IngredientCard = (props) => {
   const dispatch = useDispatch();
@@ -18,10 +18,8 @@ const IngredientCard = (props) => {
       ref={dragRef}
       onClick={() =>
         dispatch({
-          type: OPEN_MODAL,
-          view: 'detail',
+          type: SET_CURRENT_ITEM,
           item: props.item,
-          header: 'Детали ингредиента',
         })
       }
     >

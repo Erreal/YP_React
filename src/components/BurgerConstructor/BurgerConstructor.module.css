@@ -34,3 +34,24 @@
     align-items: center;
     gap: 8px;
 }
+.emptyBunTop,
+.emptyBunBottom {
+    padding: 16px 24px;
+    margin: 0;
+    display: inline-block;
+    background-color: rgb(47, 47, 56);
+    border-radius: 88px 88px 40px 40px;
+    width: 536px;
+    min-height: 80px;
+    font-family: 'Jet Brains Mono';
+    font-size: 16px;
+    line-height: 24px;
+    color: #F2F2F3;
+    flex-grow: 1;
+    box-sizing: border-box;
+    line-height: 48px;
+    text-align: center;
+}
+.emptyBunBottom {
+    border-radius: 40px 40px 88px 88px;
+}

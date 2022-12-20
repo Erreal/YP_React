@@ -1,7 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import {
-  ConstructorElement,
-  DragIcon,
   CurrencyIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -14,11 +12,11 @@ import {
   DELETE_ITEM,
   RESET,
 } from '../../services/actions/basket';
-import { OPEN_MODAL } from '../../services/actions/modal';
 import { placeOrder } from '../../services/actions/order';
 import { useDrop } from 'react-dnd';
 import ItemInConstructor from './ItemInConstructor';
 import uuid from 'react-uuid';
+import { EMPTY_BUN_TEXT } from '../../utils/constants';
 
 const BurgerConstructor = () => {
   const ingredients = useSelector((store) => store.ingredients.items);
@@ -44,18 +42,9 @@ const BurgerConstructor = () => {
     },
   });
 
-  useEffect(() => {
-    if (Object.keys(ingredients).length && !Object.keys(basket.bun).length) {
-      const item = ingredients.find((ingredient) => ingredient.type === 'bun');
-      dispatch({ type: ADD_BUN, bun: item, price: item.price });
-    }
-  }, [ingredients, dispatch, basket.bun]);
-
   const clickOrder = useCallback(() => {
-    let request = basket.items.map((item) => item._id);
-    request.push(basket.bun._id);
-    dispatch({ type: OPEN_MODAL, view: 'order' });
-    dispatch(placeOrder(request));
+    let ingredientsIds = [basket.bun._id, ...basket.items.map((item) => item._id), basket.bun._id];
+    dispatch(placeOrder(ingredientsIds));
     dispatch({ type: RESET });
   }, [dispatch, basket.bun._id, basket.items]);
 
@@ -68,13 +57,15 @@ const BurgerConstructor = () => {
         <>
           <div className={`${constructorStyles.constructorWrapper} mb-10`}>
             <div className={constructorStyles.constructorBunItem}>
-              {Object.keys(basket.bun).length && (
+              {Object.keys(basket.bun).length ? (
                 <BunInConstructor
                   type="top"
                   text="(верх)"
                   bun={basket.bun}
                   ingredients={ingredients}
                 />
+              ): (
+                <p className={constructorStyles.emptyBunTop}>{EMPTY_BUN_TEXT}</p>
               )}
             </div>
             <div className={constructorStyles.constructorInner}>
@@ -90,13 +81,15 @@ const BurgerConstructor = () => {
                 : null}
             </div>
             <div className={constructorStyles.constructorBunItem}>
-              {Object.keys(basket.bun).length && (
+              {Object.keys(basket.bun).length ? (
                 <BunInConstructor
                   type="bottom"
                   text="(низ)"
                   bun={basket.bun}
                   ingredients={ingredients}
                 />
+              ) : (
+                <p className={constructorStyles.emptyBunBottom}>{EMPTY_BUN_TEXT}</p>
               )}
             </div>
           </div>

@@ -4,6 +4,7 @@ import { requestData } from '../../utils/requestApi';
 export const ORDER_SUCESS = 'ORDER_SUCESS';
 export const ORDER_FAILED = 'ORDER_FAILED';
 export const ORDER_REQUEST = 'ORDER_REQUEST';
+export const ORDER_RESET = 'ORDER_RESET';
 
 const dataUrl = `${API_URL}/orders`;
 
@@ -21,18 +22,22 @@ export function placeOrder(request) {
       body: JSON.stringify({
         ingredients: request,
       }),
-    }).then((res) => {
-      if (res && res.success) {
-        dispatch({
-          type: ORDER_SUCESS,
-          name: res.name,
-          number: res.order.number,
-        });
-      } else {
+    })
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({
+            type: ORDER_SUCESS,
+            name: res.name,
+            number: res.order.number,
+          });
+        } else {
+          return Promise.reject(`Ошибка ${res.status}`);
+        }
+      })
+      .catch(
         dispatch({
           type: ORDER_FAILED,
-        });
-      }
-    });
+        })
+      );
   };
 }

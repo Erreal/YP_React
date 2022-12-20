@@ -5,9 +5,9 @@ import {
   DELETE_ITEM,
   MOVE_ITEM,
 } from '../actions/basket';
-import { initialState } from './app';
+import { INITIAL_STATE } from '../../utils/constants';
 
-export const basket = (state = initialState.basket, action) => {
+export const basketReducer = (state = INITIAL_STATE.basket, action) => {
   switch (action.type) {
     case ADD_BUN:
       return {
@@ -33,7 +33,7 @@ export const basket = (state = initialState.basket, action) => {
         items: action.items,
       };
     case RESET:
-      return initialState.basket;
+      return INITIAL_STATE.basket;
     default:
       return state;
   }

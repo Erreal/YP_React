@@ -1,7 +1,7 @@
-import { ORDER_REQUEST, ORDER_SUCESS, ORDER_FAILED } from '../actions/order';
-import { initialState } from './app';
+import { ORDER_REQUEST, ORDER_SUCESS, ORDER_FAILED, ORDER_RESET } from '../actions/order';
+import { INITIAL_STATE } from '../../utils/constants';
 
-export const order = (state = initialState.order, action) => {
+export const orderReducer = (state = INITIAL_STATE.order, action) => {
   switch (action.type) {
     case ORDER_REQUEST: {
       return {
@@ -21,6 +21,8 @@ export const order = (state = initialState.order, action) => {
     case ORDER_FAILED: {
       return { ...state, orderFailed: true, orderRequest: false };
     }
+    case ORDER_RESET:
+      return INITIAL_STATE.order;
     default:
       return state;
   }
