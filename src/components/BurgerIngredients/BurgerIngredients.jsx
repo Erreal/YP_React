@@ -9,7 +9,7 @@ import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { ORDER_RESET } from '../../services/actions/order';
-import { RESET_CURRENT_ITEM } from '../../services/actions';
+import { RESET_CURRENT_ITEM } from '../../services/actions/ingredients';
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();

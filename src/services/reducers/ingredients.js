@@ -7,7 +7,7 @@ import {
   GET_ITEMS_FAILED,
   SET_CURRENT_ITEM,
   RESET_CURRENT_ITEM,
-} from '../actions';
+} from '../actions/ingredients';
 import { INITIAL_STATE } from '../../utils/constants';
 
 const ingredientsReducer = (state = INITIAL_STATE.ingredients, action) => {
