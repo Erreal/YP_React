@@ -29,7 +29,11 @@ export const basketReducer = (state = INITIAL_STATE.basket, action) => {
       };
     case MOVE_ITEM:
       let sortedItems = [...state.items];
-      sortedItems.splice(action.target, 0, sortedItems.splice(action.item, 1)[0]);
+      sortedItems.splice(
+        action.target,
+        0,
+        sortedItems.splice(action.item, 1)[0]
+      );
       return {
         ...state,
         items: sortedItems,

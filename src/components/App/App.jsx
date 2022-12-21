@@ -21,7 +21,8 @@ function App() {
       <Loader size="large" />
     ) : (
       <>
-        <BurgerIngredients /><BurgerConstructor />
+        <BurgerIngredients />
+        <BurgerConstructor />
       </>
     );
   }, [ingredients.itemsRequest]);

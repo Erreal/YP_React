@@ -19,7 +19,7 @@ BunInConstructor.propTypes = {
   type: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   bun: ingredientType.isRequired,
-  ingredients: PropTypes.arrayOf(ingredientType),
+  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
 };
 
 export default BunInConstructor;

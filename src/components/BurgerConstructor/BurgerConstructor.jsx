@@ -1,4 +1,3 @@
-import React, { useCallback } from 'react';
 import {
   CurrencyIcon,
   Button,
@@ -43,14 +42,18 @@ const BurgerConstructor = () => {
   });
 
   const clickOrder = () => {
-    let ingredientsIds = [basket.bun._id, ...basket.items.map((item) => item._id), basket.bun._id];
+    let ingredientsIds = [
+      basket.bun._id,
+      ...basket.items.map((item) => item._id),
+      basket.bun._id,
+    ];
     if (!Object.keys(basket.bun).length || basket.items.length === 0) {
       alert(EMPTY_ORDER);
       return;
     }
     dispatch(placeOrder(ingredientsIds));
     dispatch({ type: RESET });
-  }
+  };
 
   return (
     <section
@@ -68,8 +71,10 @@ const BurgerConstructor = () => {
                   bun={basket.bun}
                   ingredients={ingredients}
                 />
-              ): (
-                <p className={constructorStyles.emptyBunTop}>{EMPTY_BUN_TEXT}</p>
+              ) : (
+                <p className={constructorStyles.emptyBunTop}>
+                  {EMPTY_BUN_TEXT}
+                </p>
               )}
             </div>
             <div className={constructorStyles.constructorInner}>
@@ -93,7 +98,9 @@ const BurgerConstructor = () => {
                   ingredients={ingredients}
                 />
               ) : (
-                <p className={constructorStyles.emptyBunBottom}>{EMPTY_BUN_TEXT}</p>
+                <p className={constructorStyles.emptyBunBottom}>
+                  {EMPTY_BUN_TEXT}
+                </p>
               )}
             </div>
           </div>

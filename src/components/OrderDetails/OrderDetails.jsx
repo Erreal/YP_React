@@ -1,6 +1,7 @@
 import React from 'react';
 //import orderDetailsStyles from './OrderDetails.module.css';
 import done from '../../images/done.png';
+import PropTypes from 'prop-types';
 
 const OrderDetails = ({ number, name }) => {
   return (
@@ -19,3 +20,8 @@ const OrderDetails = ({ number, name }) => {
 };
 
 export default OrderDetails;
+
+OrderDetails.propTypes = {
+  name: PropTypes.string,
+  number: PropTypes.element.isRequired,
+};

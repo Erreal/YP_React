@@ -14,20 +14,21 @@ export function getItems() {
     dispatch({
       type: GET_ITEMS_REQUEST,
     });
-    requestData(dataUrl).then((res) => {
-      if (res && res.success) {
-        dispatch({
-          type: GET_ITEMS_SUCCESS,
-          items: res.data,
-        });
-      } else {
-        return Promise.reject(`Ошибка ${res.status}`);
-      }
-    })
-    .catch(
-      dispatch({
-        type: GET_ITEMS_FAILED,
+    requestData(dataUrl)
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({
+            type: GET_ITEMS_SUCCESS,
+            items: res.data,
+          });
+        } else {
+          return Promise.reject(`Ошибка ${res.status}`);
+        }
       })
-    );
+      .catch(
+        dispatch({
+          type: GET_ITEMS_FAILED,
+        })
+      );
   };
 }

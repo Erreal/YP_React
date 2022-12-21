@@ -1,4 +1,9 @@
-import { ORDER_REQUEST, ORDER_SUCESS, ORDER_FAILED, ORDER_RESET } from '../actions/order';
+import {
+  ORDER_REQUEST,
+  ORDER_SUCESS,
+  ORDER_FAILED,
+  ORDER_RESET,
+} from '../actions/order';
 import { INITIAL_STATE } from '../../utils/constants';
 
 export const orderReducer = (state = INITIAL_STATE.order, action) => {

@@ -6,6 +6,7 @@ import {
 import constructorStyles from './BurgerConstructor.module.css';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
+import ingredientType from '../../utils/types';
 import { useDispatch } from 'react-redux';
 import { MOVE_ITEM } from '../../services/actions/basket';
 
@@ -71,4 +72,11 @@ const ItemInConstructor = (props) => {
     </div>
   );
 };
+
+ItemInConstructor.propTypes = {  
+  deleteItem: PropTypes.func.isRequired,
+  item: ingredientType.isRequired,
+  index: PropTypes.number.isRequired,
+};
+
 export default ItemInConstructor;

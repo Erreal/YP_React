@@ -33,7 +33,10 @@ const ingredientsReducer = (state = INITIAL_STATE.ingredients, action) => {
       return { ...state, currentIngredient: action.item };
     }
     case RESET_CURRENT_ITEM: {
-      return { ...state, currentIngredient: INITIAL_STATE.ingredients.currentIngredient };
+      return {
+        ...state,
+        currentIngredient: INITIAL_STATE.ingredients.currentIngredient,
+      };
     }
     default:
       return state;
