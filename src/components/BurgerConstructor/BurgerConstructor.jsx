@@ -16,7 +16,7 @@ import { placeOrder } from '../../services/actions/order';
 import { useDrop } from 'react-dnd';
 import ItemInConstructor from './ItemInConstructor';
 import uuid from 'react-uuid';
-import { EMPTY_BUN_TEXT } from '../../utils/constants';
+import { EMPTY_BUN_TEXT, EMPTY_ORDER } from '../../utils/constants';
 
 const BurgerConstructor = () => {
   const ingredients = useSelector((store) => store.ingredients.items);
@@ -42,11 +42,15 @@ const BurgerConstructor = () => {
     },
   });
 
-  const clickOrder = useCallback(() => {
+  const clickOrder = () => {
     let ingredientsIds = [basket.bun._id, ...basket.items.map((item) => item._id), basket.bun._id];
+    if (!Object.keys(basket.bun).length || basket.items.length === 0) {
+      alert(EMPTY_ORDER);
+      return;
+    }
     dispatch(placeOrder(ingredientsIds));
     dispatch({ type: RESET });
-  }, [dispatch, basket.bun._id, basket.items]);
+  }
 
   return (
     <section

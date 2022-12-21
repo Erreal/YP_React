@@ -1,5 +1,6 @@
 export const API_URL = 'https://norma.nomoreparties.space/api';
 export const EMPTY_BUN_TEXT = 'Поместите булку в конструктор';
+export const EMPTY_ORDER = 'Соберите бургер для заказа';
 export const DETAIL_HEADER = 'Детали ингредиента';
 export const INGREDIENTS_TYPES = [
     {
