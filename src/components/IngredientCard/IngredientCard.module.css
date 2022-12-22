@@ -21,3 +21,6 @@
     flex-grow: 2;
     text-align: center;
 }
+.droppable.target {
+    border: 2px solid var(--blue);
+  }

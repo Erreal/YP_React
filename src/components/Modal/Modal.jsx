@@ -28,10 +28,9 @@ const Modal = (props) => {
             {props.title}
           </h3>
         )}
-        <button
-          className={modalStyles.closeButton}
-          onClick={props.onClose}
-        ><CloseIcon type="primary" /></button>
+        <button className={modalStyles.closeButton} onClick={props.onClose}>
+          <CloseIcon type="primary" />
+        </button>
         {props.children}
       </div>
     </ModalOverlay>,
