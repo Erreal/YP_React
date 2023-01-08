@@ -21,3 +21,8 @@
 .navList__link_active {
   color: #f2f2f3;
 }
+
+.buttonsWrapper {
+    display: flex;
+    justify-content: flex-end;
+}
