@@ -1,0 +1,23 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+}
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.navList__item {
+  padding: 20px 0;
+}
+.navList__link {
+  color: #8585ad;
+  text-decoration: none;
+}
+
+.navList__link_active {
+  color: #f2f2f3;
+}

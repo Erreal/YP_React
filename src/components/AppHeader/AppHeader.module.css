@@ -1,42 +1,47 @@
 .header {
-    width: 100%;
-    height: 88px;
-    background: #1C1C21;
-    box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  height: 88px;
+  background: #1c1c21;
+  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04),
+    0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
 }
 
 .container {
-    max-width: 1280px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-    align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  align-items: center;
 }
 
 .navlist {
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    padding: 0;
-    min-width: 310px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  min-width: 310px;
 }
 .navlist:last-child {
-    justify-content: flex-end;
+  justify-content: flex-end;
 }
 .navlistitem {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
 }
-
+.navlistitem a {
+  color: #fff;
+  text-decoration: none;
+}
 .navlistitem:last-child {
-    margin-left: 49px;
+  margin-left: 49px;
 }
 
 .logowrapper {
-    flex-grow: 2;
-    display: flex;
+  flex-grow: 2;
+  display: flex;
 }

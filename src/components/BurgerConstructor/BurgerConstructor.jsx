@@ -16,11 +16,14 @@ import { useDrop } from 'react-dnd';
 import ItemInConstructor from './ItemInConstructor';
 import uuid from 'react-uuid';
 import { EMPTY_BUN_TEXT, EMPTY_ORDER } from '../../utils/constants';
+import { useHistory } from 'react-router-dom';
 
 const BurgerConstructor = () => {
   const ingredients = useSelector((store) => store.ingredients.items);
   const basket = useSelector((store) => store.basket);
+  const autorized = useSelector((store) => store.user.auth);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onDrop = (item) => {
     item.type === 'bun'
@@ -51,8 +54,12 @@ const BurgerConstructor = () => {
       alert(EMPTY_ORDER);
       return;
     }
-    dispatch(placeOrder(ingredientsIds));
-    dispatch({ type: RESET });
+    if (autorized) {
+      dispatch(placeOrder(ingredientsIds));
+      dispatch({ type: RESET });
+    } else {
+      history.push('/login');
+    }
   };
 
   return (

@@ -6,6 +6,7 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import headerStyles from './AppHeader.module.css';
+import { Link } from 'react-router-dom';
 
 const AppHeaderNav = () => {
   return (
@@ -13,11 +14,15 @@ const AppHeaderNav = () => {
       <ul className={headerStyles.navlist}>
         <li className={headerStyles.navlistitem}>
           <BurgerIcon type="primary" />
-          <span className="text text_type_main-default">Конструктор</span>
+          <Link to="/" className="text text_type_main-default">
+            Конструктор
+          </Link>
         </li>
         <li className={headerStyles.navlistitem}>
           <ListIcon type="primary" />
-          <span className="text text_type_main-default">Лента заказов</span>
+          <Link to="/profile/orders" className="text text_type_main-default">
+            Лента заказов
+          </Link>
         </li>
       </ul>
     </nav>
@@ -29,7 +34,9 @@ const AppHeaderLogin = () => {
     <ul className={headerStyles.navlist}>
       <li className={headerStyles.navlistitem}>
         <ProfileIcon type="primary" />
-        <span className="text text_type_main-default">Личный кабинет</span>
+        <Link to="/profile" className="text text_type_main-default">
+          Личный кабинет
+        </Link>
       </li>
     </ul>
   );
