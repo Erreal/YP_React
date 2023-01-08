@@ -189,7 +189,7 @@ export const getUserData = (token) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
+        'authorization': `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -221,7 +221,7 @@ export const updateUserData = (user, token) => {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
+        'authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({
         email: user.email,

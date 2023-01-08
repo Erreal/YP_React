@@ -19,21 +19,23 @@ import { tokenRefresh } from '../../services/actions/auth';
 
 function App() {
   const { ingredients } = useSelector((store) => store);
-  const { token } = useSelector((store) => store.user);
+  const { token, auth } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getItems());
   }, [dispatch]);
 
-  /*useEffect(() => {
+useEffect(() => {
+  if (!auth) {
     const refreshToken = localStorage.getItem('refreshToken');
     if (refreshToken) {
       dispatch(tokenRefresh(refreshToken));
     }
     if (token) {
-      dispatch(getUserData(refreshToken));
+      dispatch(getUserData(token));
     }
-  }, [dispatch, token]);*/
+  }
+  }, [dispatch, token, auth]);
 
   const content = useMemo(() => {
     return ingredients.itemsRequest ? (
