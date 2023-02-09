@@ -18,6 +18,7 @@ import { Profile } from '../../pages/profile';
 import { ProtectedRoute } from '../ProtectedRoute';
 import { getUserData } from '../../services/actions/auth';
 import { tokenRefresh } from '../../services/actions/auth';
+import ForgotPassword from '../../pages/forgot-password';
 
 function App() {
   const { ingredients } = useSelector((store) => store);
@@ -65,7 +66,7 @@ useEffect(() => {
             <Route path="/" exact={true}>
               {content}
             </Route>
-            <ProtectedRoute path="/profile" exact={true}>
+            <ProtectedRoute authNeeded={true} path="/profile" exact={true}>
               <Profile />
             </ProtectedRoute>
             <Route path="/register" exact={true}>
@@ -74,6 +75,12 @@ useEffect(() => {
             <Route path="/login" exact={true}>
               <Login />
             </Route>
+            <ProtectedRoute path="/forgot-password" exact={true}>
+              <ForgotPassword />
+					</ProtectedRoute>	
+					<ProtectedRoute path="/reset-password" exact={true}>
+						<></>
+					</ProtectedRoute>
             <Route path={`/ingredients/:id`}>
               <section className={appStyles.detailSection}>
                 <h2 className='text text_type_main-large'>Детали ингредиента</h2>

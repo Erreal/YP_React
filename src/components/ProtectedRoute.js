@@ -1,24 +1,27 @@
 import React from 'react';
 import { Route, Redirect, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Loader } from '../components/Loader/loader';
 
-export const ProtectedRoute = ({ children, ...rest }) => {
-  const userAuth = useSelector((store) => store.user.auth);
+export const ProtectedRoute = ({ authNeeded=false, children, ...rest }) => {
   const location = useLocation();
-  const { token } = useSelector((store) => store.user);
+  const { auth } = useSelector((store) => store.user);
 
-  if (!userAuth && !token) {
-    return (
-      <Route {...rest}>
-        <Redirect to={{ pathname: '/login', state: { from: location } }} />
-      </Route>
-    );
-  }
+  if (!authNeeded && auth) {
+		const { from } = location.state || { from: { pathname: '/' } };
+		return (
+			<Route {...rest}>
+				<Redirect to={from} />
+			</Route>
+		);
+	}
 
-  if (!userAuth && token) {
-    return <Loader />;
-  }
+	if (authNeeded && !auth) {
+		return (
+			<Route {...rest}>
+				<Redirect to={{ pathname: '/login', state: { from: location } }} />
+			</Route>
+		);
+	}
 
-  return <Route {...rest}>{children}</Route>;
+	return <Route {...rest}>{children}</Route>;
 };
