@@ -6,9 +6,11 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/ingredients';
 import { Loader } from '../Loader/loader';
+import Modal from '../Modal/Modal';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { Registration } from '../../pages/register';
 import { Login } from '../../pages/login';
 import { Page404 } from '../../pages/404';
@@ -20,10 +22,16 @@ import { tokenRefresh } from '../../services/actions/auth';
 function App() {
   const { ingredients } = useSelector((store) => store);
   const { token, auth } = useSelector((store) => store.user);
+  const location = useLocation();
+  const background = location.state && location.state.background;
+  const history = useHistory();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getItems());
   }, [dispatch]);
+
+  const handleModalClose = () => history.goBack();
 
 useEffect(() => {
   if (!auth) {
@@ -49,11 +57,11 @@ useEffect(() => {
   }, [ingredients.itemsRequest]);
 
   return (
-    <Router>
+    <>
       <AppHeader />
       <DndProvider backend={HTML5Backend}>
         <main className={appStyles.container}>
-          <Switch>
+          <Switch location={background || location}>
             <Route path="/" exact={true}>
               {content}
             </Route>
@@ -66,13 +74,29 @@ useEffect(() => {
             <Route path="/login" exact={true}>
               <Login />
             </Route>
+            <Route path={`/ingredients/:id`}>
+              <section className={appStyles.detailSection}>
+                <h2 className='text text_type_main-large'>Детали ингредиента</h2>
+                <div className={appStyles.detailWrapper}>
+                  <IngredientDetails />
+                </div>
+              </section>
+            </Route>
             <Route path="*">
               <Page404 />
             </Route>
           </Switch>
         </main>
+        {background && (
+          <Route path="/ingredients/:id" exact={true}>
+            <div>
+              <Modal onClose={handleModalClose} title={'Детали ингредиента'}>
+                <IngredientDetails />
+              </Modal>
+            </div>
+          </Route>)}
       </DndProvider>
-    </Router>
+      </>
   );
 }
 

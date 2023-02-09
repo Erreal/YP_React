@@ -21,3 +21,20 @@
   margin: 0 auto;
   display: flex;
 }
+.detailSection {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 120px;
+}
+.detatilWrapper {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+

@@ -4,19 +4,15 @@ import ingredientsStyles from './BurgerIngredients.module.css';
 import IngredientCard from '../IngredientCard/IngredientCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
-import { DETAIL_HEADER, INGREDIENTS_TYPES } from '../../utils/constants';
+import { INGREDIENTS_TYPES } from '../../utils/constants';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { ORDER_RESET } from '../../services/actions/order';
-import { RESET_CURRENT_ITEM } from '../../services/actions/ingredients';
+
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
   const ingredients = useSelector((store) => store.ingredients.items);
-  const currentIngredient = useSelector(
-    (store) => store.ingredients.currentIngredient
-  );
   const order = useSelector((store) => store.order);
   const [currentTab, setCurrentTab] = React.useState('0');
 
@@ -125,14 +121,6 @@ const BurgerIngredients = () => {
           </>
         )}
       </section>
-      {Object.keys(currentIngredient).length ? (
-        <Modal
-          onClose={() => dispatch({ type: RESET_CURRENT_ITEM })}
-          title={DETAIL_HEADER}
-        >
-          <IngredientDetails item={currentIngredient} />
-        </Modal>
-      ) : null}
       {order.number ? (
         <Modal onClose={() => dispatch({ type: ORDER_RESET })}>
           <OrderDetails number={order.number} name={order.name} />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useCallback } from 'react';
 import {
   EmailInput,
   PasswordInput,
@@ -8,6 +9,7 @@ import { Link } from 'react-router-dom';
 import pageStyles from './pages.module.css';
 import { useDispatch } from 'react-redux';
 import { login } from '../services/actions/auth';
+
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -22,7 +24,8 @@ export const Login = () => {
       return;
     }
   };
-  const handleSubmit = (evt) => {
+  
+  const handleSubmit = useCallback((evt) => {
     evt.preventDefault();
     dispatch(
       login({
@@ -30,7 +33,8 @@ export const Login = () => {
         password: passwordValue,
       })
     );
-  };
+  },[dispatch, emailValue, passwordValue]);
+
   return (
     <form className={pageStyles.form} onSubmit={handleSubmit}>
       <h2 className={`${pageStyles.text_center} text text_type_main-medium`}>
