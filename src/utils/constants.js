@@ -57,5 +57,11 @@ export const INITIAL_STATE = {
     updateUserFailed: false,
     tokenRequest: false,
     tokenFailed: false,
+    resetRequest: false,
+    resetSuccess: false,
+    resetFailed: false,
+    setPasswdRequest: false,
+    setPasswdSuccess: false,
+    setPasswdFailed: false,
   },
 };

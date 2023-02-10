@@ -1,5 +1,4 @@
 import React from 'react';
-//import orderDetailsStyles from './OrderDetails.module.css';
 import done from '../../images/done.png';
 import PropTypes from 'prop-types';
 
@@ -23,5 +22,5 @@ export default OrderDetails;
 
 OrderDetails.propTypes = {
   name: PropTypes.string,
-  number: PropTypes.element.isRequired,
+  number: PropTypes.number.isRequired,
 };

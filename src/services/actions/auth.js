@@ -39,6 +39,7 @@ const logoutUrl = `${API_URL}/auth/logout`;
 const tokenRefreshUrl = `${API_URL}/auth/token`;
 const getUserUrl = `${API_URL}/auth/user`;
 const resetPassUrl = `${API_URL}/password-reset`;
+const setPassUrl = `${API_URL}/password-reset/reset`;
 
 export const login = (user) => {
   return function (dispatch) {
@@ -198,7 +199,7 @@ export const getUserData = (token) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'authorization': `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
@@ -230,7 +231,7 @@ export const updateUserData = (user, token) => {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        'authorization': `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         email: user.email,
@@ -261,7 +262,7 @@ export const updateUserData = (user, token) => {
 export const restorePassword = (email) => {
   return async (dispatch) => {
     dispatch({
-        type: RESET_PASSWORD_REQUEST
+      type: RESET_PASSWORD_REQUEST,
     });
     requestData(resetPassUrl, {
       method: 'POST',
@@ -270,23 +271,56 @@ export const restorePassword = (email) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: email
+        email: email,
       }),
     })
-    .then((res) => {
-      if (res && res.success) {
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({
+            type: RESET_PASSWORD_SUCCESS,
+          });
+        } else {
+          return Promise.reject(`Ошибка ${res.status}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
         dispatch({
-          type: RESET_PASSWORD_SUCCESS,
+          type: RESET_PASSWORD_FAILED,
         });
-      } else {
-        return Promise.reject(`Ошибка ${res.status}`);
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      dispatch({
-        type: RESET_PASSWORD_FAILED,
       });
+  };
+};
+export const setNewPassword = (data) => {
+  return async (dispatch) => {
+    dispatch({
+      type: SET_PASSWORD_REQUEST,
     });
-  }
-}
+    requestData(setPassUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({
+        password: data.password,
+        token: data.key,
+      }),
+    })
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({
+            type: SET_PASSWORD_SUCCESS,
+            password: data.password,
+          });
+        } else {
+          return Promise.reject(`Ошибка ${res.status}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        dispatch({
+          type: SET_PASSWORD_FAILED,
+        });
+      });
+  };
+};

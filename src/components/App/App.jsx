@@ -15,10 +15,12 @@ import { Registration } from '../../pages/register';
 import { Login } from '../../pages/login';
 import { Page404 } from '../../pages/404';
 import { Profile } from '../../pages/profile';
+import { ProfileOrders } from '../../pages/profile-orders';
 import { ProtectedRoute } from '../ProtectedRoute';
 import { getUserData } from '../../services/actions/auth';
 import { tokenRefresh } from '../../services/actions/auth';
 import ForgotPassword from '../../pages/forgot-password';
+import ResetPassword from '../../pages/reset-password';
 
 function App() {
   const { ingredients } = useSelector((store) => store);
@@ -34,16 +36,16 @@ function App() {
 
   const handleModalClose = () => history.goBack();
 
-useEffect(() => {
-  if (!auth) {
-    const refreshToken = localStorage.getItem('refreshToken');
-    if (refreshToken) {
-      dispatch(tokenRefresh(refreshToken));
+  useEffect(() => {
+    if (!auth) {
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (refreshToken) {
+        dispatch(tokenRefresh(refreshToken));
+      }
+      if (token) {
+        dispatch(getUserData(token));
+      }
     }
-    if (token) {
-      dispatch(getUserData(token));
-    }
-  }
   }, [dispatch, token, auth]);
 
   const content = useMemo(() => {
@@ -69,6 +71,9 @@ useEffect(() => {
             <ProtectedRoute authNeeded={true} path="/profile" exact={true}>
               <Profile />
             </ProtectedRoute>
+            <ProtectedRoute authNeeded={true} path="/profile/orders" exact={true}>
+              <ProfileOrders />
+            </ProtectedRoute>
             <Route path="/register" exact={true}>
               <Registration />
             </Route>
@@ -77,13 +82,15 @@ useEffect(() => {
             </Route>
             <ProtectedRoute path="/forgot-password" exact={true}>
               <ForgotPassword />
-					</ProtectedRoute>	
-					<ProtectedRoute path="/reset-password" exact={true}>
-						<></>
-					</ProtectedRoute>
+            </ProtectedRoute>
+            <ProtectedRoute path="/reset-password" exact={true}>
+              <ResetPassword />
+            </ProtectedRoute>
             <Route path={`/ingredients/:id`}>
               <section className={appStyles.detailSection}>
-                <h2 className='text text_type_main-large'>Детали ингредиента</h2>
+                <h2 className="text text_type_main-large">
+                  Детали ингредиента
+                </h2>
                 <div className={appStyles.detailWrapper}>
                   <IngredientDetails />
                 </div>
@@ -101,9 +108,10 @@ useEffect(() => {
                 <IngredientDetails />
               </Modal>
             </div>
-          </Route>)}
+          </Route>
+        )}
       </DndProvider>
-      </>
+    </>
   );
 }
 

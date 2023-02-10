@@ -8,6 +8,7 @@ import { SET_CURRENT_ITEM } from '../../services/actions/ingredients';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from "react-router-dom";
 
+
 const IngredientCard = (props) => {
   const basket = useSelector((store) => store.basket);
   const location = useLocation();
@@ -33,10 +34,10 @@ const IngredientCard = (props) => {
                 state: { background: location }
             }}
             className={ingredientCardStyles.cardlink}
-        >
+            ref={dragRef}>
     <div
       className={`${ingredientCardStyles.card} mt-6 mb-8`}
-      ref={dragRef}
+      
       onClick={() =>
         dispatch({
           type: SET_CURRENT_ITEM,

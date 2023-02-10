@@ -20,7 +20,6 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
-
   SET_PASSWORD_REQUEST,
   SET_PASSWORD_SUCCESS,
   SET_PASSWORD_FAILED,
@@ -136,6 +135,47 @@ export const authReducer = (state = INITIAL_STATE.user, action) => {
       return {
         ...state,
         tokenFailed: true,
+      };
+    }
+    case RESET_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        resetRequest: true,
+      };
+    }
+    case RESET_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        resetRequest: false,
+        resetSuccess: true,
+        resetFailed: false,
+      };
+    }
+    case RESET_PASSWORD_FAILED: {
+      return {
+        ...state,
+        resetFailed: true,
+      };
+    }
+    case SET_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        setPasswdRequest: true,
+      };
+    }
+    case SET_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        password: action.password,
+        setPasswdRequest: false,
+        setPasswdSuccess: true,
+        setPasswdFailed: false,
+      };
+    }
+    case SET_PASSWORD_FAILED: {
+      return {
+        ...state,
+        setPasswdFailed: true,
       };
     }
     default:

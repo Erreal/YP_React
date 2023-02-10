@@ -27,20 +27,26 @@
 .navlist:last-child {
   justify-content: flex-end;
 }
-.navlistitem {
+.navlistitem a {
   display: flex;
   align-items: center;
   gap: 9px;
   cursor: pointer;
 }
-.navlistitem a {
-  color: #fff;
+.navlistitem a,
+.navlistitem a svg {
+  color: #8585ad;
   text-decoration: none;
+  fill: #8585ad;
 }
 .navlistitem:last-child {
   margin-left: 49px;
 }
-
+a.navlistitem__link_active,
+a.navlistitem__link_active svg {
+  color: #fff;
+  fill: #FFF;
+}
 .logowrapper {
   flex-grow: 2;
   display: flex;
