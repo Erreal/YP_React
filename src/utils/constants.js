@@ -19,6 +19,17 @@ export const INGREDIENTS_TYPES = [
     place: '2',
   },
 ];
+export const ROUTES = {
+  MAIN:'/',
+  LOGIN: '/login',
+  REGISTER: '/register',
+  FORGOT_PASS: '/forgot-password',
+  RESET_PASS: '/reset-password',
+  PROFILE: '/profile',
+  PROFILE_ORDERS: '/profile/orders',
+  INGREDIENT: '/ingredients/:id',
+  FEED: '/feed'
+}
 export const INITIAL_STATE = {
   ingredients: {
     items: [],

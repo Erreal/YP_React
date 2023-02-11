@@ -9,7 +9,7 @@ const IngredientDetails = () => {
   const currentIngredient = ingredients.find(item =>item._id === id);
   return (
     <>
-    {currentIngredient ? (
+    {currentIngredient && (
     <>
       <img
         src={currentIngredient.image}
@@ -42,7 +42,7 @@ const IngredientDetails = () => {
           <p>{currentIngredient.carbohydrates}</p>
         </div>
       </div>
-    </>) : ('')}
+    </>)}
     </>
   );
 };

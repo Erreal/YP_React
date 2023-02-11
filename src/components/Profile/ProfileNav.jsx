@@ -3,6 +3,7 @@ import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../services/actions/auth';
 import profileStyles from './Profile.module.css';
+import { ROUTES } from '../../utils/constants';
 
 export const ProfileNav = () => {
   const history = useHistory();
@@ -12,14 +13,14 @@ export const ProfileNav = () => {
   const handleLogout = () => {
     const token = localStorage.getItem('refreshToken');
     dispatch(logout(token));
-    history.replace({ pathname: '/', state: { from: location } });
+    history.replace({ pathname: ROUTES.MAIN, state: { from: location } });
   };
   return (
     <nav className={`${profileStyles.nav}`}>
       <ul className={`${profileStyles.navList}`}>
         <li className={`${profileStyles.navList__item}`}>
           <NavLink
-            to={'/profile'}
+            to={ROUTES.PROFILE}
             exact={true}
             className={`${profileStyles.navList__link} text text_type_main-medium`}
             activeClassName={`${profileStyles.navList__link_active}`}
@@ -29,7 +30,7 @@ export const ProfileNav = () => {
         </li>
         <li className={`${profileStyles.navList__item}`}>
           <NavLink
-            to={'/profile/orders'}
+            to={ROUTES.PROFILE_ORDERS}
             exact={true}
             className={`${profileStyles.navList__link} text text_type_main-medium`}
             activeClassName={`${profileStyles.navList__link_active}`}
@@ -39,7 +40,7 @@ export const ProfileNav = () => {
         </li>
         <li className={`${profileStyles.navList__item}`}>
           <NavLink
-            to={'/'}
+            to={ROUTES.MAIN}
             exact={true}
             className={`${profileStyles.navList__link} text text_type_main-medium`}
             activeClassName={`${profileStyles.navList__link_active}`}

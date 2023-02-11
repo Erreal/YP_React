@@ -6,6 +6,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import resetPassStyles from './pages.module.css';
+import { ROUTES } from '../utils/constants';
 
 export default function ResetPassword() {
   const dispatch = useDispatch();
@@ -62,17 +63,17 @@ export default function ResetPassword() {
             Пароль обновлен успешно
           </p>
           <p>
-            <Link to={{ pathname: `/` }}>Перейти на Главную</Link>
+            <Link to={{ pathname: ROUTES.MAIN }}>Перейти на Главную</Link>
           </p>
         </>
       ) : (
-        <Link to={{ pathname: `/forgot-password` }}>
+        <Link to={{ pathname: ROUTES.FORGOT_PASS }}>
           Перейти на страницу сброса пароля
         </Link>
       )}
       <div>
         <p>
-          Вспомнили пароль? <Link to={{ pathname: `/login` }}>Войти</Link>
+          Вспомнили пароль? <Link to={{ pathname: ROUTES.LOGIN }}>Войти</Link>
         </p>
       </div>
     </section>

@@ -1,4 +1,4 @@
-import { requestData } from '../../utils/requestApi';
+import { refreshToken, requestData } from '../../utils/requestApi';
 import { API_URL } from '../../utils/constants';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
@@ -213,11 +213,38 @@ export const getUserData = (token) => {
           return Promise.reject(`Ошибка ${res.status}`);
         }
       })
-      .catch((error) => {
-        console.error(error);
-        dispatch({
-          type: GET_USER_FAILED,
-        });
+      .catch(async () => {
+        const newToken = await refreshToken();
+        if (!newToken.success) {
+          Promise.reject(newToken);
+        }
+        console.log(newToken);
+        localStorage.setItem('refreshToken', newToken.refreshToken);
+        token = newToken.accessToken;
+        requestData(getUserUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: `${token}`,
+          },
+        })
+          .then((res) => {
+            if (res && res.success) {
+              dispatch({
+                type: GET_USER_SUCCESS,
+                name: res.user.name,
+                email: res.user.email,
+              });
+            } else {
+              return Promise.reject(`Ошибка ${res.status}`);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            dispatch({
+              type: GET_USER_FAILED,
+            });
+          });
       });
   };
 };
@@ -250,11 +277,43 @@ export const updateUserData = (user, token) => {
           return Promise.reject(`Ошибка ${res.status}`);
         }
       })
-      .catch((error) => {
-        console.error(error);
-        dispatch({
-          type: UPDATE_USER_FAILED,
-        });
+      .catch(async () => {
+        const newToken = await refreshToken();
+        if (!newToken.success) {
+          Promise.reject(newToken);
+        }
+        console.log(newToken);
+        localStorage.setItem('refreshToken', newToken.refreshToken);
+        token = newToken.accessToken;
+        requestData(getUserUrl, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: `${token}`,
+          },
+          body: JSON.stringify({
+            email: user.email,
+            password: user.password,
+            name: user.name,
+          }),
+        })
+          .then((res) => {
+            if (res && res.success) {
+              dispatch({
+                type: UPDATE_USER_SUCCESS,
+                name: res.user.name,
+                email: res.user.email,
+              });
+            } else {
+              return Promise.reject(`Ошибка ${res.status}`);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            dispatch({
+              type: UPDATE_USER_FAILED,
+            });
+          });
       });
   };
 };

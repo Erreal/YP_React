@@ -15,7 +15,7 @@ import { placeOrder } from '../../services/actions/order';
 import { useDrop } from 'react-dnd';
 import ItemInConstructor from './ItemInConstructor';
 import uuid from 'react-uuid';
-import { EMPTY_BUN_TEXT, EMPTY_ORDER } from '../../utils/constants';
+import { EMPTY_BUN_TEXT, EMPTY_ORDER, ROUTES } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
 
 const BurgerConstructor = () => {
@@ -58,7 +58,7 @@ const BurgerConstructor = () => {
       dispatch(placeOrder(ingredientsIds));
       dispatch({ type: RESET });
     } else {
-      history.push('/login');
+      history.push(ROUTES.LOGIN);
     }
   };
 

@@ -8,6 +8,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import forgotPassStyles from './pages.module.css';
 import { Loader } from '../components/Loader/loader';
+import { ROUTES } from '../utils/constants';
 
 export default function ForgotPassword() {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export default function ForgotPassword() {
   useEffect(() => {
     if (resetSuccess) {
       history.replace({
-        pathname: '/reset-password',
+        pathname: ROUTES.RESET_PASS,
       });
     }
   }, [history, resetSuccess]);
@@ -53,7 +54,7 @@ export default function ForgotPassword() {
           </form>
           <div>
             <p className="text text_type_main-default mt-10">
-              Вспомнили пароль? <Link to={{ pathname: `/login` }}>Войти</Link>
+              Вспомнили пароль? <Link to={{ pathname: ROUTES.LOGIN }}>Войти</Link>
             </p>
           </div>
         </>

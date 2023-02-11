@@ -10,6 +10,7 @@ import pageStyles from './pages.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../services/actions/auth';
 import { Loader } from '../components/Loader/loader';
+import { ROUTES } from '../utils/constants';
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export const Login = () => {
   useEffect(() => {
     if (auth) {
       history.replace({
-        pathname: '/',
+        pathname: ROUTES.MAIN,
       });
     }
   }, [history, auth]);
@@ -93,7 +94,7 @@ export const Login = () => {
             Вы - новый пользователь?{' '}
             <Link
               className="text"
-              to="/register"
+              to={ROUTES.REGISTER}
               alt="Зарегистрироваться"
               title="Зарегистрироваться"
             >
@@ -104,7 +105,7 @@ export const Login = () => {
             Забыли пароль?{' '}
             <Link
               className="text"
-              to="/forgot-password"
+              to={ROUTES.FORGOT_PASS}
               alt="Восстановить пароль"
               title="Восстановить пароль"
             >

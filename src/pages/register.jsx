@@ -10,6 +10,7 @@ import pageStyles from './pages.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { registration } from '../services/actions/auth';
 import { Loader } from '../components/Loader/loader';
+import { ROUTES } from '../utils/constants';
 
 export const Registration = () => {
   const dispatch = useDispatch();
@@ -90,7 +91,7 @@ export const Registration = () => {
           </Button>
           <p className="text_type_main-default text_color_inactive mt-20">
             Уже зарегистрированны?{' '}
-            <Link className="text" to="/login" alt="Войти" title="Войти">
+            <Link className="text" to={ROUTES.LOGIN} alt="Войти" title="Войти">
               Войти
             </Link>
           </p>

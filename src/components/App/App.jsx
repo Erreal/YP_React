@@ -21,6 +21,7 @@ import { getUserData } from '../../services/actions/auth';
 import { tokenRefresh } from '../../services/actions/auth';
 import ForgotPassword from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
+import { ROUTES } from '../../utils/constants';
 
 function App() {
   const { ingredients } = useSelector((store) => store);
@@ -65,28 +66,28 @@ function App() {
       <DndProvider backend={HTML5Backend}>
         <main className={appStyles.container}>
           <Switch location={background || location}>
-            <Route path="/" exact={true}>
+            <Route path={ROUTES.MAIN} exact={true}>
               {content}
             </Route>
-            <ProtectedRoute authNeeded={true} path="/profile" exact={true}>
+            <ProtectedRoute authNeeded={true} path={ROUTES.PROFILE} exact={true}>
               <Profile />
             </ProtectedRoute>
-            <ProtectedRoute authNeeded={true} path="/profile/orders" exact={true}>
+            <ProtectedRoute authNeeded={true} path={ROUTES.PROFILE_ORDERS} exact={true}>
               <ProfileOrders />
             </ProtectedRoute>
-            <Route path="/register" exact={true}>
+            <Route path={ROUTES.REGISTER} exact={true}>
               <Registration />
             </Route>
-            <Route path="/login" exact={true}>
+            <Route path={ROUTES.LOGIN} exact={true}>
               <Login />
             </Route>
-            <ProtectedRoute path="/forgot-password" exact={true}>
+            <ProtectedRoute path={ROUTES.FORGOT_PASS} exact={true}>
               <ForgotPassword />
             </ProtectedRoute>
-            <ProtectedRoute path="/reset-password" exact={true}>
+            <ProtectedRoute path={ROUTES.RESET_PASS} exact={true}>
               <ResetPassword />
             </ProtectedRoute>
-            <Route path={`/ingredients/:id`}>
+            <Route path={ROUTES.INGREDIENT}>
               <section className={appStyles.detailSection}>
                 <h2 className="text text_type_main-large">
                   Детали ингредиента
@@ -102,7 +103,7 @@ function App() {
           </Switch>
         </main>
         {background && (
-          <Route path="/ingredients/:id" exact={true}>
+          <Route path={ROUTES.INGREDIENT} exact={true}>
             <div>
               <Modal onClose={handleModalClose} title={'Детали ингредиента'}>
                 <IngredientDetails />

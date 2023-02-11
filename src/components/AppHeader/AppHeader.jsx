@@ -7,6 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import headerStyles from './AppHeader.module.css';
 import { NavLink } from 'react-router-dom';
+import { ROUTES } from '../../utils/constants';
 
 const AppHeaderNav = () => {
   return (
@@ -14,7 +15,7 @@ const AppHeaderNav = () => {
       <ul className={headerStyles.navlist}>
         <li className={headerStyles.navlistitem}>
           <NavLink
-            to={'/'}
+            to={ROUTES.MAIN}
             className="text text_type_main-default"
             activeClassName={`${headerStyles.navlistitem__link_active}`}
             exact={true}
@@ -24,7 +25,7 @@ const AppHeaderNav = () => {
         </li>
         <li className={headerStyles.navlistitem}>
           <NavLink
-            to={'/profile/orders'}
+            to={ROUTES.FEED}
             className="text text_type_main-default"
             activeClassName={`${headerStyles.navlistitem__link_active}`}
             exact={true}
@@ -42,7 +43,7 @@ const AppHeaderLogin = () => {
     <ul className={headerStyles.navlist}>
       <li className={headerStyles.navlistitem}>
         <NavLink
-          to="/profile"
+          to={ROUTES.PROFILE}
           className="text text_type_main-default"
           activeClassName={`${headerStyles.navlistitem__link_active}`}
         >
