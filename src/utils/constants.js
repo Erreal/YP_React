@@ -19,6 +19,17 @@ export const INGREDIENTS_TYPES = [
     place: '2',
   },
 ];
+export const ROUTES = {
+  MAIN:'/',
+  LOGIN: '/login',
+  REGISTER: '/register',
+  FORGOT_PASS: '/forgot-password',
+  RESET_PASS: '/reset-password',
+  PROFILE: '/profile',
+  PROFILE_ORDERS: '/profile/orders',
+  INGREDIENT: '/ingredients/:id',
+  FEED: '/feed'
+}
 export const INITIAL_STATE = {
   ingredients: {
     items: [],
@@ -37,5 +48,31 @@ export const INITIAL_STATE = {
     number: 0,
     orderRequest: false,
     orderFailed: false,
+  },
+  user: {
+    auth: false,
+    name: '',
+    email: '',
+    password: '',
+    token: '',
+    orders: [],
+    loginRequest: false,
+    loginFailed: false,
+    registrationRequest: false,
+    registrationFailed: false,
+    logoutRequest: false,
+    logoutFailed: false,
+    getUserRequest: false,
+    getUserFailed: false,
+    updateUserRequest: false,
+    updateUserFailed: false,
+    tokenRequest: false,
+    tokenFailed: false,
+    resetRequest: false,
+    resetSuccess: false,
+    resetFailed: false,
+    setPasswdRequest: false,
+    setPasswdSuccess: false,
+    setPasswdFailed: false,
   },
 };

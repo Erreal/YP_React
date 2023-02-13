@@ -7,6 +7,13 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
+    color: #FFF;
+}
+.cardlink {
+    text-decoration: none;
+    color: #FFF;
+    font: inherit;
+    font-family: 'Jet Brains Mono';
 }
 .cardimage {
     width: 240px;

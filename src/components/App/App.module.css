@@ -1,22 +1,40 @@
 /* W3C standard
    сейчас только для Firefox */
-   * {
-    scrollbar-width: thin;
-    scrollbar-color: #2F2F37 #8585AD;
-  }
-  
-  /* для Chrome/Edge/Safari */
-  *::-webkit-scrollbar {
-    width: 8px;
-  }
-  *::-webkit-scrollbar-track {
-    background: #2F2F37;
-  }
-  *::-webkit-scrollbar-thumb {
-    background-color: #8585AD;
-  }
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2f2f37 #8585ad;
+}
+
+/* для Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
 .container {
+  height: 95vh;
   max-width: 1280px;
   margin: 0 auto;
   display: flex;
+  position: relative;
+}
+.detailSection {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 120px;
+}
+.detatilWrapper {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
 }

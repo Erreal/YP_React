@@ -6,14 +6,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd/dist/hooks';
 import { SET_CURRENT_ITEM } from '../../services/actions/ingredients';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link, useLocation } from "react-router-dom";
+
 
 const IngredientCard = (props) => {
   const basket = useSelector((store) => store.basket);
+  const location = useLocation();
   const dispatch = useDispatch();
+
   const [, dragRef] = useDrag({
     type: 'ingredient',
     item: props.item,
   });
+
   const counter = useMemo(() => {
     let count = 0;
     if (Object.keys(basket.bun).length && basket.bun._id === props.item._id)
@@ -21,10 +26,18 @@ const IngredientCard = (props) => {
     count = basket.items.filter((item) => item._id === props.item._id).length;
     return count;
   }, [basket.bun, basket.items, props.item._id]);
+
   return (
+    <Link
+            to={{
+                pathname: `/ingredients/${props.item._id}`,
+                state: { background: location }
+            }}
+            className={ingredientCardStyles.cardlink}
+            ref={dragRef}>
     <div
       className={`${ingredientCardStyles.card} mt-6 mb-8`}
-      ref={dragRef}
+      
       onClick={() =>
         dispatch({
           type: SET_CURRENT_ITEM,
@@ -46,6 +59,7 @@ const IngredientCard = (props) => {
       </div>
       <p className={ingredientCardStyles.cardname}>{props.item.name}</p>
     </div>
+    </Link>
   );
 };
 

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { basketReducer } from './basket';
 import { orderReducer } from './order';
+import { authReducer } from './auth';
 import {
   GET_ITEMS_REQUEST,
   GET_ITEMS_SUCCESS,
@@ -46,4 +47,5 @@ export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   basket: basketReducer,
   order: orderReducer,
+  user: authReducer,
 });
