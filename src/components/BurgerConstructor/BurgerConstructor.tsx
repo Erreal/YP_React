@@ -40,7 +40,7 @@ const BurgerConstructor: FC = () => {
           price: item.price,
         });
   };
-  const deleteItem = (item: { id: any; price: number }) => {
+  const deleteItem = (item: { id: string; price: number }) => {
     dispatch({ type: DELETE_ITEM, id: item.id, price: item.price });
   };
   const [, dropTarget] = useDrop({
@@ -53,7 +53,7 @@ const BurgerConstructor: FC = () => {
   const clickOrder = () => {
     let ingredientsIds = [
       basket.bun._id,
-      ...basket.items.map((item: { _id: any }) => item._id),
+      ...basket.items.map((item: { _id: string }) => item._id),
       basket.bun._id,
     ];
     if (!Object.keys(basket.bun).length || basket.items.length === 0) {

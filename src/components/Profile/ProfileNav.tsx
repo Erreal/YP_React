@@ -11,7 +11,7 @@ export const ProfileNav = () => {
   const location = useLocation<string>();
 
   const handleLogout = () => {
-    const token: any = localStorage.getItem('refreshToken');
+    const token = localStorage.getItem('refreshToken') || '';
     dispatch(logout(token));
     history.replace({ pathname: ROUTES.MAIN, state: { from: location } });
   };

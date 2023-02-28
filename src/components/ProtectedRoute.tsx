@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { Route, Redirect, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ROUTES } from '../utils/constants';
@@ -7,7 +7,7 @@ import { ILocationState } from '../utils/types';
 
 interface IProtectedRoute {
   authNeeded?: boolean;
-  children: any;
+  children: ReactNode;
   rest?: string;
   path: string;
   exact?: boolean;

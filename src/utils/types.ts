@@ -32,14 +32,14 @@ export interface IItemInConstructor {
   item: IIngredientParams;
   deleteItem: Function;
   index: number;
-  key: any;
+  key?: string;
 }
 export interface IIngredientCard {
   key?: string;
   item: IIngredientParams;
 }
 export interface IIngredientParams {
-  id?: string | number | null;
+  id?: string;
   _id: string;
   calories?: number;
   fat?: number;
