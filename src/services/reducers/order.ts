@@ -6,7 +6,7 @@ import {
 } from '../actions/order';
 import { INITIAL_STATE } from '../../utils/constants';
 
-export const orderReducer = (state = INITIAL_STATE.order, action) => {
+export const orderReducer = (state = INITIAL_STATE.order, action: any) => {
   switch (action.type) {
     case ORDER_REQUEST: {
       return {

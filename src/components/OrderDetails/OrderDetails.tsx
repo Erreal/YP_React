@@ -1,8 +1,8 @@
-import React from 'react';
+import { FC } from 'react';
 import done from '../../images/done.png';
-import PropTypes from 'prop-types';
+import { IOrderDetails } from '../../utils/types';
 
-const OrderDetails = ({ number, name }) => {
+export const OrderDetails: FC<IOrderDetails> = ({ number, name }) => {
   return (
     <>
       <p className="text text_type_digits-large mt-20">{number}</p>
@@ -16,11 +16,4 @@ const OrderDetails = ({ number, name }) => {
       </p>
     </>
   );
-};
-
-export default OrderDetails;
-
-OrderDetails.propTypes = {
-  name: PropTypes.string,
-  number: PropTypes.number.isRequired,
 };

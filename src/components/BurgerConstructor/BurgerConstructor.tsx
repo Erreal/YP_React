@@ -1,10 +1,11 @@
+import { FC } from 'react';
 import {
   CurrencyIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructorStyles from './BurgerConstructor.module.css';
-import BunInConstructor from './BunInConstructor';
-import { useSelector, useDispatch } from 'react-redux';
+import { BunInConstructor } from './BunInConstructor';
+import { useSelector } from 'react-redux';
 import {
   ADD_BUN,
   ADD_ITEM,
@@ -17,15 +18,20 @@ import ItemInConstructor from './ItemInConstructor';
 import uuid from 'react-uuid';
 import { EMPTY_BUN_TEXT, EMPTY_ORDER, ROUTES } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
+import { TStateReducer } from '../../services/reducers/ingredients';
+import { IBusket, IIngredientParams, IIngredients } from '../../utils/types';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 
-const BurgerConstructor = () => {
-  const ingredients = useSelector((store) => store.ingredients.items);
-  const basket = useSelector((store) => store.basket);
-  const autorized = useSelector((store) => store.user.auth);
-  const dispatch = useDispatch();
+const BurgerConstructor: FC = () => {
+  const ingredients = useSelector(
+    (store: IIngredients) => store.ingredients.items
+  );
+  const basket = useSelector((store: IBusket) => store.basket);
+  const autorized = useSelector((store: TStateReducer) => store.user.auth);
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
-  const onDrop = (item) => {
+  const onDrop = (item: { type: string; price: number }) => {
     item.type === 'bun'
       ? dispatch({ type: ADD_BUN, bun: item, price: item.price })
       : dispatch({
@@ -34,12 +40,12 @@ const BurgerConstructor = () => {
           price: item.price,
         });
   };
-  const deleteItem = (item) => {
+  const deleteItem = (item: { id: any; price: number }) => {
     dispatch({ type: DELETE_ITEM, id: item.id, price: item.price });
   };
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop(item) {
+    drop(item: { type: string; price: number }) {
       onDrop(item);
     },
   });
@@ -47,7 +53,7 @@ const BurgerConstructor = () => {
   const clickOrder = () => {
     let ingredientsIds = [
       basket.bun._id,
-      ...basket.items.map((item) => item._id),
+      ...basket.items.map((item: { _id: any }) => item._id),
       basket.bun._id,
     ];
     if (!Object.keys(basket.bun).length || basket.items.length === 0) {
@@ -72,12 +78,7 @@ const BurgerConstructor = () => {
           <div className={`${constructorStyles.constructorWrapper} mb-10`}>
             <div className={constructorStyles.constructorBunItem}>
               {Object.keys(basket.bun).length ? (
-                <BunInConstructor
-                  type="top"
-                  text="(верх)"
-                  bun={basket.bun}
-                  ingredients={ingredients}
-                />
+                <BunInConstructor type="top" text="(верх)" bun={basket.bun} />
               ) : (
                 <p className={constructorStyles.emptyBunTop}>
                   {EMPTY_BUN_TEXT}
@@ -86,7 +87,7 @@ const BurgerConstructor = () => {
             </div>
             <div className={constructorStyles.constructorInner}>
               {Object.keys(basket.items).length
-                ? basket.items.map((item, index) => (
+                ? basket.items.map((item: IIngredientParams, index: number) => (
                     <ItemInConstructor
                       item={item}
                       deleteItem={deleteItem}
@@ -98,12 +99,7 @@ const BurgerConstructor = () => {
             </div>
             <div className={constructorStyles.constructorBunItem}>
               {Object.keys(basket.bun).length ? (
-                <BunInConstructor
-                  type="bottom"
-                  text="(низ)"
-                  bun={basket.bun}
-                  ingredients={ingredients}
-                />
+                <BunInConstructor type="bottom" text="(низ)" bun={basket.bun} />
               ) : (
                 <p className={constructorStyles.emptyBunBottom}>
                   {EMPTY_BUN_TEXT}

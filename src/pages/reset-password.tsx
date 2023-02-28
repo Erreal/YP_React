@@ -14,16 +14,16 @@ export default function ResetPassword() {
   const dispatch = useAppDispatch();
 
   const { resetSuccess, setPasswdFailed, setPasswdSuccess } = useSelector(
-    (store:TStateReducer) => store.user
+    (store: TStateReducer) => store.user
   );
 
   const [formValues, setValue] = useState({ password: '', key: '' });
-  const onChange = (evt: { target: { name: string; value: string; }; }) => {
+  const onChange = (evt: { target: { name: string; value: string } }) => {
     setValue({ ...formValues, [evt.target.name]: evt.target.value });
   };
 
   const resetPassword = useCallback(
-    (evt: { preventDefault: () => void; }) => {
+    (evt: { preventDefault: () => void }) => {
       evt.preventDefault();
       if (!resetSuccess) return;
       dispatch(setNewPassword(formValues));

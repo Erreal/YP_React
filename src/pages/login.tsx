@@ -17,7 +17,7 @@ import { useAppDispatch } from '../hooks/useAppDispatch';
 export const Login: FC = () => {
   const dispatch = useAppDispatch();
   const { auth, loginRequest, loginFailed } = useSelector(
-    (store:TStateReducer) => store.user
+    (store: TStateReducer) => store.user
   );
   const [emailValue, setEmailValue] = React.useState('');
   const [passwordValue, setPasswordValue] = React.useState('');
@@ -42,7 +42,7 @@ export const Login: FC = () => {
   };
 
   const handleSubmit = useCallback(
-    (evt: { preventDefault: () => void; }) => {
+    (evt: { preventDefault: () => void }) => {
       evt.preventDefault();
       dispatch(
         login({
@@ -114,7 +114,7 @@ export const Login: FC = () => {
           </p>
         </form>
       ) : (
-        <Loader size='medium'/>
+        <Loader size="medium" />
       )}
     </>
   );

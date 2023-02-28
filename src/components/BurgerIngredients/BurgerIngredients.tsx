@@ -5,24 +5,27 @@ import IngredientCard from '../IngredientCard/IngredientCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { INGREDIENTS_TYPES } from '../../utils/constants';
-import Modal from '../Modal/Modal';
-import OrderDetails from '../OrderDetails/OrderDetails';
+import { Modal } from '../Modal/Modal';
+import { OrderDetails } from '../OrderDetails/OrderDetails';
 import { ORDER_RESET } from '../../services/actions/order';
-
+import { IIngredients } from '../../utils/types';
+import { TStateReducer } from '../../services/reducers/ingredients';
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
-  const ingredients = useSelector((store) => store.ingredients.items);
-  const order = useSelector((store) => store.order);
-  const [currentTab, setCurrentTab] = React.useState('0');
+  const ingredients = useSelector(
+    (store: IIngredients) => store.ingredients.items
+  );
+  const order = useSelector((store: TStateReducer) => store.order);
+  const [currentTab, setCurrentTab] = React.useState<string>('0');
 
   const [bunRef, bunInView] = useInView();
   const [mainRef, mainInView] = useInView();
   const [sauceRef, sauceInView] = useInView();
 
-  const mainScrollRef = useRef();
-  const bunScrollRef = useRef();
-  const sauceScrollRef = useRef();
+  const mainScrollRef = useRef<any>();
+  const bunScrollRef = useRef<any>();
+  const sauceScrollRef = useRef<any>();
   const buns = useMemo(
     () => ingredients.filter((obj) => obj.type === INGREDIENTS_TYPES[0].type),
     [ingredients]
@@ -46,7 +49,7 @@ const BurgerIngredients = () => {
     }
   }, [bunInView, sauceInView, mainInView]);
 
-  const onTabClick = (evt) => {
+  const onTabClick = (evt: React.SetStateAction<string>) => {
     setCurrentTab(evt);
     if (evt === INGREDIENTS_TYPES[0].place) {
       bunScrollRef.current.scrollIntoView({ behavior: 'smooth' });

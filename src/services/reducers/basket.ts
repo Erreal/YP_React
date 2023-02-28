@@ -6,8 +6,9 @@ import {
   MOVE_ITEM,
 } from '../actions/basket';
 import { INITIAL_STATE } from '../../utils/constants';
+import { IIngredientParams } from '../../utils/types';
 
-export const basketReducer = (state = INITIAL_STATE.basket, action) => {
+export const basketReducer = (state = INITIAL_STATE.basket, action: any) => {
   switch (action.type) {
     case ADD_BUN:
       return {
@@ -24,7 +25,7 @@ export const basketReducer = (state = INITIAL_STATE.basket, action) => {
     case DELETE_ITEM:
       return {
         ...state,
-        items: state.items.filter((item) => item.id !== action.id),
+        items: state.items.filter((item: IIngredientParams) => item.id !== action.id),
         itemsPrice: state.itemsPrice - action.price,
       };
     case MOVE_ITEM:

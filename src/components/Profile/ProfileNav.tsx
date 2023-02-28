@@ -1,17 +1,17 @@
 import React from 'react';
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { logout } from '../../services/actions/auth';
 import profileStyles from './Profile.module.css';
 import { ROUTES } from '../../utils/constants';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 export const ProfileNav = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
-  const location = useLocation();
+  const dispatch = useAppDispatch();
+  const location = useLocation<string>();
 
   const handleLogout = () => {
-    const token = localStorage.getItem('refreshToken');
+    const token: any = localStorage.getItem('refreshToken');
     dispatch(logout(token));
     history.replace({ pathname: ROUTES.MAIN, state: { from: location } });
   };

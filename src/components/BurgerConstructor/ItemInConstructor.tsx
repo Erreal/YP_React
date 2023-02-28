@@ -1,33 +1,32 @@
-import React, { useRef } from 'react';
+import React, { useRef, FC } from 'react';
 import {
   DragIcon,
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructorStyles from './BurgerConstructor.module.css';
 import { useDrag, useDrop } from 'react-dnd';
-import PropTypes from 'prop-types';
-import ingredientType from '../../utils/types';
 import { useDispatch } from 'react-redux';
 import { MOVE_ITEM } from '../../services/actions/basket';
+import { IItemInConstructor } from '../../utils/types';
 
-const ItemInConstructor = (props) => {
+const ItemInConstructor: FC<IItemInConstructor> = (props) => {
   const dispatch = useDispatch();
-  const dropRef = useRef();
+  const dropRef = useRef<HTMLDivElement>(null);
 
   const [{ target }, dropTarget] = useDrop({
     accept: 'sort',
-    collect(monitor) {
+    collect(monitor: { getHandlerId: () => any }) {
       return {
         target: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: { index: number }, monitor: { getClientOffset: () => any }) {
       const dragIndex = item.index;
       const targetIndex = props.index;
       if (dragIndex === targetIndex) {
         return;
       }
-      const hoverBoundRect = dropRef.current?.getBoundingClientRect();
+      const hoverBoundRect: any = dropRef.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundRect.bottom - hoverBoundRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundRect.top;
@@ -47,7 +46,7 @@ const ItemInConstructor = (props) => {
         index: props.index,
       };
     },
-    collect: (monitor) => ({
+    collect: (monitor: { isDragging: () => any }) => ({
       isDragging: monitor.isDragging(),
     }),
   });
@@ -71,12 +70,6 @@ const ItemInConstructor = (props) => {
       />
     </div>
   );
-};
-
-ItemInConstructor.propTypes = {  
-  deleteItem: PropTypes.func.isRequired,
-  item: ingredientType.isRequired,
-  index: PropTypes.number.isRequired,
 };
 
 export default ItemInConstructor;

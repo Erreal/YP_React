@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   Input,
   EmailInput,
@@ -8,22 +8,26 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import profileStyles from './Profile.module.css';
 import { updateUserData } from '../../services/actions/auth';
+import { TStateReducer } from '../../services/reducers/ingredients';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 export const ProfileForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { name, email, password, token } = useSelector((state) => state.user);
-  const [dataChanged, setDataChanged] = useState(false);
-  const [nameValue, setName] = useState(name);
-  const [emailValue, setEmail] = useState(email);
-  const [passwordValue, setPassword] = useState(password);
+  const { name, email, password, token } = useSelector(
+    (state: TStateReducer) => state.user
+  );
+  const [dataChanged, setDataChanged] = useState<boolean>(false);
+  const [nameValue, setName] = useState<string>(name);
+  const [emailValue, setEmail] = useState<string>(email);
+  const [passwordValue, setPassword] = useState<string>(password);
   const handleCancel = () => {
     setName(name);
     setEmail(email);
     setPassword(password);
     setDataChanged(false);
   };
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: { preventDefault: () => void }) => {
     evt.preventDefault();
     dispatch(
       updateUserData(
@@ -37,7 +41,7 @@ export const ProfileForm = () => {
     );
     setDataChanged(false);
   };
-  const onInputChange = (evt) => {
+  const onInputChange = (evt: { target: { name: string; value: string } }) => {
     setDataChanged(true);
     if (evt.target.name === 'name') {
       setName(evt.target.value);
@@ -68,7 +72,6 @@ export const ProfileForm = () => {
         value={emailValue}
         onChange={onInputChange}
         placeholder={'Логин'}
-        icon={'EditIcon'}
         extraClass={'mt-6'}
       />
       <PasswordInput

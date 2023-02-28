@@ -9,8 +9,8 @@ export const RESET_CURRENT_ITEM = 'RESET_CURRENT_ITEM';
 
 const dataUrl = `${API_URL}/ingredients`;
 
-export function getItems() {
-  return function (dispatch) {
+export const getItems = () => {
+  return function (dispatch: (arg0: { type: string; items?: Array<object>; }) => ((reason: any) => PromiseLike<never>) | null | undefined) {
     dispatch({
       type: GET_ITEMS_REQUEST,
     });

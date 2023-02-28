@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Route, Redirect, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { ROUTES } from '../utils/constants';
+import { TStateReducer } from '../services/reducers/ingredients';
+import { ILocationState } from '../utils/types';
 
-export const ProtectedRoute = ({ authNeeded = false, children, ...rest }) => {
-  const location = useLocation();
-  const { auth } = useSelector((store) => store.user);
+interface IProtectedRoute {
+  authNeeded?: boolean;
+  children: any;
+  rest?: string;
+  path: string;
+  exact?: boolean;
+}
+
+export const ProtectedRoute: FC<IProtectedRoute> = ({
+  authNeeded = false,
+  children,
+  ...rest
+}) => {
+  const location = useLocation<ILocationState>();
+  const { auth } = useSelector((store: TStateReducer) => store.user);
 
   if (!authNeeded && auth) {
     const { from } = location.state || { from: { pathname: ROUTES.MAIN } };
@@ -26,13 +39,4 @@ export const ProtectedRoute = ({ authNeeded = false, children, ...rest }) => {
   }
 
   return <Route {...rest}>{children}</Route>;
-};
-ProtectedRoute.propTypes = {
-  authNeeded: PropTypes.bool,
-  children: PropTypes.element.isRequired,
-  rest: PropTypes.shape({
-    path: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    computedMatch: PropTypes.object.isRequired,
-  }),
 };

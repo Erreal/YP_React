@@ -17,12 +17,12 @@ import { TStateReducer } from '../services/reducers/ingredients';
 export const Registration = () => {
   const dispatch = useAppDispatch();
   const { name, email, password, registrationRequest } = useSelector(
-    (state:TStateReducer) => state.user
+    (state: TStateReducer) => state.user
   );
   const [nameValue, setName] = React.useState(name);
   const [emailValue, setEmail] = React.useState(email);
   const [passwordValue, setPassword] = React.useState(password);
-  const onInputChange = (evt: { target: { name: string; value: string; }; }) => {
+  const onInputChange = (evt: { target: { name: string; value: string } }) => {
     if (evt.target.name === 'name') {
       setName(evt.target.value);
       return;
@@ -37,7 +37,7 @@ export const Registration = () => {
     }
   };
 
-  const handleSubmit = (evt: { preventDefault: () => void; }) => {
+  const handleSubmit = (evt: { preventDefault: () => void }) => {
     evt.preventDefault();
     dispatch(
       registration({
@@ -99,7 +99,7 @@ export const Registration = () => {
           </p>
         </form>
       ) : (
-        <Loader size='medium' />
+        <Loader size="medium" />
       )}
     </>
   );

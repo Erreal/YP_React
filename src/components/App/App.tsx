@@ -1,12 +1,12 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, FC } from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import appStyles from './App.module.css';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/ingredients';
 import { Loader } from '../Loader/loader';
-import Modal from '../Modal/Modal';
+import { Modal } from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
@@ -19,17 +19,20 @@ import { ProfileOrders } from '../../pages/profile-orders';
 import { ProtectedRoute } from '../ProtectedRoute';
 import { getUserData } from '../../services/actions/auth';
 import { tokenRefresh } from '../../services/actions/auth';
-import {ForgotPassword} from '../../pages/forgot-password';
+import { ForgotPassword } from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
 import { ROUTES } from '../../utils/constants';
+import { TStateReducer } from '../../services/reducers/ingredients';
+import { IIngredients, ILocationState } from '../../utils/types';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 
-function App() {
-  const { ingredients } = useSelector((store) => store);
-  const { token, auth } = useSelector((store) => store.user);
-  const location = useLocation();
+const App: FC = () => {
+  const { ingredients } = useSelector((store: IIngredients) => store);
+  const { token, auth } = useSelector((store: TStateReducer) => store.user);
+  const location = useLocation<ILocationState>();
   const background = location.state && location.state.background;
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getItems());
@@ -41,7 +44,7 @@ function App() {
     if (!auth) {
       const refreshToken = localStorage.getItem('refreshToken');
       if (refreshToken) {
-        dispatch(tokenRefresh(refreshToken));
+        dispatch(tokenRefresh());
       }
       if (token) {
         dispatch(getUserData(token));
@@ -69,10 +72,18 @@ function App() {
             <Route path={ROUTES.MAIN} exact={true}>
               {content}
             </Route>
-            <ProtectedRoute authNeeded={true} path={ROUTES.PROFILE} exact={true}>
+            <ProtectedRoute
+              authNeeded={true}
+              path={ROUTES.PROFILE}
+              exact={true}
+            >
               <Profile />
             </ProtectedRoute>
-            <ProtectedRoute authNeeded={true} path={ROUTES.PROFILE_ORDERS} exact={true}>
+            <ProtectedRoute
+              authNeeded={true}
+              path={ROUTES.PROFILE_ORDERS}
+              exact={true}
+            >
               <ProfileOrders />
             </ProtectedRoute>
             <Route path={ROUTES.REGISTER} exact={true}>
@@ -114,6 +125,6 @@ function App() {
       </DndProvider>
     </>
   );
-}
+};
 
 export default App;

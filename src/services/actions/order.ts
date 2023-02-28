@@ -8,8 +8,8 @@ export const ORDER_RESET = 'ORDER_RESET';
 
 const dataUrl = `${API_URL}/orders`;
 
-export function placeOrder(request) {
-  return function (dispatch) {
+export function placeOrder(request: any[]) {
+  return function (dispatch: (arg0: { type: string; name?: string; number?: number; }) => ((reason: any) => PromiseLike<never>) | null | undefined) {
     dispatch({
       type: ORDER_REQUEST,
     });

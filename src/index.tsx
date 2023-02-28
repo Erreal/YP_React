@@ -4,12 +4,11 @@ import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { rootReducer } from './services/reducers/ingredients';
 import { compose, applyMiddleware, createStore } from 'redux';
-import thunk  from 'redux-thunk';
-
+import thunk from 'redux-thunk';
 
 declare global {
   interface Window {
@@ -22,18 +21,16 @@ const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 const store = createStore(rootReducer, enhancer);
 
-const root = ReactDOM.createRoot(document.getElementById("root") as Element);
-  root.render(
-    <React.StrictMode>
-              <Router>
+const root = ReactDOM.createRoot(document.getElementById('root') as Element);
+root.render(
+  <React.StrictMode>
+    <Router>
       <Provider store={store}>
-
-          <App />
-        
+        <App />
       </Provider>
-      </Router>
-    </React.StrictMode>
-  );
+    </Router>
+  </React.StrictMode>
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -15,14 +15,16 @@ import { useAppDispatch } from '../hooks/useAppDispatch';
 export const ForgotPassword: FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { resetSuccess, resetRequest } = useSelector((store:TStateReducer) => store.user);
+  const { resetSuccess, resetRequest } = useSelector(
+    (store: TStateReducer) => store.user
+  );
   const [emailValue, setEmailValue] = useState<string>('');
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(evt.target.value);
   };
 
   const sendEmail = useCallback(
-    (evt: { preventDefault: () => void; }) => {
+    (evt: { preventDefault: () => void }) => {
       evt.preventDefault();
       dispatch(restorePassword(emailValue));
     },
@@ -55,13 +57,14 @@ export const ForgotPassword: FC = () => {
           </form>
           <div>
             <p className="text text_type_main-default mt-10">
-              Вспомнили пароль? <Link to={{ pathname: ROUTES.LOGIN }}>Войти</Link>
+              Вспомнили пароль?{' '}
+              <Link to={{ pathname: ROUTES.LOGIN }}>Войти</Link>
             </p>
           </div>
         </>
       ) : (
-        <Loader size='medium'/>
+        <Loader size="medium" />
       )}
     </section>
   );
-}
+};

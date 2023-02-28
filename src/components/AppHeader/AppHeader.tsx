@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   Logo,
   BurgerIcon,
@@ -9,7 +9,7 @@ import headerStyles from './AppHeader.module.css';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '../../utils/constants';
 
-const AppHeaderNav = () => {
+const AppHeaderNav: FC = () => {
   return (
     <nav>
       <ul className={headerStyles.navlist}>
@@ -20,7 +20,7 @@ const AppHeaderNav = () => {
             activeClassName={`${headerStyles.navlistitem__link_active}`}
             exact={true}
           >
-            <BurgerIcon /> Конструктор
+            <BurgerIcon type="primary" /> Конструктор
           </NavLink>
         </li>
         <li className={headerStyles.navlistitem}>
@@ -30,7 +30,7 @@ const AppHeaderNav = () => {
             activeClassName={`${headerStyles.navlistitem__link_active}`}
             exact={true}
           >
-            <ListIcon /> Лента заказов
+            <ListIcon type="primary" /> Лента заказов
           </NavLink>
         </li>
       </ul>
@@ -38,7 +38,7 @@ const AppHeaderNav = () => {
   );
 };
 
-const AppHeaderLogin = () => {
+const AppHeaderLogin: FC = () => {
   return (
     <ul className={headerStyles.navlist}>
       <li className={headerStyles.navlistitem}>
@@ -47,14 +47,14 @@ const AppHeaderLogin = () => {
           className="text text_type_main-default"
           activeClassName={`${headerStyles.navlistitem__link_active}`}
         >
-          <ProfileIcon /> Личный кабинет
+          <ProfileIcon type="primary" /> Личный кабинет
         </NavLink>
       </li>
     </ul>
   );
 };
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
   return (
     <header className={headerStyles.header}>
       <div className={headerStyles.container}>

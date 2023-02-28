@@ -26,7 +26,7 @@ import {
 } from '../actions/auth';
 import { INITIAL_STATE } from '../../utils/constants';
 
-export const authReducer = (state = INITIAL_STATE.user, action) => {
+export const authReducer = (state = INITIAL_STATE.user, action: any) => {
   switch (action.type) {
     case LOGIN_REQUEST: {
       return {

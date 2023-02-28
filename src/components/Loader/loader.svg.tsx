@@ -1,4 +1,9 @@
-export const LoaderSvg = ({ color = '#3C39EC', size }) => {
+import { FC } from 'react';
+type TLoaderSvg = {
+  color: string;
+  size: number;
+};
+export const LoaderSvg: FC<TLoaderSvg> = ({ color = '#3C39EC', size }) => {
   return (
     <svg
       width={size}
