@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import { useCallback, useEffect } from 'react';
 import {
   EmailInput,
@@ -7,15 +7,17 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useHistory } from 'react-router-dom';
 import pageStyles from './pages.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { login } from '../services/actions/auth';
 import { Loader } from '../components/Loader/loader';
 import { ROUTES } from '../utils/constants';
+import { TStateReducer } from '../services/reducers/ingredients';
+import { useAppDispatch } from '../hooks/useAppDispatch';
 
-export const Login = () => {
-  const dispatch = useDispatch();
+export const Login: FC = () => {
+  const dispatch = useAppDispatch();
   const { auth, loginRequest, loginFailed } = useSelector(
-    (store) => store.user
+    (store:TStateReducer) => store.user
   );
   const [emailValue, setEmailValue] = React.useState('');
   const [passwordValue, setPasswordValue] = React.useState('');
@@ -29,7 +31,7 @@ export const Login = () => {
     }
   }, [history, auth]);
 
-  const onChangeInput = (evt) => {
+  const onChangeInput = (evt: ChangeEvent<HTMLInputElement>) => {
     if (evt.target.name === 'email') {
       setEmailValue(evt.target.value);
       return;
@@ -40,7 +42,7 @@ export const Login = () => {
   };
 
   const handleSubmit = useCallback(
-    (evt) => {
+    (evt: { preventDefault: () => void; }) => {
       evt.preventDefault();
       dispatch(
         login({
@@ -95,7 +97,6 @@ export const Login = () => {
             <Link
               className="text"
               to={ROUTES.REGISTER}
-              alt="Зарегистрироваться"
               title="Зарегистрироваться"
             >
               Зарегистрироваться
@@ -106,7 +107,6 @@ export const Login = () => {
             <Link
               className="text"
               to={ROUTES.FORGOT_PASS}
-              alt="Восстановить пароль"
               title="Восстановить пароль"
             >
               Восстановить пароль
@@ -114,7 +114,7 @@ export const Login = () => {
           </p>
         </form>
       ) : (
-        <Loader />
+        <Loader size='medium'/>
       )}
     </>
   );

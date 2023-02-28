@@ -1,13 +1,11 @@
-import React from 'react';
-import { ProfileForm } from '../components/Profile/ProfileForm';
+import { FC } from 'react';
 import { ProfileNav } from '../components/Profile/ProfileNav';
 import profileStyles from './pages.module.css';
 
-export const Profile = () => {
+export const ProfileOrders: FC = () => {
   return (
     <section className={`${profileStyles.profileSection} pt-30`}>
       <ProfileNav />
-      <ProfileForm />
     </section>
   );
 };

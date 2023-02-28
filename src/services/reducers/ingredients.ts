@@ -11,7 +11,7 @@ import {
 } from '../actions/ingredients';
 import { INITIAL_STATE } from '../../utils/constants';
 
-const ingredientsReducer = (state = INITIAL_STATE.ingredients, action) => {
+const ingredientsReducer = (state = INITIAL_STATE.ingredients, action: { type: string; items: Array<object>; item: object; }) => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return {
@@ -49,3 +49,4 @@ export const rootReducer = combineReducers({
   order: orderReducer,
   user: authReducer,
 });
+export type TStateReducer = ReturnType<typeof rootReducer>

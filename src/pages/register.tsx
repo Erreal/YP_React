@@ -7,20 +7,22 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import pageStyles from './pages.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { registration } from '../services/actions/auth';
 import { Loader } from '../components/Loader/loader';
 import { ROUTES } from '../utils/constants';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { TStateReducer } from '../services/reducers/ingredients';
 
 export const Registration = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { name, email, password, registrationRequest } = useSelector(
-    (state) => state.user
+    (state:TStateReducer) => state.user
   );
   const [nameValue, setName] = React.useState(name);
   const [emailValue, setEmail] = React.useState(email);
   const [passwordValue, setPassword] = React.useState(password);
-  const onInputChange = (evt) => {
+  const onInputChange = (evt: { target: { name: string; value: string; }; }) => {
     if (evt.target.name === 'name') {
       setName(evt.target.value);
       return;
@@ -35,7 +37,7 @@ export const Registration = () => {
     }
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: { preventDefault: () => void; }) => {
     evt.preventDefault();
     dispatch(
       registration({
@@ -91,13 +93,13 @@ export const Registration = () => {
           </Button>
           <p className="text_type_main-default text_color_inactive mt-20">
             Уже зарегистрированны?{' '}
-            <Link className="text" to={ROUTES.LOGIN} alt="Войти" title="Войти">
+            <Link className="text" to={ROUTES.LOGIN} title="Войти">
               Войти
             </Link>
           </p>
         </form>
       ) : (
-        <Loader className={pageStyles.form} />
+        <Loader size='medium' />
       )}
     </>
   );

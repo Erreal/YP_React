@@ -1,13 +1,19 @@
 import { API_URL } from "./constants";
 
-const checkResponse = (response) => {
+interface IResponseCheck {
+  json(): any;
+  status:number;
+  ok: boolean;
+}
+
+const checkResponse = (response:IResponseCheck) => {
   if (response.ok) {
     return response.json();
   }
   return Promise.reject(`Ошибка ${response.status}`);
 };
 
-export const requestData = async (url, options) => {
+export const requestData = async (url:string, options:object) => {
   const response = await fetch(url, options);
   return checkResponse(response);
 };

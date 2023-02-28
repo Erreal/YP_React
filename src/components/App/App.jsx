@@ -19,7 +19,7 @@ import { ProfileOrders } from '../../pages/profile-orders';
 import { ProtectedRoute } from '../ProtectedRoute';
 import { getUserData } from '../../services/actions/auth';
 import { tokenRefresh } from '../../services/actions/auth';
-import ForgotPassword from '../../pages/forgot-password';
+import {ForgotPassword} from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
 import { ROUTES } from '../../utils/constants';
 

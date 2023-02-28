@@ -41,8 +41,8 @@ const getUserUrl = `${API_URL}/auth/user`;
 const resetPassUrl = `${API_URL}/password-reset`;
 const setPassUrl = `${API_URL}/password-reset/reset`;
 
-export const login = (user) => {
-  return function (dispatch) {
+export const login = (user:{email:string; password:string;}) => {
+  return function (dispatch: (arg0: { type: string; name?: string; email?: string; token?: string; }) => void) {
     dispatch({
       type: LOGIN_REQUEST,
     });
@@ -80,8 +80,8 @@ export const login = (user) => {
   };
 };
 
-export const logout = (token) => {
-  return function (dispatch) {
+export const logout = (token: string) => {
+  return function (dispatch: (arg0: { type: string; }) => ((reason: any) => PromiseLike<never>) | null | undefined) {
     dispatch({
       type: LOGOUT_REQUEST,
     });
@@ -113,8 +113,8 @@ export const logout = (token) => {
   };
 };
 
-export const registration = (user) => {
-  return function (dispatch) {
+export const registration = (user: {email:string; password:string; name: string}) => {
+  return function (dispatch: (arg0: { type: string; name?: string; email?: string; token?: string; }) => void) {
     dispatch({
       type: REGISTRATION_REQUEST,
     });
@@ -154,7 +154,7 @@ export const registration = (user) => {
 };
 
 export const tokenRefresh = () => {
-  return function (dispatch) {
+  return function (dispatch: (arg0: { type: string; token?: string; }) => void) {
     dispatch({
       type: TOKEN_REQUEST,
     });
@@ -190,8 +190,8 @@ export const tokenRefresh = () => {
   };
 };
 
-export const getUserData = (token) => {
-  return function (dispatch) {
+export const getUserData = (token:string) => {
+  return function (dispatch: (arg0: { type: string; name?: string; email?: string; }) => void) {
     dispatch({
       type: GET_USER_REQUEST,
     });
@@ -249,8 +249,8 @@ export const getUserData = (token) => {
   };
 };
 
-export const updateUserData = (user, token) => {
-  return function (dispatch) {
+export const updateUserData = (user: {email: string; password:string; name:string}, token:string) => {
+  return function (dispatch: (arg0: { type: string; name?: string; email?: string; }) => void) {
     dispatch({
       type: UPDATE_USER_REQUEST,
     });
@@ -318,8 +318,8 @@ export const updateUserData = (user, token) => {
   };
 };
 
-export const restorePassword = (email) => {
-  return async (dispatch) => {
+export const restorePassword = (email:string) => {
+  return async (dispatch: (arg0: { type: string; }) => void) => {
     dispatch({
       type: RESET_PASSWORD_REQUEST,
     });
@@ -350,8 +350,8 @@ export const restorePassword = (email) => {
       });
   };
 };
-export const setNewPassword = (data) => {
-  return async (dispatch) => {
+export const setNewPassword = (data: { password: string; key: string; }) => {
+  return async (dispatch: (arg0: { type: string; password?: string; }) => void) => {
     dispatch({
       type: SET_PASSWORD_REQUEST,
     });
