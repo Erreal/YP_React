@@ -23,10 +23,11 @@ import {
   SET_PASSWORD_REQUEST,
   SET_PASSWORD_SUCCESS,
   SET_PASSWORD_FAILED,
+  TAuthActions,
 } from '../actions/auth';
 import { INITIAL_STATE } from '../../utils/constants';
 
-export const authReducer = (state = INITIAL_STATE.user, action: any) => {
+export const authReducer = (state = INITIAL_STATE.user, action: TAuthActions) => {
   switch (action.type) {
     case LOGIN_REQUEST: {
       return {

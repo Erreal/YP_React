@@ -7,8 +7,9 @@ import {
 } from '../actions/basket';
 import { INITIAL_STATE } from '../../utils/constants';
 import { IIngredientParams } from '../../utils/types';
+import { TBasketActions } from '../actions/basket';
 
-export const basketReducer = (state = INITIAL_STATE.basket, action: any) => {
+export const basketReducer = (state = INITIAL_STATE.basket, action: TBasketActions) => {
   switch (action.type) {
     case ADD_BUN:
       return {

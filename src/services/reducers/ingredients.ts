@@ -10,8 +10,9 @@ import {
   RESET_CURRENT_ITEM,
 } from '../actions/ingredients';
 import { INITIAL_STATE } from '../../utils/constants';
+import { IIngredientParams } from '../../utils/types';
 
-const ingredientsReducer = (state = INITIAL_STATE.ingredients, action: { type: string; items: Array<object>; item: object; }) => {
+const ingredientsReducer = (state = INITIAL_STATE.ingredients, action: { type: string; items: Array<IIngredientParams>; item: IIngredientParams; }) => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return {

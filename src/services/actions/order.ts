@@ -1,15 +1,38 @@
 import { API_URL } from '../../utils/constants';
 import { requestData } from '../../utils/requestApi';
+import { Dispatch } from 'redux';
+import { TApplicationActions } from '../store';
 
-export const ORDER_SUCESS = 'ORDER_SUCESS';
-export const ORDER_FAILED = 'ORDER_FAILED';
-export const ORDER_REQUEST = 'ORDER_REQUEST';
-export const ORDER_RESET = 'ORDER_RESET';
+export const ORDER_SUCESS:'ORDER_SUCESS' = 'ORDER_SUCESS';
+export const ORDER_FAILED:'ORDER_FAILED' = 'ORDER_FAILED';
+export const ORDER_REQUEST:'ORDER_REQUEST' = 'ORDER_REQUEST';
+export const ORDER_RESET:'ORDER_RESET' = 'ORDER_RESET';
 
+export interface IOrderSuccess {
+  readonly type: typeof ORDER_SUCESS;
+  name: string;
+  number: number;
+}
+export interface IOrderFailed {
+  readonly type: typeof ORDER_FAILED;
+}
+export interface IOrderRequest {
+  readonly type: typeof ORDER_REQUEST;
+}
+export interface IOrderReset {
+  readonly type: typeof ORDER_RESET;
+}
+
+export type TOrderActions =
+  | IOrderSuccess
+  | IOrderFailed
+  | IOrderRequest
+  | IOrderReset;  
+
+type TOrderDispatch = Dispatch<TApplicationActions>; 
 const dataUrl = `${API_URL}/orders`;
 
-export function placeOrder(request: any[]) {
-  return function (dispatch: (arg0: { type: string; name?: string; number?: number; }) => ((reason: any) => PromiseLike<never>) | null | undefined) {
+export const placeOrder = (request: Array<string>) => (dispatch: TOrderDispatch) => {
     dispatch({
       type: ORDER_REQUEST,
     });
@@ -34,10 +57,11 @@ export function placeOrder(request: any[]) {
           return Promise.reject(`Ошибка ${res.status}`);
         }
       })
-      .catch(
+      .catch(() => {
         dispatch({
           type: ORDER_FAILED,
         })
+      }
       );
   };
-}
+
