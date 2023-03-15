@@ -11,8 +11,16 @@ import {
 } from '../actions/ingredients';
 import { INITIAL_STATE } from '../../utils/constants';
 import { IIngredientParams } from '../../utils/types';
+import { wsReducerFeed, wsReducerProfile } from './websocket';
 
-const ingredientsReducer = (state = INITIAL_STATE.ingredients, action: { type: string; items: Array<IIngredientParams>; item: IIngredientParams; }) => {
+const ingredientsReducer = (
+  state = INITIAL_STATE.ingredients,
+  action: {
+    type: string;
+    items: Array<IIngredientParams>;
+    item: IIngredientParams;
+  }
+) => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return {
@@ -49,5 +57,7 @@ export const rootReducer = combineReducers({
   basket: basketReducer,
   order: orderReducer,
   user: authReducer,
+  websocket: wsReducerFeed,
+  websocketProfile: wsReducerProfile,
 });
-export type TStateReducer = ReturnType<typeof rootReducer>
+export type TStateReducer = ReturnType<typeof rootReducer>;

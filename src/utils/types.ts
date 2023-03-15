@@ -1,8 +1,13 @@
 import { ReactNode } from 'react';
 import { Location } from 'history';
+import {
+  ActionCreatorWithoutPayload,
+  ActionCreatorWithPayload,
+} from '@reduxjs/toolkit';
 
 export interface ILocationState {
   background: Location;
+  order: TOrderCard;
   from: {
     pathname: string;
   };
@@ -52,6 +57,7 @@ export interface IIngredientParams {
   proteins?: number;
   type?: string;
   __v?: number;
+  count?: number;
 }
 export interface IModal {
   onClose: () => void;
@@ -66,3 +72,37 @@ export interface IOrderDetails {
   name?: string;
   number: number;
 }
+export interface IWsData {
+  success: boolean;
+  orders: Array<object>;
+  total: number;
+  totalToday: number;
+}
+export type TwsActionTypes = {
+  wsConnect: ActionCreatorWithPayload<any>;
+  wsDisconnect: ActionCreatorWithoutPayload;
+  onOpen: ActionCreatorWithoutPayload;
+  onClose: ActionCreatorWithoutPayload;
+  onError: ActionCreatorWithPayload<string>;
+  onMessage: ActionCreatorWithPayload<any>;
+};
+export type TWsOrders = {
+  feed: Array<object>;
+  totalOrders: number | null;
+  totalToday: number | null;
+};
+export type TWsState = {
+  orders: TWsOrders;
+  wsConnected: boolean;
+  wsFailed: boolean;
+};
+export type TOrderCard = {
+  _id: string;
+  number: number;
+  name: string;
+  ingredients: Array<string>;
+  status?: string;
+  index: number;
+  createdAt: string;
+  showStatus?: boolean;
+};

@@ -1,7 +1,10 @@
 export const API_URL = 'https://norma.nomoreparties.space/api';
+export const WS_URL = 'wss://norma.nomoreparties.space';
+
 export const EMPTY_BUN_TEXT = 'Поместите булку в конструктор';
 export const EMPTY_ORDER = 'Соберите бургер для заказа';
 export const DETAIL_HEADER = 'Детали ингредиента';
+
 export const INGREDIENTS_TYPES = [
   {
     name: 'Булки',
@@ -19,6 +22,14 @@ export const INGREDIENTS_TYPES = [
     place: '2',
   },
 ];
+
+export const ORDER_STATUS = {
+  CREATED: 'Создан',
+  DONE: 'Выполнен',
+  PENDING: 'Готовится',
+  CANSELED: 'Отменен',
+};
+
 export const ROUTES = {
   MAIN: '/',
   LOGIN: '/login',
@@ -27,9 +38,12 @@ export const ROUTES = {
   RESET_PASS: '/reset-password',
   PROFILE: '/profile',
   PROFILE_ORDERS: '/profile/orders',
+  PROFILE_ORDER: '/profile/orders/:id',
   INGREDIENT: '/ingredients/:id',
   FEED: '/feed',
+  FEED_ORDER: '/feed/:number',
 };
+
 export const INITIAL_STATE = {
   ingredients: {
     items: [],
@@ -74,5 +88,23 @@ export const INITIAL_STATE = {
     setPasswdRequest: false,
     setPasswdSuccess: false,
     setPasswdFailed: false,
+  },
+  websocket: {
+    wsConnected: false,
+    wsFailed: false,
+    orders: {
+      feed: [],
+      totalOrders: null,
+      totalToday: null,
+    },
+  },
+  websocketProfile: {
+    wsConnected: false,
+    wsFailed: false,
+    orders: {
+      feed: [],
+      totalOrders: null,
+      totalToday: null,
+    },
   },
 };

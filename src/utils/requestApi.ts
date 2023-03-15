@@ -30,3 +30,13 @@ export const refreshToken = async () => {
   });
   return await res;
 };
+
+export const getOrder = async (number: string) => {
+  const res = await requestData(`${API_URL}/orders/${number}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return await res;
+};
