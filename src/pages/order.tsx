@@ -9,7 +9,6 @@ import orderStyles from './pages.module.css';
 export const OrderPage = () => {
   const { number } = useParams<{ number: string }>();
   const [order, setOrder] = useState<TOrderCard>();
-  console.log('order', order);
 
   useEffect(() => {
     getOrder(number).then(

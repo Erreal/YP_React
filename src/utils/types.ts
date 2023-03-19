@@ -68,10 +68,6 @@ export interface IModalOverlay {
   onClose: () => void;
   children: ReactNode;
 }
-export interface IOrderDetails {
-  name?: string;
-  number: number;
-}
 export interface IWsData {
   success: boolean;
   orders: Array<object>;
@@ -83,7 +79,7 @@ export type TwsActionTypes = {
   wsDisconnect: ActionCreatorWithoutPayload;
   onOpen: ActionCreatorWithoutPayload;
   onClose: ActionCreatorWithoutPayload;
-  onError: ActionCreatorWithPayload<string>;
+  onError: ActionCreatorWithoutPayload;
   onMessage: ActionCreatorWithPayload<any>;
 };
 export type TWsOrders = {

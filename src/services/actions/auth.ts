@@ -158,7 +158,6 @@ type TAuthDispatch = Dispatch<TApplicationActions>
 const loginUrl = `${API_URL}/auth/login`;
 const registerUrl = `${API_URL}/auth/register`;
 const logoutUrl = `${API_URL}/auth/logout`;
-const tokenRefreshUrl = `${API_URL}/auth/token`;
 const getUserUrl = `${API_URL}/auth/user`;
 const resetPassUrl = `${API_URL}/password-reset`;
 const setPassUrl = `${API_URL}/password-reset/reset`;
@@ -182,6 +181,7 @@ export const login = (user:{email:string; password:string;}) => (dispatch: TAuth
         if (res && res.success) {
           const token = res.accessToken.split('Bearer ')[1];
           localStorage.setItem('refreshToken', res.refreshToken);
+          localStorage.setItem('accessToken', token);
           dispatch({
             type: LOGIN_SUCCESS,
             name: res.user.name,
@@ -218,6 +218,7 @@ export const logout = (token: string) => (dispatch: TAuthDispatch) => {
       .then((res) => {
         if (res && res.success) {
           localStorage.removeItem('refreshToken');
+          localStorage.removeItem('accessToken');
           dispatch({
             type: LOGOUT_SUCCESS,
           });
@@ -254,6 +255,7 @@ export const registration = (user: {email:string; password:string; name: string}
         if (res && res.success) {
           const token = res.accessToken.split('Bearer ')[1];
           localStorage.setItem('refreshToken', res.refreshToken);
+          localStorage.setItem('accessToken', token);
           dispatch({
             type: REGISTRATION_SUCCESS,
             name: res.user.name,
@@ -273,44 +275,7 @@ export const registration = (user: {email:string; password:string; name: string}
   };
 
 
-export const tokenRefresh = () => (dispatch: TAuthDispatch) => {
-    dispatch({
-      type: TOKEN_REQUEST,
-    });
-    const refreshToken = localStorage.getItem('refreshToken');
-    requestData(tokenRefreshUrl, {
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        token: refreshToken,
-      }),
-    })
-      .then((res) => {
-        if (res && res.success) {
-          const token = res.accessToken.split('Bearer ')[1];
-          localStorage.setItem('refreshToken', res.refreshToken);
-          dispatch({
-            type: TOKEN_SUCCESS,
-            token: token,
-          });
-        } else {
-          return Promise.reject(`Ошибка ${res.status}`);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        dispatch({
-          type: TOKEN_FAILED,
-        });
-      });
-  };
-
-
 export const getUserData = (token:string) => (dispatch: TAuthDispatch) => {
-  
     dispatch({
       type: GET_USER_REQUEST,
     });
@@ -337,14 +302,14 @@ export const getUserData = (token:string) => (dispatch: TAuthDispatch) => {
         if (!newToken.success) {
           Promise.reject(newToken);
         }
-        console.log(newToken);
         localStorage.setItem('refreshToken', newToken.refreshToken);
         token = newToken.accessToken;
+        localStorage.setItem('accessToken', newToken.accessToken.split('Bearer ')[1]);
         requestData(getUserUrl, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            authorization: `${token}`,
+            Authorization: `Bearer ${token}`,
           },
         })
           .then((res) => {
@@ -400,9 +365,9 @@ export const updateUserData = (user: {email: string; password:string; name:strin
         if (!newToken.success) {
           Promise.reject(newToken);
         }
-        console.log(newToken);
         localStorage.setItem('refreshToken', newToken.refreshToken);
         token = newToken.accessToken;
+        localStorage.setItem('accessToken', token);
         requestData(getUserUrl, {
           method: 'PATCH',
           headers: {

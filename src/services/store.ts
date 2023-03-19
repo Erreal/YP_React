@@ -9,21 +9,15 @@ import { TAuthActions } from './actions/auth';
 import {
   TWSActions,
   WS_CONNECTION_CLOSED,
-  WS_CONNECTION_CLOSED_PROFILE,
   WS_CONNECTION_END,
-  WS_CONNECTION_END_PROFILE,
   WS_CONNECTION_ERROR,
-  WS_CONNECTION_ERROR_PROFILE,
   WS_CONNECTION_START,
-  WS_CONNECTION_START_PROFILE,
   WS_CONNECTION_SUCCESS,
-  WS_CONNECTION_SUCCESS_PROFILE,
   WS_GET_DATA,
-  WS_GET_DATA_PROFILE,
 } from './actions/websocket';
 import {
-  socketMiddlewareProfile,
-  socketMiddlewareFeed,
+  socketMiddleware,
+
 } from './middleware/wsmiddleware';
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -51,21 +45,14 @@ const wsActions: any = {
   onError: WS_CONNECTION_ERROR,
   onMessage: WS_GET_DATA,
 };
-const wsActionsProfile: any = {
-  wsConnect: WS_CONNECTION_START_PROFILE,
-  wsDisconnect: WS_CONNECTION_END_PROFILE,
-  onOpen: WS_CONNECTION_SUCCESS_PROFILE,
-  onClose: WS_CONNECTION_CLOSED_PROFILE,
-  onError: WS_CONNECTION_ERROR_PROFILE,
-  onMessage: WS_GET_DATA_PROFILE,
-};
-const socketMiddleware1 = socketMiddlewareFeed(wsActions);
-const socketMiddleware2 = socketMiddlewareProfile(wsActionsProfile);
+
+const ordersMiddleware = socketMiddleware(wsActions);
+
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(socketMiddleware1, socketMiddleware2);
+    return getDefaultMiddleware().concat(ordersMiddleware);
   },
-  devTools: true,
+  devTools: process.env.NODE_ENV !== 'production',
 });

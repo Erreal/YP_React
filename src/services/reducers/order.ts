@@ -13,6 +13,7 @@ export const orderReducer = (state = INITIAL_STATE.order, action: TOrderActions)
       return {
         ...state,
         orderRequest: true,
+        modalShow: true,
       };
     }
     case ORDER_SUCESS: {

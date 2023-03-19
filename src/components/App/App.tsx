@@ -18,7 +18,6 @@ import { Profile } from '../../pages/profile';
 import { ProfileOrders } from '../../pages/profile-orders';
 import { ProtectedRoute } from '../ProtectedRoute';
 import { getUserData } from '../../services/actions/auth';
-import { tokenRefresh } from '../../services/actions/auth';
 import { ForgotPassword } from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
 import { ROUTES } from '../../utils/constants';
@@ -37,6 +36,7 @@ const App: FC = () => {
   const order = location.state && location.state.order;
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const accessToken = token ? token : localStorage.getItem('accessToken');
 
   useEffect(() => {
     dispatch(getItems());
@@ -46,15 +46,11 @@ const App: FC = () => {
 
   useEffect(() => {
     if (!auth) {
-      const refreshToken = localStorage.getItem('refreshToken');
-      if (refreshToken) {
-        dispatch(tokenRefresh());
-      }
-      if (token) {
-        dispatch(getUserData(token));
+      if (accessToken) {
+        dispatch(getUserData(accessToken));
       }
     }
-  }, [dispatch, token, auth]);
+  }, [dispatch, accessToken, auth]);
 
   const content = useMemo(() => {
     return ingredients.itemsRequest ? (

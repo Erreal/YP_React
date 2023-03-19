@@ -22,7 +22,7 @@ export const refreshToken = async () => {
   const res = await requestData(`${API_URL}/auth/token`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json;charset=utf-8',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken'),

@@ -38,7 +38,7 @@ export const ROUTES = {
   RESET_PASS: '/reset-password',
   PROFILE: '/profile',
   PROFILE_ORDERS: '/profile/orders',
-  PROFILE_ORDER: '/profile/orders/:id',
+  PROFILE_ORDER: '/profile/orders/:number',
   INGREDIENT: '/ingredients/:id',
   FEED: '/feed',
   FEED_ORDER: '/feed/:number',
@@ -62,6 +62,7 @@ export const INITIAL_STATE = {
     number: 0,
     orderRequest: false,
     orderFailed: false,
+    modalShow: false,
   },
   user: {
     auth: false,

@@ -6,7 +6,7 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import headerStyles from './AppHeader.module.css';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { ROUTES } from '../../utils/constants';
 
 const AppHeaderNav: FC = () => {
@@ -59,7 +59,9 @@ const AppHeader: FC = () => {
     <header className={headerStyles.header}>
       <div className={headerStyles.container}>
         <AppHeaderNav />
-        <Logo />
+        <Link to={ROUTES.MAIN}>
+          <Logo />
+        </Link>
         <AppHeaderLogin />
       </div>
     </header>

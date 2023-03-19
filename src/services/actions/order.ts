@@ -36,10 +36,11 @@ export const placeOrder = (request: Array<string>) => (dispatch: TOrderDispatch)
     dispatch({
       type: ORDER_REQUEST,
     });
+    const token = localStorage.getItem('accessToken');
     requestData(dataUrl, {
       method: 'post',
       headers: {
-        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

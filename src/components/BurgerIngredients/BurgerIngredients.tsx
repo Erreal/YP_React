@@ -124,9 +124,9 @@ const BurgerIngredients = () => {
           </>
         )}
       </section>
-      {order.number ? (
+      {order.modalShow ? (
         <Modal onClose={() => dispatch({ type: ORDER_RESET })}>
-          <OrderDetails number={order.number} name={order.name} />
+          <OrderDetails  />
         </Modal>
       ) : null}
     </>

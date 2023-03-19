@@ -39,7 +39,11 @@ export const OrderInfo: FC<TOrderCard> = (props) => {
     return Object.values(tempResult);
   };
   const totalPrice = useMemo(
-    () => composition.reduce((a, b) => a + b.price, 0),
+    () =>  {
+      if (typeof composition[0] !== 'undefined') {
+        return composition.reduce((a, b) => a + b.price, 0)
+      }
+    },
     [composition]
   );
   return (

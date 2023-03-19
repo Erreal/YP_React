@@ -6,6 +6,7 @@ import { Loader } from '../components/Loader/loader';
 import { useSelector } from 'react-redux';
 import { TWsState } from '../utils/types';
 import { OrderCard } from '../components/OrderCard/OrderCard';
+import { WS_URL } from '../utils/constants';
 
 export const Feed: FC = () => {
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ export const Feed: FC = () => {
   useEffect(() => {
     dispatch({
       type: 'WS_CONNECTION_START',
+      payload: `${WS_URL}/orders/all`
     });
     return () => {
       dispatch({ type: 'WS_CONNECTION_END' });
@@ -27,7 +29,7 @@ export const Feed: FC = () => {
       <h1 className={feedStyles.header}>Лента заказов</h1>
       <div className={feedStyles.mainContainer}>
         <section className={feedStyles.leftContainer}>
-          {wsData.orders.feed.length ? (
+          {wsData.orders.feed && wsData.orders.feed.length ? (
             wsData.orders.feed.map((value: any) => (
               <OrderCard {...value} key={value._id} showStatus={false} />
             ))
@@ -40,7 +42,7 @@ export const Feed: FC = () => {
             <div className={feedStyles.doneBoard}>
               <p className="text text_type_main-medium">Готовы:</p>
               <ul className={feedStyles.doneBoardUL}>
-                {wsData.orders.feed.length &&
+                {wsData.orders.feed && wsData.orders.feed.length &&
                   wsData.orders.feed.map((value: any, i: number) => {
                     return value.status === 'done' ? (
                       <li
@@ -56,7 +58,7 @@ export const Feed: FC = () => {
             <div className={feedStyles.doneBoard}>
               <p className="text text_type_main-medium">В работе:</p>
               <ul className={feedStyles.doneBoardUL}>
-                {wsData.orders.feed.length &&
+                {wsData.orders.feed && wsData.orders.feed.length &&
                   wsData.orders.feed.map((value: any, i: number) => {
                     return value.status === 'pending' ? (
                       <li
