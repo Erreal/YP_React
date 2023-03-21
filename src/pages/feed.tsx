@@ -56,7 +56,7 @@ export const Feed: FC = () => {
               <p className="text text_type_main-medium">В работе:</p>
               <ul className={feedStyles.doneBoardUL}>
                 {wsData.feed && wsData.feed.length &&
-                  wsData.feed.map((value: any, i: number) => {
+                  wsData.feed.map((value, i) => {
                     return value.status === 'pending' ? (
                       <li
                         key={i}
