@@ -1,15 +1,16 @@
 import { useMemo, FC } from 'react';
 import ingredientCardStyles from './IngredientCard.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd/dist/hooks';
 import { SET_CURRENT_ITEM } from '../../services/actions/ingredients';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from 'react-router-dom';
-import { IBusket, IIngredientCard } from '../../utils/types';
+import { IIngredientCard } from '../../utils/types';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 const IngredientCard: FC<IIngredientCard> = (props) => {
-  const basket = useSelector((store: IBusket) => store.basket);
+  const basket = useAppSelector((store) => store.basket);
   const location = useLocation();
   const dispatch = useDispatch();
 

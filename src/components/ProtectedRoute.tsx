@@ -1,9 +1,8 @@
 import { FC, ReactNode } from 'react';
 import { Route, Redirect, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { ROUTES } from '../utils/constants';
-import { TStateReducer } from '../services/reducers/ingredients';
 import { ILocationState } from '../utils/types';
+import { useAppSelector } from '../hooks/useAppSelector';
 
 interface IProtectedRoute {
   authNeeded?: boolean;
@@ -20,7 +19,7 @@ export const ProtectedRoute: FC<IProtectedRoute> = ({
 }) => {
 
   const location = useLocation<ILocationState>();
-  const { token } = useSelector((store: TStateReducer) => store.user);
+  const { token } = useAppSelector((store) => store.user);
   const accessToken = token ? token : localStorage.getItem('accessToken');
 
   if (!authNeeded && accessToken) {

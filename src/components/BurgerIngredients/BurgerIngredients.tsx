@@ -2,21 +2,18 @@ import React, { useRef, useEffect, useMemo } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientsStyles from './BurgerIngredients.module.css';
 import IngredientCard from '../IngredientCard/IngredientCard';
-import { useSelector, useDispatch } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { INGREDIENTS_TYPES } from '../../utils/constants';
 import { Modal } from '../Modal/Modal';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
 import { ORDER_RESET } from '../../services/actions/order';
-import { IIngredients } from '../../utils/types';
-import { TStateReducer } from '../../services/reducers/ingredients';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 const BurgerIngredients = () => {
-  const dispatch = useDispatch();
-  const ingredients = useSelector(
-    (store: IIngredients) => store.ingredients.items
-  );
-  const order = useSelector((store: TStateReducer) => store.order);
+  const dispatch = useAppDispatch();
+  const ingredients = useAppSelector((store) => store.ingredients.items);
+  const order = useAppSelector((store) => store.order);
   const [currentTab, setCurrentTab] = React.useState<string>('0');
 
   const [bunRef, bunInView] = useInView();

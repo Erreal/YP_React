@@ -1,11 +1,10 @@
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/useAppSelector';
 import done from '../../images/done.png';
-import { TStateReducer } from '../../services/reducers/ingredients';
 import { Loader } from '../Loader/loader';
 
 export const OrderDetails: FC = () => {
-  const order = useSelector((store: TStateReducer) => store.order);
+  const order = useAppSelector((store) => store.order);
   return (
     <>
       {order.number ? (

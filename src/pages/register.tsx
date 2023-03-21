@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import {
   Input,
   EmailInput,
@@ -7,22 +7,20 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import pageStyles from './pages.module.css';
-import { useSelector } from 'react-redux';
 import { registration } from '../services/actions/auth';
 import { Loader } from '../components/Loader/loader';
 import { ROUTES } from '../utils/constants';
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import { TStateReducer } from '../services/reducers/ingredients';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { TPreventDefault } from '../utils/types';
 
 export const Registration = () => {
   const dispatch = useAppDispatch();
-  const { name, email, password, registrationRequest } = useSelector(
-    (state: TStateReducer) => state.user
-  );
+  const { name, email, password, registrationRequest } = useAppSelector((state) => state.user);
   const [nameValue, setName] = React.useState(name);
   const [emailValue, setEmail] = React.useState(email);
   const [passwordValue, setPassword] = React.useState(password);
-  const onInputChange = (evt: { target: { name: string; value: string } }) => {
+  const onInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
     if (evt.target.name === 'name') {
       setName(evt.target.value);
       return;
@@ -37,7 +35,7 @@ export const Registration = () => {
     }
   };
 
-  const handleSubmit = (evt: { preventDefault: () => void }) => {
+  const handleSubmit = (evt: TPreventDefault) => {
     evt.preventDefault();
     dispatch(
       registration({

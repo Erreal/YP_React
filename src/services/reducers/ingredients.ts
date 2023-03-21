@@ -8,19 +8,24 @@ import {
   GET_ITEMS_FAILED,
   SET_CURRENT_ITEM,
   RESET_CURRENT_ITEM,
+  TIngredientsActions,
 } from '../actions/ingredients';
-import { INITIAL_STATE } from '../../utils/constants';
-import { IIngredientParams } from '../../utils/types';
 import { wsReducer } from './websocket';
+import { IIngredientParams } from '../../utils/types';
 
-const ingredientsReducer = (
-  state = INITIAL_STATE.ingredients,
-  action: {
-    type: string;
-    items: Array<IIngredientParams>;
-    item: IIngredientParams;
-  }
-) => {
+const ingredients: {
+  items: Array<IIngredientParams>;
+  itemsRequest: boolean;
+  itemsFailed: boolean;
+  currentIngredient: object;
+} = {
+  items: [],
+  itemsRequest: false,
+  itemsFailed: false,
+  currentIngredient: {},
+}
+
+const ingredientsReducer = (state = ingredients, action: TIngredientsActions) => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return {
@@ -45,7 +50,7 @@ const ingredientsReducer = (
     case RESET_CURRENT_ITEM: {
       return {
         ...state,
-        currentIngredient: INITIAL_STATE.ingredients.currentIngredient,
+        currentIngredient: ingredients.currentIngredient,
       };
     }
     default:

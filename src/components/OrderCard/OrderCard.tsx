@@ -3,16 +3,16 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
 import cardStyles from './OrderCard.module.css';
-import { IIngredients, IIngredientParams, TOrderCard } from '../../utils/types';
+import { IIngredientParams, TOrderCard } from '../../utils/types';
 import { ORDER_STATUS } from '../../utils/constants';
 import { Link, useLocation } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 export const OrderCard: FC<TOrderCard> = (props) => {
   const { number, name, status, ingredients, createdAt, showStatus } = props;
-  const ingredientsList = useSelector(
-    (store: IIngredients) => store.ingredients.items
+  const ingredientsList = useAppSelector(
+    (store) => store.ingredients.items
   );
   const location = useLocation();
 

@@ -12,22 +12,6 @@ export interface ILocationState {
     pathname: string;
   };
 }
-export interface IIngredients {
-  ingredients: {
-    items: Array<IIngredientParams>;
-    itemsRequest: boolean;
-    itemsFailed: boolean;
-    currentIngredient: IIngredientParams;
-  };
-}
-export interface IBusket {
-  basket: {
-    bun: IIngredientParams;
-    bunPrice: number;
-    items: Array<IIngredientParams>;
-    itemsPrice: number;
-  };
-}
 export interface IBunInConstructor {
   type: 'top' | 'bottom' | undefined;
   text?: string;
@@ -70,7 +54,7 @@ export interface IModalOverlay {
 }
 export interface IWsData {
   success: boolean;
-  orders: Array<object>;
+  orders: Array<TOrderCard>;
   total: number;
   totalToday: number;
 }
@@ -83,9 +67,9 @@ export type TwsActionTypes = {
   onMessage: ActionCreatorWithPayload<any>;
 };
 export type TWsOrders = {
-  feed: Array<object>;
-  totalOrders: number | null;
-  totalToday: number | null;
+  feed: Array<IIngredientParams>;
+  totalOrders: number;
+  totalToday: number;
 };
 export type TWsState = {
   orders: TWsOrders;
@@ -102,3 +86,6 @@ export type TOrderCard = {
   createdAt: string;
   showStatus?: boolean;
 };
+export type TPreventDefault = {
+  preventDefault: () => void;
+}

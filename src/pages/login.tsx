@@ -7,18 +7,16 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useHistory } from 'react-router-dom';
 import pageStyles from './pages.module.css';
-import { useSelector } from 'react-redux';
 import { login } from '../services/actions/auth';
 import { Loader } from '../components/Loader/loader';
 import { ROUTES } from '../utils/constants';
-import { TStateReducer } from '../services/reducers/ingredients';
 import { useAppDispatch } from '../hooks/useAppDispatch';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { TPreventDefault } from '../utils/types';
 
 export const Login: FC = () => {
   const dispatch = useAppDispatch();
-  const { auth, loginRequest, loginFailed } = useSelector(
-    (store: TStateReducer) => store.user
-  );
+  const { auth, loginRequest, loginFailed } = useAppSelector((store) => store.user);
   const [emailValue, setEmailValue] = React.useState('');
   const [passwordValue, setPasswordValue] = React.useState('');
   const history = useHistory();
@@ -42,7 +40,7 @@ export const Login: FC = () => {
   };
 
   const handleSubmit = useCallback(
-    (evt: { preventDefault: () => void }) => {
+    (evt: TPreventDefault) => {
       evt.preventDefault();
       dispatch(
         login({

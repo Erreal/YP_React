@@ -1,29 +1,27 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { setNewPassword } from '../services/actions/auth';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import resetPassStyles from './pages.module.css';
 import { ROUTES } from '../utils/constants';
-import { TStateReducer } from '../services/reducers/ingredients';
 import { useAppDispatch } from '../hooks/useAppDispatch';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { TPreventDefault } from '../utils/types';
 
 export default function ResetPassword() {
   const dispatch = useAppDispatch();
 
-  const { resetSuccess, setPasswdFailed, setPasswdSuccess } = useSelector(
-    (store: TStateReducer) => store.user
-  );
+  const { resetSuccess, setPasswdFailed, setPasswdSuccess } = useAppSelector((store) => store.user);
 
   const [formValues, setValue] = useState({ password: '', key: '' });
-  const onChange = (evt: { target: { name: string; value: string } }) => {
+  const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...formValues, [evt.target.name]: evt.target.value });
   };
 
   const resetPassword = useCallback(
-    (evt: { preventDefault: () => void }) => {
+    (evt: TPreventDefault) => {
       evt.preventDefault();
       if (!resetSuccess) return;
       dispatch(setNewPassword(formValues));

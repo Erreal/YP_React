@@ -1,26 +1,23 @@
 import { FC, useEffect } from 'react';
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import { TStateReducer } from '../services/reducers/ingredients';
 import feedStyles from './pages.module.css';
 import { Loader } from '../components/Loader/loader';
-import { useSelector } from 'react-redux';
-import { TWsState } from '../utils/types';
 import { OrderCard } from '../components/OrderCard/OrderCard';
 import { WS_URL } from '../utils/constants';
+import { WS_CONNECTION_END, WS_CONNECTION_START } from '../services/actions/websocket';
+import { useAppSelector } from '../hooks/useAppSelector';
 
 export const Feed: FC = () => {
   const dispatch = useAppDispatch();
-  const wsData: TWsState = useSelector(
-    (store: TStateReducer) => store.websocket
-  );
+  const wsData = useAppSelector((store) => store.websocket);
 
   useEffect(() => {
     dispatch({
-      type: 'WS_CONNECTION_START',
+      type: WS_CONNECTION_START,
       payload: `${WS_URL}/orders/all`
     });
     return () => {
-      dispatch({ type: 'WS_CONNECTION_END' });
+      dispatch({ type: WS_CONNECTION_END });
     };
   }, [dispatch]);
 
@@ -29,8 +26,8 @@ export const Feed: FC = () => {
       <h1 className={feedStyles.header}>Лента заказов</h1>
       <div className={feedStyles.mainContainer}>
         <section className={feedStyles.leftContainer}>
-          {wsData.orders.feed && wsData.orders.feed.length ? (
-            wsData.orders.feed.map((value: any) => (
+          {wsData.feed && wsData.feed.length ? (
+            wsData.feed.map((value) => (
               <OrderCard {...value} key={value._id} showStatus={false} />
             ))
           ) : (
@@ -42,8 +39,8 @@ export const Feed: FC = () => {
             <div className={feedStyles.doneBoard}>
               <p className="text text_type_main-medium">Готовы:</p>
               <ul className={feedStyles.doneBoardUL}>
-                {wsData.orders.feed && wsData.orders.feed.length &&
-                  wsData.orders.feed.map((value: any, i: number) => {
+                {wsData.feed && wsData.feed.length &&
+                  wsData.feed.map((value, i) => {
                     return value.status === 'done' ? (
                       <li
                         key={i}
@@ -58,8 +55,8 @@ export const Feed: FC = () => {
             <div className={feedStyles.doneBoard}>
               <p className="text text_type_main-medium">В работе:</p>
               <ul className={feedStyles.doneBoardUL}>
-                {wsData.orders.feed && wsData.orders.feed.length &&
-                  wsData.orders.feed.map((value: any, i: number) => {
+                {wsData.feed && wsData.feed.length &&
+                  wsData.feed.map((value: any, i: number) => {
                     return value.status === 'pending' ? (
                       <li
                         key={i}
@@ -79,7 +76,7 @@ export const Feed: FC = () => {
             <p
               className={`${feedStyles.complitedNumbers} text text_type_digits-large`}
             >
-              {wsData.orders && wsData.orders.totalOrders}
+              {wsData && wsData.totalOrders}
             </p>
           </section>
           <section className="mt-15">
@@ -87,7 +84,7 @@ export const Feed: FC = () => {
             <p
               className={`${feedStyles.complitedNumbers} text text_type_digits-large`}
             >
-              {wsData.orders && wsData.orders.totalToday}
+              {wsData && wsData.totalToday}
             </p>
           </section>
         </section>

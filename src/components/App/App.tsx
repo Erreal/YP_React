@@ -3,7 +3,6 @@ import AppHeader from '../AppHeader/AppHeader';
 import appStyles from './App.module.css';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import { useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/ingredients';
 import { Loader } from '../Loader/loader';
 import { Modal } from '../Modal/Modal';
@@ -21,16 +20,16 @@ import { getUserData } from '../../services/actions/auth';
 import { ForgotPassword } from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
 import { ROUTES } from '../../utils/constants';
-import { TStateReducer } from '../../services/reducers/ingredients';
-import { IIngredients, ILocationState } from '../../utils/types';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { Feed } from '../../pages/feed';
 import { OrderInfo } from '../OrderInfo/OrderInfo';
 import { OrderPage } from '../../pages/order';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { ILocationState } from '../../utils/types';
 
 const App: FC = () => {
-  const { ingredients } = useSelector((store: IIngredients) => store);
-  const { token, auth } = useSelector((store: TStateReducer) => store.user);
+  const { ingredients } = useAppSelector((store) => store);
+  const { token, auth } = useAppSelector((store) => store.user);
   const location = useLocation<ILocationState>();
   const background = location.state && location.state.background;
   const order = location.state && location.state.order;

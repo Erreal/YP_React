@@ -45,18 +45,6 @@ export const ROUTES = {
 };
 
 export const INITIAL_STATE = {
-  ingredients: {
-    items: [],
-    itemsRequest: false,
-    itemsFailed: false,
-    currentIngredient: {},
-  },
-  basket: {
-    bun: {},
-    bunPrice: 0,
-    items: [],
-    itemsPrice: 0,
-  },
   order: {
     name: '',
     number: 0,
@@ -89,23 +77,5 @@ export const INITIAL_STATE = {
     setPasswdRequest: false,
     setPasswdSuccess: false,
     setPasswdFailed: false,
-  },
-  websocket: {
-    wsConnected: false,
-    wsFailed: false,
-    orders: {
-      feed: [],
-      totalOrders: null,
-      totalToday: null,
-    },
-  },
-  websocketProfile: {
-    wsConnected: false,
-    wsFailed: false,
-    orders: {
-      feed: [],
-      totalOrders: null,
-      totalToday: null,
-    },
   },
 };

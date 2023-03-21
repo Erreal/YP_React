@@ -9,7 +9,7 @@ const modalRoot = document.getElementById('root-modals');
 
 export const Modal: FC<IModal> = (props) => {
   useEffect(() => {
-    const close = (evt: { key: string }) => {
+    const close = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
         props.onClose();
       }

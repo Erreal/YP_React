@@ -5,11 +5,27 @@ import {
   DELETE_ITEM,
   MOVE_ITEM,
 } from '../actions/basket';
-import { INITIAL_STATE } from '../../utils/constants';
 import { IIngredientParams } from '../../utils/types';
 import { TBasketActions } from '../actions/basket';
 
-export const basketReducer = (state = INITIAL_STATE.basket, action: TBasketActions) => {
+const basket: {
+  bun: IIngredientParams;
+  bunPrice: number;
+  items: Array<IIngredientParams>;
+  itemsPrice: number
+} = {
+  bun: {
+    _id: '',
+    image: '',
+    name: '',
+    price: 0,
+  },
+  bunPrice: 0,
+  items: [],
+  itemsPrice: 0
+}
+
+export const basketReducer = (state = basket, action: TBasketActions) => {
   switch (action.type) {
     case ADD_BUN:
       return {
@@ -41,7 +57,7 @@ export const basketReducer = (state = INITIAL_STATE.basket, action: TBasketActio
         items: sortedItems,
       };
     case RESET:
-      return INITIAL_STATE.basket;
+      return basket;
     default:
       return state;
   }

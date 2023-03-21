@@ -1,6 +1,6 @@
 // rootReducer.ts
 
-import { INITIAL_STATE } from '../../utils/constants';
+import { TOrderCard } from '../../utils/types';
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
@@ -10,10 +10,21 @@ import {
   TWSActions,
 } from '../actions/websocket';
 
-export const wsReducer = (
-  state = INITIAL_STATE.websocket,
-  action: TWSActions
-) => {
+const websocket: {
+  wsConnected: boolean;
+  wsFailed: boolean;
+  feed: Array<TOrderCard>;
+  totalOrders: number;
+  totalToday: number;
+} = {
+  wsConnected: false,
+  wsFailed: false,
+  feed: [],
+  totalOrders: 0,
+  totalToday: 0,
+}
+
+export const wsReducer = (state = websocket, action: TWSActions) => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {
@@ -34,11 +45,9 @@ export const wsReducer = (
     case WS_GET_DATA:
       return {
         ...state,
-        orders: {
           feed: action.payload.orders,
           totalOrders: action.payload.total,
           totalToday: action.payload.totalToday,
-        },
       };
     default:
       return state;

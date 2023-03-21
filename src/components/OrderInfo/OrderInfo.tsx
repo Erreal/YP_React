@@ -3,17 +3,15 @@ import {
   FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/useAppSelector';
 import { ORDER_STATUS } from '../../utils/constants';
-import { IIngredientParams, IIngredients, TOrderCard } from '../../utils/types';
+import { IIngredientParams, TOrderCard } from '../../utils/types';
 import orderInfoStyles from './OrderInfo.module.css';
 
 export const OrderInfo: FC<TOrderCard> = (props) => {
   const { number, name, status, ingredients, createdAt } = props;
 
-  const ingredientsList = useSelector(
-    (store: IIngredients) => store.ingredients.items
-  );
+  const ingredientsList = useAppSelector((store) => store.ingredients.items);
   const composition = useMemo(() => {
     return ingredients
       .map((el) => {
