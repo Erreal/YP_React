@@ -8,10 +8,24 @@ import {
   GET_ITEMS_FAILED,
   SET_CURRENT_ITEM,
   RESET_CURRENT_ITEM,
+  TIngredientsActions,
 } from '../actions/ingredients';
-import { INITIAL_STATE } from '../../utils/constants';
+import { wsReducer } from './websocket';
+import { IIngredientParams } from '../../utils/types';
 
-const ingredientsReducer = (state = INITIAL_STATE.ingredients, action: { type: string; items: Array<object>; item: object; }) => {
+const ingredients: {
+  items: Array<IIngredientParams>;
+  itemsRequest: boolean;
+  itemsFailed: boolean;
+  currentIngredient: object;
+} = {
+  items: [],
+  itemsRequest: false,
+  itemsFailed: false,
+  currentIngredient: {},
+}
+
+const ingredientsReducer = (state = ingredients, action: TIngredientsActions) => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return {
@@ -36,7 +50,7 @@ const ingredientsReducer = (state = INITIAL_STATE.ingredients, action: { type: s
     case RESET_CURRENT_ITEM: {
       return {
         ...state,
-        currentIngredient: INITIAL_STATE.ingredients.currentIngredient,
+        currentIngredient: ingredients.currentIngredient,
       };
     }
     default:
@@ -48,5 +62,6 @@ export const rootReducer = combineReducers({
   basket: basketReducer,
   order: orderReducer,
   user: authReducer,
+  websocket: wsReducer,
 });
-export type TStateReducer = ReturnType<typeof rootReducer>
+export type TStateReducer = ReturnType<typeof rootReducer>;

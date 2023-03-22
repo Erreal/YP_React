@@ -1,26 +1,15 @@
 import { ReactNode } from 'react';
 import { Location } from 'history';
+import {
+  ActionCreatorWithoutPayload,
+  ActionCreatorWithPayload,
+} from '@reduxjs/toolkit';
 
 export interface ILocationState {
   background: Location;
+  order: TOrderCard;
   from: {
     pathname: string;
-  };
-}
-export interface IIngredients {
-  ingredients: {
-    items: Array<IIngredientParams>;
-    itemsRequest: boolean;
-    itemsFailed: boolean;
-    currentIngredient: IIngredientParams;
-  };
-}
-export interface IBusket {
-  basket: {
-    bun: IIngredientParams;
-    bunPrice: number;
-    items: Array<IIngredientParams>;
-    itemsPrice: number;
   };
 }
 export interface IBunInConstructor {
@@ -52,6 +41,7 @@ export interface IIngredientParams {
   proteins?: number;
   type?: string;
   __v?: number;
+  count?: number;
 }
 export interface IModal {
   onClose: () => void;
@@ -62,7 +52,40 @@ export interface IModalOverlay {
   onClose: () => void;
   children: ReactNode;
 }
-export interface IOrderDetails {
-  name?: string;
+export interface IWsData {
+  success: boolean;
+  orders: Array<TOrderCard>;
+  total: number;
+  totalToday: number;
+}
+export type TwsActionTypes = {
+  wsConnect: ActionCreatorWithPayload<any>;
+  wsDisconnect: ActionCreatorWithoutPayload;
+  onOpen: ActionCreatorWithoutPayload;
+  onClose: ActionCreatorWithoutPayload;
+  onError: ActionCreatorWithoutPayload;
+  onMessage: ActionCreatorWithPayload<any>;
+};
+export type TWsOrders = {
+  feed: Array<IIngredientParams>;
+  totalOrders: number;
+  totalToday: number;
+};
+export type TWsState = {
+  orders: TWsOrders;
+  wsConnected: boolean;
+  wsFailed: boolean;
+};
+export type TOrderCard = {
+  _id: string;
   number: number;
+  name: string;
+  ingredients: Array<string>;
+  status?: string;
+  index: number;
+  createdAt: string;
+  showStatus?: boolean;
+};
+export type TPreventDefault = {
+  preventDefault: () => void;
 }

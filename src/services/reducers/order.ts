@@ -3,15 +3,17 @@ import {
   ORDER_SUCESS,
   ORDER_FAILED,
   ORDER_RESET,
+  TOrderActions,
 } from '../actions/order';
 import { INITIAL_STATE } from '../../utils/constants';
 
-export const orderReducer = (state = INITIAL_STATE.order, action: any) => {
+export const orderReducer = (state = INITIAL_STATE.order, action: TOrderActions) => {
   switch (action.type) {
     case ORDER_REQUEST: {
       return {
         ...state,
         orderRequest: true,
+        modalShow: true,
       };
     }
     case ORDER_SUCESS: {

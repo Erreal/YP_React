@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { restorePassword } from '../services/actions/auth';
 import {
   EmailInput,
@@ -9,22 +8,21 @@ import {
 import forgotPassStyles from './pages.module.css';
 import { Loader } from '../components/Loader/loader';
 import { ROUTES } from '../utils/constants';
-import { TStateReducer } from '../services/reducers/ingredients';
 import { useAppDispatch } from '../hooks/useAppDispatch';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { TPreventDefault } from '../utils/types';
 
 export const ForgotPassword: FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { resetSuccess, resetRequest } = useSelector(
-    (store: TStateReducer) => store.user
-  );
+  const { resetSuccess, resetRequest } = useAppSelector((store) => store.user);
   const [emailValue, setEmailValue] = useState<string>('');
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(evt.target.value);
   };
 
   const sendEmail = useCallback(
-    (evt: { preventDefault: () => void }) => {
+    (evt: TPreventDefault) => {
       evt.preventDefault();
       dispatch(restorePassword(emailValue));
     },

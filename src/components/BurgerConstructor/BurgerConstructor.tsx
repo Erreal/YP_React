@@ -5,7 +5,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructorStyles from './BurgerConstructor.module.css';
 import { BunInConstructor } from './BunInConstructor';
-import { useSelector } from 'react-redux';
 import {
   ADD_BUN,
   ADD_ITEM,
@@ -18,16 +17,14 @@ import ItemInConstructor from './ItemInConstructor';
 import uuid from 'react-uuid';
 import { EMPTY_BUN_TEXT, EMPTY_ORDER, ROUTES } from '../../utils/constants';
 import { useHistory } from 'react-router-dom';
-import { TStateReducer } from '../../services/reducers/ingredients';
-import { IBusket, IIngredientParams, IIngredients } from '../../utils/types';
+import {  IIngredientParams } from '../../utils/types';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 const BurgerConstructor: FC = () => {
-  const ingredients = useSelector(
-    (store: IIngredients) => store.ingredients.items
-  );
-  const basket = useSelector((store: IBusket) => store.basket);
-  const autorized = useSelector((store: TStateReducer) => store.user.auth);
+  const ingredients = useAppSelector((store) => store.ingredients.items);
+  const basket = useAppSelector((store) => store.basket);
+  const autorized = useAppSelector((store) => store.user.auth);
   const dispatch = useAppDispatch();
   const history = useHistory();
 
@@ -56,7 +53,7 @@ const BurgerConstructor: FC = () => {
       ...basket.items.map((item: { _id: string }) => item._id),
       basket.bun._id,
     ];
-    if (!Object.keys(basket.bun).length || basket.items.length === 0) {
+    if (!Object.keys(basket?.bun).length || basket.items.length === 0) {
       alert(EMPTY_ORDER);
       return;
     }
@@ -77,7 +74,7 @@ const BurgerConstructor: FC = () => {
         <>
           <div className={`${constructorStyles.constructorWrapper} mb-10`}>
             <div className={constructorStyles.constructorBunItem}>
-              {Object.keys(basket.bun).length ? (
+              {basket.bun.price !== 0 ? (
                 <BunInConstructor type="top" text="(верх)" bun={basket.bun} />
               ) : (
                 <p className={constructorStyles.emptyBunTop}>
@@ -98,7 +95,7 @@ const BurgerConstructor: FC = () => {
                 : null}
             </div>
             <div className={constructorStyles.constructorBunItem}>
-              {Object.keys(basket.bun).length ? (
+              {basket.bun.price !== 0 ? (
                 <BunInConstructor type="bottom" text="(низ)" bun={basket.bun} />
               ) : (
                 <p className={constructorStyles.emptyBunBottom}>

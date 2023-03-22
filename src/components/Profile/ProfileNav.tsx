@@ -9,7 +9,7 @@ export const ProfileNav = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const location = useLocation<string>();
-
+  const isOrderList: boolean = location.pathname ==='/profile/orders' ? true: false;
   const handleLogout = () => {
     const token = localStorage.getItem('refreshToken') || '';
     dispatch(logout(token));
@@ -53,7 +53,7 @@ export const ProfileNav = () => {
       <p
         className={`${profileStyles.text} text text_type_main-default text_color_inactive mt-20`}
       >
-        В этом разделе вы можете изменить свои персональные данные
+        {isOrderList ? 'В этом разделе вы можете просмотреть свою историю заказов' : 'В этом разделе вы можете изменить свои персональные данные' }
       </p>
     </nav>
   );

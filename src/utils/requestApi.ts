@@ -22,11 +22,21 @@ export const refreshToken = async () => {
   const res = await requestData(`${API_URL}/auth/token`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json;charset=utf-8',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken'),
     }),
+  });
+  return await res;
+};
+
+export const getOrder = async (number: string) => {
+  const res = await requestData(`${API_URL}/orders/${number}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
   return await res;
 };

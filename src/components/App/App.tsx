@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo, FC } from 'react';
+import { useEffect, useMemo, FC } from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import appStyles from './App.module.css';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import { useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/ingredients';
 import { Loader } from '../Loader/loader';
 import { Modal } from '../Modal/Modal';
@@ -18,21 +17,25 @@ import { Profile } from '../../pages/profile';
 import { ProfileOrders } from '../../pages/profile-orders';
 import { ProtectedRoute } from '../ProtectedRoute';
 import { getUserData } from '../../services/actions/auth';
-import { tokenRefresh } from '../../services/actions/auth';
 import { ForgotPassword } from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
 import { ROUTES } from '../../utils/constants';
-import { TStateReducer } from '../../services/reducers/ingredients';
-import { IIngredients, ILocationState } from '../../utils/types';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { Feed } from '../../pages/feed';
+import { OrderInfo } from '../OrderInfo/OrderInfo';
+import { OrderPage } from '../../pages/order';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { ILocationState } from '../../utils/types';
 
 const App: FC = () => {
-  const { ingredients } = useSelector((store: IIngredients) => store);
-  const { token, auth } = useSelector((store: TStateReducer) => store.user);
+  const { ingredients } = useAppSelector((store) => store);
+  const { token, auth } = useAppSelector((store) => store.user);
   const location = useLocation<ILocationState>();
   const background = location.state && location.state.background;
+  const order = location.state && location.state.order;
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const accessToken = token ? token : localStorage.getItem('accessToken');
 
   useEffect(() => {
     dispatch(getItems());
@@ -42,15 +45,11 @@ const App: FC = () => {
 
   useEffect(() => {
     if (!auth) {
-      const refreshToken = localStorage.getItem('refreshToken');
-      if (refreshToken) {
-        dispatch(tokenRefresh());
-      }
-      if (token) {
-        dispatch(getUserData(token));
+      if (accessToken) {
+        dispatch(getUserData(accessToken));
       }
     }
-  }, [dispatch, token, auth]);
+  }, [dispatch, accessToken, auth]);
 
   const content = useMemo(() => {
     return ingredients.itemsRequest ? (
@@ -86,6 +85,13 @@ const App: FC = () => {
             >
               <ProfileOrders />
             </ProtectedRoute>
+            <ProtectedRoute
+              path={ROUTES.PROFILE_ORDER}
+              authNeeded={true}
+              exact={true}
+            >
+              <OrderPage />
+            </ProtectedRoute>
             <Route path={ROUTES.REGISTER} exact={true}>
               <Registration />
             </Route>
@@ -108,6 +114,12 @@ const App: FC = () => {
                 </div>
               </section>
             </Route>
+            <Route path={ROUTES.FEED} exact>
+              <Feed />
+            </Route>
+            <Route path={ROUTES.FEED_ORDER} exact={true}>
+              <OrderPage />
+            </Route>
             <Route path="*">
               <Page404 />
             </Route>
@@ -120,6 +132,21 @@ const App: FC = () => {
                 <IngredientDetails />
               </Modal>
             </div>
+          </Route>
+        )}
+        {background && (
+          <Route path="/profile/orders/:id">
+            <Modal onClose={handleModalClose}>
+              <OrderInfo {...order} />
+            </Modal>
+          </Route>
+        )}
+
+        {background && (
+          <Route path="/feed/:id">
+            <Modal onClose={handleModalClose}>
+              <OrderInfo {...order} />
+            </Modal>
           </Route>
         )}
       </DndProvider>

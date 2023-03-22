@@ -5,12 +5,12 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructorStyles from './BurgerConstructor.module.css';
 import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
 import { MOVE_ITEM } from '../../services/actions/basket';
 import { IItemInConstructor } from '../../utils/types';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 const ItemInConstructor: FC<IItemInConstructor> = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const dropRef = useRef<HTMLDivElement>(null);
 
   const [{ target }, dropTarget] = useDrop({

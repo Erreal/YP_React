@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Input,
   EmailInput,
@@ -8,15 +7,14 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import profileStyles from './Profile.module.css';
 import { updateUserData } from '../../services/actions/auth';
-import { TStateReducer } from '../../services/reducers/ingredients';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { TPreventDefault } from '../../utils/types';
 
 export const ProfileForm = () => {
   const dispatch = useAppDispatch();
 
-  const { name, email, password, token } = useSelector(
-    (state: TStateReducer) => state.user
-  );
+  const { name, email, password, token } = useAppSelector((state) => state.user);
   const [dataChanged, setDataChanged] = useState<boolean>(false);
   const [nameValue, setName] = useState<string>(name);
   const [emailValue, setEmail] = useState<string>(email);
@@ -27,7 +25,7 @@ export const ProfileForm = () => {
     setPassword(password);
     setDataChanged(false);
   };
-  const handleSubmit = (evt: { preventDefault: () => void }) => {
+  const handleSubmit = (evt: TPreventDefault) => {
     evt.preventDefault();
     dispatch(
       updateUserData(
@@ -41,7 +39,7 @@ export const ProfileForm = () => {
     );
     setDataChanged(false);
   };
-  const onInputChange = (evt: { target: { name: string; value: string } }) => {
+  const onInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setDataChanged(true);
     if (evt.target.name === 'name') {
       setName(evt.target.value);
