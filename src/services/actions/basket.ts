@@ -5,6 +5,10 @@ export const ADD_ITEM: 'ADD_ITEM' = 'ADD_ITEM';
 export const DELETE_ITEM: 'DELETE_ITEM' = 'DELETE_ITEM';
 export const RESET: 'RESET' = 'RESET';
 export const MOVE_ITEM: 'MOVE_ITEM' = 'MOVE_ITEM';
+
+export interface IBusketInit {
+  readonly type: null;
+}
 export interface IAddBun {
   readonly type: typeof ADD_BUN;
   bun: IIngredientParams;
@@ -33,4 +37,5 @@ export type TBasketActions =
   | IAddBun
   | IDeleteItem
   | IReset
-  | IMoveItem;
+  | IMoveItem
+  | IBusketInit;

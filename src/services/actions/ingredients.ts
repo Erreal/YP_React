@@ -8,8 +8,10 @@ export const GET_ITEMS_REQUEST: 'GET_ITEMS_REQUEST' = 'GET_ITEMS_REQUEST';
 export const GET_ITEMS_SUCCESS: 'GET_ITEMS_SUCCESS' = 'GET_ITEMS_SUCCESS';
 export const GET_ITEMS_FAILED: 'GET_ITEMS_FAILED' = 'GET_ITEMS_FAILED';
 export const SET_CURRENT_ITEM: 'SET_CURRENT_ITEM' = 'SET_CURRENT_ITEM';
-export const RESET_CURRENT_ITEM: 'RESET_CURRENT_ITEM' = 'RESET_CURRENT_ITEM';
 
+export interface IIngredientsInit {
+  readonly type: null;
+}
 export interface IGetItemsRequest {
   readonly type: typeof GET_ITEMS_REQUEST;
 }
@@ -24,16 +26,13 @@ export interface ISetCurrentItem {
   readonly type: typeof SET_CURRENT_ITEM;
   item: IIngredientParams;
 }
-export interface IResetCurrentItem {
-  readonly type: typeof RESET_CURRENT_ITEM;
-}
 
 export type TIngredientsActions =
   | IGetItemsRequest
   | IGetItemsSuccess
   | IGetItemsFailed
   | ISetCurrentItem
-  | IResetCurrentItem;  
+  | IIngredientsInit;  
 
 type TIngredientsDispatch = Dispatch<TApplicationActions>; 
 

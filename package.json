@@ -5,7 +5,6 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/react-dnd": "^3.0.2",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
@@ -27,7 +26,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && scp -r ./build/* erreal@188.120.242.74:/var/www/stellar-burger" 
   },
   "eslintConfig": {
     "extends": [
@@ -48,13 +48,18 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^14.0.0",
     "@types/babel__core": "^7.20.0",
     "@types/jest": "^29.4.0",
     "@types/node": "^18.14.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/react-router-dom": "^5.3.3",
+    "cypress": "^12.9.0",
     "eslint-config-prettier": "^8.5.0",
-    "prettier": "2.8.0"
+    "fetch-mock": "^9.11.0",
+    "prettier": "2.8.0",
+    "react-test-renderer": "^18.2.0",
+    "redux-mock-store": "^1.5.4"
   }
 }

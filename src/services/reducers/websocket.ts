@@ -10,7 +10,7 @@ import {
   TWSActions,
 } from '../actions/websocket';
 
-const websocket: {
+export const websocket: {
   wsConnected: boolean;
   wsFailed: boolean;
   feed: Array<TOrderCard>;

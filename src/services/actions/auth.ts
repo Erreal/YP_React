@@ -35,6 +35,9 @@ export const SET_PASSWORD_REQUEST:'SET_PASSWORD_REQUEST' = 'SET_PASSWORD_REQUEST
 export const SET_PASSWORD_SUCCESS:'SET_PASSWORD_SUCCESS' = 'SET_PASSWORD_SUCCESS';
 export const SET_PASSWORD_FAILED: 'SET_PASSWORD_FAILED' = 'SET_PASSWORD_FAILED';
 
+export interface IAuthInit {
+  readonly type: null;
+}
 export interface ILoginRequest {
   readonly type: typeof LOGIN_REQUEST;
 }
@@ -151,7 +154,8 @@ export type TAuthActions =
 | IResetPasswordFailed
 | ISetPasswordRequest
 | ISetPasswordSuccess
-| ISetPasswordFailed;
+| ISetPasswordFailed
+| IAuthInit;
 
 type TAuthDispatch = Dispatch<TApplicationActions>
 
