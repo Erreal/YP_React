@@ -27,7 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./build/* erreal@188.120.242.74:/var/www/stellar-burger" 
+    "deploy": "npm run build && scp -r ./build/* erreal@188.120.242.74:/var/www/stellar-burger"
   },
   "eslintConfig": {
     "extends": [
@@ -57,6 +57,7 @@
     "@types/react-router-dom": "^5.3.3",
     "cypress": "^12.9.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-cypress": "^2.13.2",
     "fetch-mock": "^9.11.0",
     "prettier": "2.8.0",
     "react-test-renderer": "^18.2.0",

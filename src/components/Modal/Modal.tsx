@@ -28,7 +28,7 @@ export const Modal: FC<IModal> = (props) => {
             {props.title}
           </h3>
         )}
-        <button className={modalStyles.closeButton} onClick={props.onClose}>
+        <button className={modalStyles.closeButton} onClick={props.onClose} data-test-id="close-modal">
           <CloseIcon type="primary" />
         </button>
         {props.children}

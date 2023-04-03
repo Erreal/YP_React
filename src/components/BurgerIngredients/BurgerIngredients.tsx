@@ -77,7 +77,7 @@ const BurgerIngredients = () => {
                 </Tab>
               ))}
             </div>
-            <div className={ingredientsStyles.scrollsection}>
+            <div className={ingredientsStyles.scrollsection} data-test-id="ingredients-section">
               {INGREDIENTS_TYPES.map((item) => (
                 <section
                   className="mt-10"

@@ -55,7 +55,7 @@ export const Login: FC = () => {
   return (
     <>
       {!loginRequest ? (
-        <form className={pageStyles.form} onSubmit={handleSubmit}>
+        <form className={pageStyles.form} onSubmit={handleSubmit} data-test-id="login-form">
           <h2
             className={`${pageStyles.text_center} text text_type_main-medium`}
           >
@@ -74,6 +74,7 @@ export const Login: FC = () => {
             extraClass={`mt-6`}
             required={true}
             placeholder="some@example.com"
+            data-test-id="email-input"
           />
           <PasswordInput
             name={'password'}
@@ -81,12 +82,14 @@ export const Login: FC = () => {
             extraClass={`mt-6`}
             value={passwordValue}
             onChange={onChangeInput}
+            data-test-id="password-input"
           />
           <Button
             htmlType="submit"
             type="primary"
             size="medium"
             extraClass={`mt-6`}
+            data-test-id="login-button"
           >
             Войти
           </Button>

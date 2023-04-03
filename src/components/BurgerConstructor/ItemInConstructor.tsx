@@ -59,6 +59,7 @@ const ItemInConstructor: FC<IItemInConstructor> = (props) => {
       className={constructorStyles.constructorItem}
       ref={dropRef}
       data-handler-id={target}
+      data-test-id="drop-reorder"
       style={{ opacity }}
     >
       <DragIcon type="primary" />

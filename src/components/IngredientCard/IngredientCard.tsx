@@ -35,6 +35,7 @@ const IngredientCard: FC<IIngredientCard> = (props) => {
       }}
       className={ingredientCardStyles.cardlink}
       ref={dragRef}
+      data-test-id="ingredient-link"
     >
       <div
         className={`${ingredientCardStyles.card} mt-6 mb-8`}

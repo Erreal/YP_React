@@ -4,7 +4,7 @@ import { IModalOverlay } from '../../utils/types';
 
 export const ModalOverlay: FC<IModalOverlay> = (props) => {
   return (
-    <aside className={modalOverlayStyles.overlay} onClick={props.onClose}>
+    <aside className={modalOverlayStyles.overlay} onClick={props.onClose} data-test-id="modal-overlay">
       {props.children}
     </aside>
   );
