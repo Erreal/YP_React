@@ -65,10 +65,14 @@ describe('Redux busket store', () => {
 
   test('should handle MOVE_ITEM', () => {
     const storeBeforeMove = {
-        ...initialState,
-        items: ingredients,
+      ...initialState,
+      items: ingredients,
     };
-    const sortedState = ingredients.map(obj => {return {...obj}}).reverse();
+    const sortedState = ingredients
+      .map((obj) => {
+        return { ...obj };
+      })
+      .reverse();
     const state = {
       ...initialState,
       items: sortedState,
@@ -83,8 +87,8 @@ describe('Redux busket store', () => {
   });
   test('Should handle RESET', () => {
     const state = {
-        ...initialState,
-    }
-    expect(basketReducer(initialState, { type: RESET })).toEqual(state)
-})
+      ...initialState,
+    };
+    expect(basketReducer(initialState, { type: RESET })).toEqual(state);
+  });
 });

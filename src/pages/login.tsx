@@ -16,7 +16,9 @@ import { TPreventDefault } from '../utils/types';
 
 export const Login: FC = () => {
   const dispatch = useAppDispatch();
-  const { auth, loginRequest, loginFailed } = useAppSelector((store) => store.user);
+  const { auth, loginRequest, loginFailed } = useAppSelector(
+    (store) => store.user
+  );
   const [emailValue, setEmailValue] = React.useState('');
   const [passwordValue, setPasswordValue] = React.useState('');
   const history = useHistory();
@@ -55,7 +57,11 @@ export const Login: FC = () => {
   return (
     <>
       {!loginRequest ? (
-        <form className={pageStyles.form} onSubmit={handleSubmit} data-test-id="login-form">
+        <form
+          className={pageStyles.form}
+          onSubmit={handleSubmit}
+          data-test-id="login-form"
+        >
           <h2
             className={`${pageStyles.text_center} text text_type_main-medium`}
           >
