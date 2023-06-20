@@ -69,6 +69,7 @@ const BurgerConstructor: FC = () => {
     <section
       className={`${constructorStyles.mainsection} pt-25 ml-10`}
       ref={dropTarget}
+      data-test-id="drop-container"
     >
       {Object.keys(ingredients).length && (
         <>
@@ -82,7 +83,7 @@ const BurgerConstructor: FC = () => {
                 </p>
               )}
             </div>
-            <div className={constructorStyles.constructorInner}>
+            <div className={constructorStyles.constructorInner} data-test-id="constructor-inner">
               {Object.keys(basket.items).length
                 ? basket.items.map((item: IIngredientParams, index: number) => (
                     <ItemInConstructor
@@ -98,7 +99,7 @@ const BurgerConstructor: FC = () => {
               {basket.bun.price !== 0 ? (
                 <BunInConstructor type="bottom" text="(низ)" bun={basket.bun} />
               ) : (
-                <p className={constructorStyles.emptyBunBottom}>
+                <p className={constructorStyles.emptyBunBottom} data-test-id="empty-bun">
                   {EMPTY_BUN_TEXT}
                 </p>
               )}
@@ -116,6 +117,7 @@ const BurgerConstructor: FC = () => {
               htmlType="button"
               type="primary"
               size="large"
+              data-test-id="order-button"
             >
               Оформить заказ
             </Button>

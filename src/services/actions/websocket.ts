@@ -9,6 +9,9 @@ export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' =
 export const WS_CONNECTION_END: 'WS_CONNECTION_END' = 'WS_CONNECTION_END';
 export const WS_GET_DATA: 'WS_GET_DATA' = 'WS_GET_DATA';
 
+export interface IWsInit {
+  readonly type: null;
+}
 export interface IWsConnectionStart {
   readonly type: typeof WS_CONNECTION_START;
 }
@@ -35,4 +38,5 @@ export type TWSActions =
   | IWsConnectionError
   | IWsConnectionClosed
   | IWsGetData
-  | IWsConnectionEnd;
+  | IWsConnectionEnd
+  | IWsInit;

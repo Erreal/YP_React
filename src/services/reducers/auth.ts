@@ -156,6 +156,7 @@ export const authReducer = (state = INITIAL_STATE.user, action: TAuthActions) =>
       return {
         ...state,
         resetFailed: true,
+        resetRequest: false,
       };
     }
     case SET_PASSWORD_REQUEST: {
@@ -177,6 +178,7 @@ export const authReducer = (state = INITIAL_STATE.user, action: TAuthActions) =>
       return {
         ...state,
         setPasswdFailed: true,
+        setPasswdRequest: false,
       };
     }
     default:

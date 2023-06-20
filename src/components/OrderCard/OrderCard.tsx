@@ -25,7 +25,11 @@ export const OrderCard: FC<TOrderCard> = (props) => {
   }, [ingredients, ingredientsList]);
 
   const totalPrice = useMemo(
-    () => composition.reduce((a, b) => a + b.price, 0),
+    () => {
+      if (composition) {
+        composition.reduce((a, b) => a + b?.price, 0);
+      }
+    },
     [composition]
   );
 
@@ -76,8 +80,10 @@ export const OrderCard: FC<TOrderCard> = (props) => {
           })}
         </ul>
         <span className={`${cardStyles.price} text text_type_digits-default`}>
-          {totalPrice}
-          <CurrencyIcon type="primary" />
+          <>
+            {totalPrice}
+            <CurrencyIcon type="primary" />
+          </>
         </span>
       </div>
     </Link>

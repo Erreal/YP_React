@@ -9,7 +9,7 @@ export const OrderDetails: FC = () => {
     <>
       {order.number ? (
         <>
-          <p className="text text_type_digits-large mt-20">{order.number}</p>
+          <p className="text text_type_digits-large mt-20" data-test-id="order-number">{order.number}</p>
           <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
           <img className="mt-15" alt="Done" src={done} />
           <p className="text text_type_main-default mt-15">

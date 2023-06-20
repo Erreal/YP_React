@@ -8,7 +8,7 @@ import {
 import { IIngredientParams } from '../../utils/types';
 import { TBasketActions } from '../actions/basket';
 
-const basket: {
+export const basket: {
   bun: IIngredientParams;
   bunPrice: number;
   items: Array<IIngredientParams>;

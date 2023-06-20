@@ -3,10 +3,15 @@ import { requestData } from '../../utils/requestApi';
 import { Dispatch } from 'redux';
 import { TApplicationActions } from '../store';
 
+
 export const ORDER_SUCESS:'ORDER_SUCESS' = 'ORDER_SUCESS';
 export const ORDER_FAILED:'ORDER_FAILED' = 'ORDER_FAILED';
 export const ORDER_REQUEST:'ORDER_REQUEST' = 'ORDER_REQUEST';
 export const ORDER_RESET:'ORDER_RESET' = 'ORDER_RESET';
+
+export interface IOrderInit {
+  readonly type: null;
+}
 
 export interface IOrderSuccess {
   readonly type: typeof ORDER_SUCESS;
@@ -27,7 +32,8 @@ export type TOrderActions =
   | IOrderSuccess
   | IOrderFailed
   | IOrderRequest
-  | IOrderReset;  
+  | IOrderReset
+  | IOrderInit;  
 
 type TOrderDispatch = Dispatch<TApplicationActions>; 
 const dataUrl = `${API_URL}/orders`;
